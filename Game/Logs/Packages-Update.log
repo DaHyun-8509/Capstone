@@ -44,3 +44,39 @@ The following packages were updated:
   com.unity.collab-proxy from version 1.13.5 to 2.0.3
   com.unity.timeline from version 1.6.2 to 1.6.4
   com.unity.visualscripting from version 1.7.6 to 1.8.0
+
+=== Sat Apr 29 21:10:29 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.2.16 to 2.0.3
+  com.unity.ide.rider from version 1.1.4 to 3.0.18
+  com.unity.ide.vscode from version 1.2.1 to 1.2.5
+  com.unity.render-pipelines.universal from version 7.3.1 to 12.1.11
+  com.unity.test-framework from version 1.1.16 to 1.1.31
+  com.unity.textmeshpro from version 2.1.1 to 3.0.6
+  com.unity.timeline from version 1.2.15 to 1.6.4
+
+=== Sat Apr 29 21:10:30 2023
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.render-pipelines.universal@12.1.11
+
+=== Sat Apr 29 21:17:47 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.2.16 to 2.0.3
+  com.unity.ide.rider from version 1.1.4 to 3.0.18
+  com.unity.ide.vscode from version 1.2.1 to 1.2.5
+  com.unity.render-pipelines.universal from version 7.3.1 to 12.1.11
+  com.unity.test-framework from version 1.1.16 to 1.1.31
+  com.unity.textmeshpro from version 2.1.1 to 3.0.6
+  com.unity.timeline from version 1.2.15 to 1.6.4
