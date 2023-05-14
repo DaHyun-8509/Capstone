@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     }
     void OnKeyBoard()
     {
+        if(_controller.enabled == false)
+            return;
         //키 입력 이벤트 -> 키보드 이동 처리
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");

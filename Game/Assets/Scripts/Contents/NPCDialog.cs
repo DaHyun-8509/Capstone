@@ -1,31 +1,55 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class NPCDialog : MonoBehaviour
 {
     [SerializeField] private GameObject mainCamera;
-    [SerializeField] private GameObject dialogCamera;
+    [SerializeField] private GameObject toActivate;
 
     [SerializeField] private Transform standingPoint;
+
+    private Transform avatar;
     
-    private void OnTriggerEnter(Collider other)
+    private async void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // disable main cam, enable dialog cam
-            mainCamera.SetActive(false);
-            dialogCamera.SetActive(true);
+            avatar = other.transform;
+
+            // disable player input
+            avatar.GetComponent<PlayerController>().enabled = false;
+            avatar.GetComponent<CharacterController>().enabled = false;
+
+            await Task.Delay(50);
 
             //teleport the avartar to staning point
-            Transform avatar = other.transform;
             avatar.position = standingPoint.position;
             avatar.rotation = standingPoint.rotation;
 
-            // disable player input
-            avatar.GetComponent<PlayerInput>().enabled = false;
+            // disable main cam, enable dialog cam
+            mainCamera.SetActive(false);
+            toActivate.SetActive(true);
 
             // gpt chat ui
+
+            // display cursor
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void Recover()
+    {
+        avatar.GetComponent<PlayerController>().enabled = true;
+        avatar.GetComponent<CharacterController>().enabled = true;
+
+        mainCamera.SetActive(true);
+        toActivate.SetActive(false);
+
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     // recover
 }
