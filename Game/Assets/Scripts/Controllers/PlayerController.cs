@@ -48,8 +48,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
         _controller.Move(transform.TransformDirection(moveDirection * _moveSpeed * Time.deltaTime));
-
-        transform.position = new Vector3(transform.position.x, 3.647f, transform.position.z);
     }
 
 }
