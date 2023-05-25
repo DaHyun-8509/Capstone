@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,18 +11,30 @@ public class NPCDialog : MonoBehaviour
     [SerializeField] private Transform standingPoint;
 
     private Transform avatar;
-    
-    private async void OnTriggerEnter(Collider other)
+    private GameObject uiText;
+
+    void Awake()
     {
-        if (other.CompareTag("Player"))
+        uiText = GameObject.Find("UI_InteractionText");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        uiText.GetComponent<TextMeshProUGUI>().text = "대화하기[E]";
+        uiText.gameObject.SetActive(true);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
         {
+            uiText.gameObject.SetActive(false);
+
             avatar = other.transform;
 
             // disable player input
             avatar.GetComponent<PlayerController>().enabled = false;
             avatar.GetComponent<CharacterController>().enabled = false;
-
-            await Task.Delay(50);
 
             //teleport the avartar to staning point
             avatar.position = standingPoint.position;
@@ -39,6 +52,15 @@ public class NPCDialog : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            uiText.gameObject.SetActive(false);
+        }
+    }
+
+
     public void Recover()
     {
         avatar.GetComponent<PlayerController>().enabled = true;
@@ -46,7 +68,6 @@ public class NPCDialog : MonoBehaviour
 
         mainCamera.SetActive(true);
         toActivate.SetActive(false);
-
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
