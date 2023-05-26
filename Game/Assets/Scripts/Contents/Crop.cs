@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Crop : MonoBehaviour
 {
+    private bool isHarvestable = true;
+    public bool IsHarvestable
+    {
+        get { return isHarvestable; }
+        set { isHarvestable = value; }
+    }
+
     void Start()
     {
         
     }
+
+    
     void Update()
     {
         
