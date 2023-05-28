@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CropTrigger
+  - TreeTrigger
   layers:
   - Default
   - TransparentFX

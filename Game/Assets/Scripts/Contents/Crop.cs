@@ -11,14 +11,4 @@ public class Crop : MonoBehaviour
         set { isHarvestable = value; }
     }
 
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-        
-    }
 }
