@@ -7,6 +7,7 @@ public class TreeField : MonoBehaviour
 {
     public GameObject grownTreePrefab;
     private GameObject currentTree;
+    public float genertateTime = 3f;
 
     private bool isGrown ;
 
@@ -24,9 +25,9 @@ public class TreeField : MonoBehaviour
 
 
 
-    public IEnumerator GrowTreeAfterDelay(float delay)
+    public IEnumerator GrowTreeAfterDelay()
     { //나무 다시 자란 상태로
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(genertateTime);
 
         Transform treeTransform = currentTree.transform;
 

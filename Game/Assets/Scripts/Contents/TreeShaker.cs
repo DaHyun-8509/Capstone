@@ -77,7 +77,7 @@ public class TreeShaker : MonoBehaviour
                 box.enabled = true;
             }
 
-            StartCoroutine(treefield.GrowTreeAfterDelay(5f));
+            StartCoroutine(treefield.GrowTreeAfterDelay());
             treefield.IsGrown = false;
         }
     }
