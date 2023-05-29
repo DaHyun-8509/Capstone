@@ -70,15 +70,13 @@ public class TreeShaker : MonoBehaviour
                 r.useGravity = true;
             }
 
-            Transform[] children = treefield.GetComponentsInChildren<Transform>();
+            BoxCollider[] childrenBox = treefield.GetComponentsInChildren<BoxCollider>();
          
-            foreach (Transform child in children)
+            foreach (BoxCollider box in childrenBox)
             {
-
-                child.GetComponentInChildren<BoxCollider>().gameObject.SetActive(true);
+                box.enabled = true;
             }
 
-            
             StartCoroutine(treefield.GrowTreeAfterDelay(5f));
             treefield.IsGrown = false;
         }

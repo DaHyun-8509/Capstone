@@ -30,7 +30,7 @@ public class CropPicker : MonoBehaviour
     private void OnTriggerEnter(Collider other) //트리거 잡힐 때
     {
 
-        if (other.CompareTag("CropTrigger") && currentCrop == null)
+        if (other.CompareTag("PickableCropTrigger") && currentCrop == null)
         {
             //현재 트리거에 잡힌 작물이 없으면 지금 잡힌 작물을 저장
             currentCrop = other.gameObject.transform.parent.gameObject;
@@ -43,7 +43,7 @@ public class CropPicker : MonoBehaviour
 
     private void OnTriggerExit(Collider other) //트리거에서 빠져나올 때
     {
-        if (other.CompareTag("CropTrigger"))
+        if (other.CompareTag("PickableCropTrigger"))
         {
             //텍스트 비활성화
             uiText.gameObject.SetActive(false);

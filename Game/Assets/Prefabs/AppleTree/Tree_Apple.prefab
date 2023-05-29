@@ -117,6 +117,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: PickableCropTrigger
+      objectReference: {fileID: 0}
     - target: {fileID: 1330596752416741099, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -181,9 +189,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6969235185081720902, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
@@ -232,6 +248,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -300,6 +320,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -359,6 +383,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -427,6 +455,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -486,6 +518,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -554,6 +590,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -613,6 +653,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -681,6 +725,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -740,6 +788,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -808,6 +860,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -867,6 +923,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -935,6 +995,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -994,6 +1058,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -1062,6 +1130,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -1121,6 +1193,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -1189,6 +1265,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -1248,6 +1328,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -1316,6 +1400,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -1375,6 +1463,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4522775229384678910}
     m_Modifications:
+    - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1133220025156661290, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_TagString
       value: PickableCropTrigger
@@ -1442,6 +1534,10 @@ PrefabInstance:
     - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880677456785539285, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2008817016622468378, guid: f91625cf2098ddd43957bf17e231f67a, type: 3}
       propertyPath: m_Convex

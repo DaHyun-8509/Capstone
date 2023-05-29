@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CropTrigger
   - TreeTrigger
+  - PickableCropTrigger
   layers:
   - Default
   - TransparentFX

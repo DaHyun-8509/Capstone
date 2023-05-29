@@ -22,7 +22,7 @@ public class TreeField : MonoBehaviour
         isGrown = true;
     }
 
- 
+
 
     public IEnumerator GrowTreeAfterDelay(float delay)
     { //나무 다시 자란 상태로
