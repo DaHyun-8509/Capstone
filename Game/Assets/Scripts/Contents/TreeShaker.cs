@@ -15,18 +15,14 @@ public class TreeShaker : MonoBehaviour
 
     void Update() //매 프레임마다
     {
-        //현재 트리거에 잡힌 나무 있는 상태에서 E키 누를 때
-        if (currentCrop != null && Input.GetKeyDown(KeyCode.E))
+        //현재 트리거에 잡힌 나무 자란 상태에서 E키 누를 때
+        if (currentCrop != null && currentCrop.GetComponent<TreeField>().IsGrown)
         {
-            //텍스트 비활성화
-            uiText.gameObject.SetActive(false);
-
-            //나무 흔들기
-            Rigidbody[] rigidbodys = currentCrop.GetComponentsInChildren<Rigidbody>();
-
-            foreach (Rigidbody r in rigidbodys)
+            if(Input.GetKeyDown(KeyCode.E))
             {
-                r.useGravity = true;
+                //텍스트 비활성화
+                uiText.gameObject.SetActive(false);
+                ShakeTree();
             }
         }
     }
@@ -36,12 +32,15 @@ public class TreeShaker : MonoBehaviour
 
         if (other.CompareTag("TreeTrigger") && currentCrop == null)
         {
-            //현재 트리거에 잡힌 작물이 없으면 지금 잡힌 작물을 저장
+            //현재 트리거에 잡힌 나무가 없으면 지금 잡힌 나무를 저장
             currentCrop = other.gameObject.transform.parent.gameObject;
 
-            //텍스트 활성화
-            uiText.GetComponent<TextMeshProUGUI>().text = "흔들기[E]";
-            uiText.gameObject.SetActive(true);
+            if (currentCrop.GetComponent<TreeField>().IsGrown)
+            {
+                //텍스트 활성화
+                uiText.GetComponent<TextMeshProUGUI>().text = "흔들기[E]";
+                uiText.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -52,23 +51,36 @@ public class TreeShaker : MonoBehaviour
             //텍스트 비활성화
             uiText.gameObject.SetActive(false);
 
-            //현재 잡힌 작물 null로 초기화
+            //현재 잡힌 나무 null로 초기화
             currentCrop = null;
         }
     }
 
-    private void HarvestCrop() //작물 수확
+    private void ShakeTree()
     {
-        //작물이 수확 가능한 상태일 때
-        if (currentCrop != null && currentCrop.GetComponent<Crop>().IsHarvestable)
+        TreeField treefield = currentCrop.GetComponentInChildren<TreeField>();
+
+        //나무 흔들기
+        if(treefield.GetComponent<TreeField>().IsGrown)
         {
-            //작물 비활성화
-            currentCrop.SetActive(false);
+            Rigidbody[] rigidbodys = treefield.GetComponentsInChildren<Rigidbody>();
 
-            //현재 작물 null 초기화
-            currentCrop = null;
+            foreach (Rigidbody r in rigidbodys)
+            {
+                r.useGravity = true;
+            }
 
-            currentCrop.GetComponent<Crop>().IsHarvestable = false;
+            Transform[] children = treefield.GetComponentsInChildren<Transform>();
+         
+            foreach (Transform child in children)
+            {
+
+                child.GetComponentInChildren<BoxCollider>().gameObject.SetActive(true);
+            }
+
+            
+            StartCoroutine(treefield.GrowTreeAfterDelay(5f));
+            treefield.IsGrown = false;
         }
     }
 }
