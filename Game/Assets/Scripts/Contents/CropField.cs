@@ -5,7 +5,7 @@ using UnityEngine;
 public class CropField : MonoBehaviour
 {
     private GameObject crop;
-    public float genertateTime = 3f;
+    public float generateTime = 3f;
 
     private bool isGrown;
     public bool IsGrown
@@ -23,7 +23,7 @@ public class CropField : MonoBehaviour
 
     public IEnumerator GrowTreeAfterDelay()
     { //작물 다시 자란 상태로
-        yield return new WaitForSeconds(genertateTime);
+        yield return new WaitForSeconds(generateTime);
 
         //일정 시간 후 보이게
         crop.SetActive(true);
