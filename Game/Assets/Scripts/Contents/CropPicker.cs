@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,7 +25,10 @@ public class CropPicker : MonoBehaviour
             uiText.gameObject.SetActive(false);
 
             //작물 수확
-            HarvestCrop();
+            Animator anim = GetComponent<Animator>();
+            anim.SetTrigger("pick_fruit");
+
+            StartCoroutine(HarvestCrop());
         }
     }
 
@@ -53,12 +58,14 @@ public class CropPicker : MonoBehaviour
         }
     }
 
-    private void HarvestCrop() //작물 수확
+    private IEnumerator HarvestCrop() //작물 수확
     {
         if (currentCrop != null)
         {
+            GameObject crop = currentCrop;
+            yield return new WaitForSeconds(1f);
             //작물 비활성화
-            currentCrop.GetComponent<PickableCrop>().ClearCrop();
+            crop.GetComponent<PickableCrop>().ClearCrop();
 
             //현재 작물 null 초기화
             currentCrop = null;

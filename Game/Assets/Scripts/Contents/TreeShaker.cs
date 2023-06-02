@@ -63,6 +63,9 @@ public class TreeShaker : MonoBehaviour
         //³ª¹« Èçµé±â
         if(treefield.GetComponent<TreeField>().IsGrown)
         {
+            Animator anim = GetComponent<Animator>();
+            anim.SetTrigger("shake_tree");
+
             Rigidbody[] rigidbodys = treefield.GetComponentsInChildren<Rigidbody>();
 
             foreach (Rigidbody r in rigidbodys)
