@@ -91,8 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b2928675ed4544e9ccfd711cce609e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grownCropPrefab: {fileID: 7778478430253871653, guid: 451b1893f17720b4db808d5ea00c4e7a, type: 3}
-  genertateTime: 5
+  generateTime: 3
 --- !u!1001 &2970263493962193259
 PrefabInstance:
   m_ObjectHideFlags: 0
