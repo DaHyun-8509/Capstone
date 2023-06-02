@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
         Idle, 
         Walk,
         Run,
-        Plant,
-        Harvest
     }
 
     PlayerState _state = PlayerState.Idle;
@@ -56,15 +54,6 @@ public class PlayerController : MonoBehaviour
 
         Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", _runSpeed);
-    }
-
-    void UpdatePlant()
-    {
-
-    }
-    void UpdateHarvest()
-    {
-
     }
 
 
@@ -132,12 +121,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Run:
                 UpdateRun();
-                break;
-            case PlayerState.Plant:
-                UpdatePlant();
-                break;
-            case PlayerState.Harvest:
-                UpdateHarvest();
                 break;
         }
     }
