@@ -22,7 +22,9 @@ public class TreeShaker : MonoBehaviour
             {
                 //텍스트 비활성화
                 uiText.gameObject.SetActive(false);
-                ShakeTree();
+
+                //나무 흔들기
+                StartCoroutine(ShakeTree());
             }
         }
     }
@@ -56,32 +58,33 @@ public class TreeShaker : MonoBehaviour
         }
     }
 
-    private void ShakeTree()
+    private IEnumerator ShakeTree()
     {
         TreeField treefield = currentCrop.GetComponentInChildren<TreeField>();
 
         //나무 흔들기
-        if(treefield.GetComponent<TreeField>().IsGrown)
+
+        Animator anim = GetComponent<Animator>();
+        anim.SetTrigger("shake_tree");
+
+        yield return new WaitForSeconds(1);
+
+        Rigidbody[] rigidbodys = treefield.GetComponentsInChildren<Rigidbody>();
+
+        foreach (Rigidbody r in rigidbodys)
         {
-            Animator anim = GetComponent<Animator>();
-            anim.SetTrigger("shake_tree");
-
-            Rigidbody[] rigidbodys = treefield.GetComponentsInChildren<Rigidbody>();
-
-            foreach (Rigidbody r in rigidbodys)
-            {
-                r.useGravity = true;
-            }
-
-            BoxCollider[] childrenBox = treefield.GetComponentsInChildren<BoxCollider>();
-         
-            foreach (BoxCollider box in childrenBox)
-            {
-                box.enabled = true;
-            }
-
-            StartCoroutine(treefield.GrowTreeAfterDelay());
-            treefield.IsGrown = false;
+            r.useGravity = true;
         }
+
+        BoxCollider[] childrenBox = treefield.GetComponentsInChildren<BoxCollider>();
+         
+        foreach (BoxCollider box in childrenBox)
+        {
+            box.enabled = true;
+        }
+
+        StartCoroutine(treefield.GrowTreeAfterDelay());
+        treefield.IsGrown = false;
+        
     }
 }

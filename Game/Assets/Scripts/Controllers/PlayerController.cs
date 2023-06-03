@@ -27,14 +27,16 @@ public class PlayerController : MonoBehaviour
         Idle, 
         Walk,
         Run,
+        Interact
     }
 
     PlayerState _state = PlayerState.Idle;
+    public PlayerState State { get { return _state; } set { _state = value; }}
 
     void UpdateIdle()
     {
         Move(_walkSpeed);
-      
+        Rotate();
         Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", 0);
     }
@@ -42,19 +44,26 @@ public class PlayerController : MonoBehaviour
     void UpdateWalk()
     {
         Move(_walkSpeed);
-        
+        Rotate();
+
         Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", _walkSpeed);
-
     }
 
     void UpdateRun()
     {
         Move(_runSpeed);
+        Rotate();
 
         Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", _runSpeed);
     }
+    
+    void UpdateInteract()
+    {
+        Rotate();
+    }
+
 
 
     void Move(float speed) //키보드 입력에 따른 플레이어 이동
@@ -108,7 +117,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        Rotate();
+
 
         //플레이어 상태 변화
         switch (_state)
@@ -121,6 +130,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Run:
                 UpdateRun();
+                break;
+            case PlayerState.Interact:
+                UpdateInteract();
                 break;
         }
     }

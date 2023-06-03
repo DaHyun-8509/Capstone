@@ -29,6 +29,7 @@ public class CropPicker : MonoBehaviour
             anim.SetTrigger("pick_fruit");
 
             StartCoroutine(HarvestCrop());
+
         }
     }
 
@@ -63,7 +64,9 @@ public class CropPicker : MonoBehaviour
         if (currentCrop != null)
         {
             GameObject crop = currentCrop;
+
             yield return new WaitForSeconds(1f);
+
             //작물 비활성화
             crop.GetComponent<PickableCrop>().ClearCrop();
 

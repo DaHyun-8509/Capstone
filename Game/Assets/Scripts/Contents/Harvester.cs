@@ -24,12 +24,11 @@ public class Harvester : MonoBehaviour
             //텍스트 비활성화
             uiText.gameObject.SetActive(false);
 
+            //작물 수확
             Animator anim = GetComponent<Animator>();
             anim.SetTrigger("pull_plant");
 
-            //작물 수확
             StartCoroutine(HarvestCrop());
-            
         }
     }
 
@@ -65,10 +64,9 @@ public class Harvester : MonoBehaviour
         if(currentCropField != null && currentCropField.GetComponent<CropField>().IsGrown)
         {
             GameObject crop = currentCropField;
-
             yield return new WaitForSeconds(1f);
 
-            if(crop != null)
+            if (crop != null)
             {
                 //기존 작물 비활성화
                 crop.SetActive(false);
