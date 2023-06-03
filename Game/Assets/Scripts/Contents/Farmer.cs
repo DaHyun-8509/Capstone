@@ -28,7 +28,17 @@ public class Farmer : MonoBehaviour
             Animator anim = GetComponent<Animator>();
             anim.SetTrigger("pull_plant");
 
-            StartCoroutine(HarvestCrop());
+
+            if(currentCropField.GetComponent<CropField>().IsGrown == true)
+            {
+                StartCoroutine(HarvestCrop());
+            }  
+            else if(currentCropField.GetComponent<CropField>().Crop == null)
+            {
+                StartCoroutine(currentCropField.GetComponent<CropField>().PlantCrop("Prefabs/Farm/Cabbage"));
+                StartCoroutine(currentCropField.GetComponent<CropField>().GrowToLv2AfterDelay());
+
+            }
         }
     }
 
@@ -51,7 +61,6 @@ public class Farmer : MonoBehaviour
             else if(currentCropField.GetComponent<CropField>().Crop == null)
             {
                 uiText.GetComponent<TextMeshProUGUI>().text = "심기[E]";
-
             }
 
             uiText.gameObject.SetActive(true);
@@ -75,13 +84,14 @@ public class Farmer : MonoBehaviour
         //작물이 수확 가능한 상태일 때
         if(currentCropField != null && currentCropField.GetComponent<CropField>().IsGrown)
         {
-            GameObject crop = currentCropField;
+            GameObject crop = currentCropField.GetComponent<CropField>().Crop;
             yield return new WaitForSeconds(1f);
 
             if (crop != null)
             {
-                //기존 작물 비활성화
-                crop.SetActive(false);
+                //기존 작물 삭제
+                GameObject.Destroy(crop);
+                currentCropField.GetComponent<CropField>().IsGrown = false;
 
 
                 //현재 작물 null 초기화

@@ -27,11 +27,14 @@ public class CropField : MonoBehaviour
         isGrown = false;
     }
 
-    public void PlantCrop(string name)
+    public IEnumerator PlantCrop(string name)
     {
+        yield return new WaitForSeconds(1);
+
         GameObject prefab = Resources.Load<GameObject>(name);
         crop = GameObject.Instantiate(prefab);
         crop.transform.SetParent(transform);
+        crop.transform.localPosition = Vector3.zero;
 
         //Lv별 작물 찾아두기 
         Transform[] children = crop.GetComponentsInChildren<Transform>();
@@ -46,8 +49,9 @@ public class CropField : MonoBehaviour
                 lv3 = child.gameObject;
         }
 
+        lv2.SetActive(false);
+        lv3.SetActive(false);
     }
-
 
     public IEnumerator GrowToLv2AfterDelay()
     { //작물을 Lv2로 
@@ -56,7 +60,8 @@ public class CropField : MonoBehaviour
         //일정 시간 후 보이게
         lv1.SetActive(false);
         lv2.SetActive(true);
-        
+
+        StartCoroutine(GrowToLv3AfterDelay());
     }
 
     public IEnumerator GrowToLv3AfterDelay()
