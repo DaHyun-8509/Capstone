@@ -16,56 +16,57 @@ public class Farmer : MonoBehaviour
         uiText = GameObject.Find("UI_InteractionText");
     }
 
-    void Update() //매 프레임마다
+    void Update( ) //매 프레임마다
     {
         //현재 트리거에 잡힌 작물 있는 상태에서 E키 누를 때
         if (currentCropField != null && Input.GetKeyDown(KeyCode.E))
         {
+            GameObject crop = currentCropField;
             //텍스트 비활성화
             uiText.gameObject.SetActive(false);
 
-            //플레이어 상태 변경
-            GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
-            
-            Animator anim = GetComponent<Animator>();
-            anim.SetTrigger("pull_plant");
+            if(crop != null)
+            {
+                //플레이어 상태 변경
+                GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
 
-            //자란 상태면 작물 수확
-            if (currentCropField.GetComponent<CropField>().IsGrown == true)
-            {
-                StartCoroutine(HarvestCrop());
-            }  
-            //작물이 없으면 심기
-            else if(currentCropField.GetComponent<CropField>().Crop == null)
-            {
-                StartCoroutine(PlantCrop());
-                StartCoroutine(currentCropField.GetComponent<CropField>().GrowToLv2AfterDelay());
+                Animator anim = GetComponent<Animator>();
+                anim.SetTrigger("pull_plant");
+
+                //자란 상태면 작물 수확
+                if (crop.GetComponent<CropField>().IsGrown == true)
+                {
+                    StartCoroutine(HarvestCrop());
+                }
+                //작물이 없으면 심기
+                else if (crop.GetComponent<CropField>().Crop == null)
+                {
+                    StartCoroutine(PlantCrop());
+                    StartCoroutine(crop.GetComponent<CropField>().GrowToLv2AfterDelay());
+                }
             }
         }
     }
 
     private void OnTriggerEnter(Collider other) //트리거 잡힐 때
     {
-      
-        if (other.CompareTag("CropTrigger")&& currentCropField == null)
+        if (other.CompareTag("CropTrigger") && currentCropField == null)
         {
             //현재 트리거에 잡힌 필드 저장
             currentCropField = other.transform.parent.gameObject;
 
-            //텍스트 활성화
-
             //작물이 자란 상태면
-            if(currentCropField.GetComponent<CropField>().IsGrown == true)
+            if (currentCropField.GetComponent<CropField>().IsGrown == true)
             {
                 uiText.GetComponent<TextMeshProUGUI>().text = "수확하기[E]";
+                uiText.gameObject.SetActive(true);
             }
             //작물이 없으면
-            else if(currentCropField.GetComponent<CropField>().Crop == null)
+            else if (currentCropField.GetComponent<CropField>().Crop == null)
             {
                 uiText.GetComponent<TextMeshProUGUI>().text = "심기[E]";
+                uiText.gameObject.SetActive(true);
             }
-
-            uiText.gameObject.SetActive(true);
         }
     }
 
@@ -78,7 +79,6 @@ public class Farmer : MonoBehaviour
 
             //현재 잡힌 작물 null로 초기화
             currentCropField = null;
-
         }
     }
 
@@ -104,11 +104,9 @@ public class Farmer : MonoBehaviour
                 GameObject.Destroy(crop);
                 currentCropField.GetComponent<CropField>().IsGrown = false;
 
-
                 //현재 작물 null 초기화
                 currentCropField = null;
             }
-
 
             GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
         }
