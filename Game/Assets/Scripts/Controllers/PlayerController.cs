@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
         Idle, 
         Walk,
         Run,
-        Interact
     }
 
     PlayerState _state = PlayerState.Idle;
@@ -59,11 +58,6 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("move_speed", _runSpeed);
     }
     
-    void UpdateInteract()
-    {
-        Rotate();
-    }
-
 
 
     void Move(float speed) //키보드 입력에 따른 플레이어 이동
@@ -130,9 +124,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Run:
                 UpdateRun();
-                break;
-            case PlayerState.Interact:
-                UpdateInteract();
                 break;
         }
     }
