@@ -16,7 +16,7 @@ public class Farmer : MonoBehaviour
         uiText = GameObject.Find("UI_InteractionText");
     }
 
-    void Update( ) //매 프레임마다
+    void Update() //매 프레임마다
     {
         //현재 트리거에 잡힌 작물 있는 상태에서 E키 누를 때
         if (currentCropField != null && Input.GetKeyDown(KeyCode.E))
