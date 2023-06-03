@@ -24,20 +24,22 @@ public class Farmer : MonoBehaviour
             //텍스트 비활성화
             uiText.gameObject.SetActive(false);
 
-            //작물 수확
+            //플레이어 상태 변경
+            GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
+            
             Animator anim = GetComponent<Animator>();
             anim.SetTrigger("pull_plant");
 
-
-            if(currentCropField.GetComponent<CropField>().IsGrown == true)
+            //자란 상태면 작물 수확
+            if (currentCropField.GetComponent<CropField>().IsGrown == true)
             {
                 StartCoroutine(HarvestCrop());
             }  
+            //작물이 없으면 심기
             else if(currentCropField.GetComponent<CropField>().Crop == null)
             {
-                StartCoroutine(currentCropField.GetComponent<CropField>().PlantCrop("Prefabs/Farm/Cabbage"));
+                StartCoroutine(PlantCrop());
                 StartCoroutine(currentCropField.GetComponent<CropField>().GrowToLv2AfterDelay());
-
             }
         }
     }
@@ -76,7 +78,16 @@ public class Farmer : MonoBehaviour
 
             //현재 잡힌 작물 null로 초기화
             currentCropField = null;
+
         }
+    }
+
+    private IEnumerator PlantCrop()
+    {
+        yield return new WaitForSeconds(1);
+        currentCropField.GetComponent<CropField>().Plant("Prefabs/Farm/Cabbage");
+
+        GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
     }
 
     private IEnumerator HarvestCrop() //작물 수확
@@ -97,6 +108,9 @@ public class Farmer : MonoBehaviour
                 //현재 작물 null 초기화
                 currentCropField = null;
             }
+
+
+            GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
         }
     }
 }

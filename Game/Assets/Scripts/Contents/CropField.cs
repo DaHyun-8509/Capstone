@@ -27,9 +27,10 @@ public class CropField : MonoBehaviour
         isGrown = false;
     }
 
-    public IEnumerator PlantCrop(string name)
+    public void Plant(string name)
     {
-        yield return new WaitForSeconds(1);
+       
+
 
         GameObject prefab = Resources.Load<GameObject>(name);
         crop = GameObject.Instantiate(prefab);

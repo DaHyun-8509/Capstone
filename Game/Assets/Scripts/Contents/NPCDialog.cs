@@ -33,7 +33,7 @@ public class NPCDialog : MonoBehaviour
             avatar = other.transform;
 
             // disable player input
-            avatar.GetComponent<PlayerController>().enabled = false;
+            avatar.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
             avatar.GetComponent<CharacterController>().enabled = false;
 
             //teleport the avartar to staning point
@@ -63,7 +63,7 @@ public class NPCDialog : MonoBehaviour
 
     public void Recover()
     {
-        avatar.GetComponent<PlayerController>().enabled = true;
+        avatar.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
         avatar.GetComponent<CharacterController>().enabled = true;
 
         mainCamera.SetActive(true);

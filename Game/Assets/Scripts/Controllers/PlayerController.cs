@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         Idle, 
         Walk,
         Run,
+        Interact
     }
 
     PlayerState _state = PlayerState.Idle;
@@ -58,6 +59,11 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("move_speed", _runSpeed);
     }
     
+    void UpdateInteract()
+    {
+        Animator anim = GetComponent<Animator>();
+        anim.SetFloat("move_speed", 0);
+    }
 
 
     void Move(float speed) //키보드 입력에 따른 플레이어 이동
@@ -100,7 +106,7 @@ public class PlayerController : MonoBehaviour
         float z = Mathf.Cos(_xRotation * Mathf.Deg2Rad) * _cameraDistance;
 
         Camera.main.transform.position = transform.position + transform.TransformVector(0f, y, -z);
-        Camera.main.transform.LookAt(transform.position + new Vector3(0f, _controller.height, 0f));
+        Camera.main.transform.LookAt(transform.position + new Vector3(0f, _controller.height / 2, 0f));
 
     }
 
@@ -111,7 +117,6 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-
 
         //플레이어 상태 변화
         switch (_state)
@@ -124,6 +129,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Run:
                 UpdateRun();
+                break;
+            case PlayerState.Interact:
+                UpdateInteract();
                 break;
         }
     }
