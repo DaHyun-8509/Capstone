@@ -13,6 +13,15 @@ public class NPCDialog : MonoBehaviour
     private Transform avatar;
     private GameObject uiText;
 
+    void Update()
+    {
+        // ESC Escape
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Recover();
+        }
+    }
+
     void Awake()
     {
         uiText = GameObject.Find("UI_InteractionText");
