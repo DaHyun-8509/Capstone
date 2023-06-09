@@ -64,8 +64,11 @@ public class CropPicker : MonoBehaviour
         if (currentCrop != null)
         {
             GameObject crop = currentCrop;
+            GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
 
             yield return new WaitForSeconds(1f);
+
+            GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
 
             //작물 비활성화
             crop.GetComponent<PickableCrop>().ClearCrop();
