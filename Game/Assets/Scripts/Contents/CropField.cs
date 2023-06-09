@@ -5,33 +5,35 @@ using UnityEngine;
 
 public class CropField : MonoBehaviour
 {
-    public float generateTime = 15f;
+    [SerializeField]
+    private float generateTime = 15f;
 
     private GameObject crop = null;
     private GameObject lv1 = null;
     private GameObject lv2 = null;
     private GameObject lv3 = null;
 
+    private FieldState state;
+    public FieldState State { get { return state; } set { state = value; } }
+
     public GameObject Crop { get { return crop; } set { crop = value; } }
 
-
-    private bool isGrown;
-    public bool IsGrown
+    public enum FieldState
     {
-        get { return isGrown; }
-        set { isGrown = value; }
+        Empty,
+        Growing,
+        Grown
     }
+
 
     private void Start()
     {
-        isGrown = false;
+        state = FieldState.Empty;
     }
 
     public void Plant(string name)
     {
-       
-
-
+ 
         GameObject prefab = Resources.Load<GameObject>(name);
         crop = GameObject.Instantiate(prefab);
         crop.transform.SetParent(transform);
@@ -50,6 +52,7 @@ public class CropField : MonoBehaviour
                 lv3 = child.gameObject;
         }
 
+        state = FieldState.Growing;
         lv2.SetActive(false);
         lv3.SetActive(false);
     }
@@ -73,7 +76,7 @@ public class CropField : MonoBehaviour
         lv2.SetActive(false);
         lv3.SetActive(true);
 
-        isGrown = true;
+        state = FieldState.Grown;
     }
 
 }
