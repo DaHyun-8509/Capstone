@@ -45,6 +45,7 @@ public class Farmer : MonoBehaviour
                     else if (currentCropField.GetComponent<CropField>().Crop == null)
                     {
                         //UI보여주기 
+                        Managers.UI.DisableInteractText();
                         Managers.UI.EnableFarmingUI();
 
                         //작물 고르고 심기
@@ -150,7 +151,8 @@ public class Farmer : MonoBehaviour
                 isWaitingForSelecting = false;
             }
         }
-        Managers.UI.DisableInteractText();
+        
+        Managers.UI.DisableFarmingUI();
 
     }
 }
