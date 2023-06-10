@@ -24,6 +24,15 @@ namespace OpenAI
             button.onClick.AddListener(SendReply);
         }
 
+        void Update()
+        {
+            // Enter≈∞ µø¿€
+            if (Input.GetKeyDown(KeyCode.Return) && inputField.GetComponent<InputField>().text.Length > 0)
+            {
+                SendReply();
+            }
+        }
+
         private void AppendMessage(ChatMessage message)
         {
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
