@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UIElements;
 using UnityEngineInternal;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,11 +17,16 @@ public class PlayerController : MonoBehaviour
 
     //회전
     public float _turnSpeed = 10.0f;
+    public float _cameraMoveSpeed = 2f;
     public float _maxUpAngle = 80f;
     public float _maxDownAngle = 30f;
     private float _xRotation = 0f;
     private float _yRotation = 0f;
-    private float _cameraDistance = 6f;
+
+    public float _offset = 0.1f;
+    public float _minDistance = 2f;
+    public float _defaultCameraDistance = 6f;
+
 
     public enum PlayerState
     {
@@ -89,6 +95,26 @@ public class PlayerController : MonoBehaviour
 
     void Rotate()//마우스 이동에 따른 시야 회전
     {
+        //플레이어와 카메라 사이에 벽이 있는지 판단하여 거리 조절
+        float cameraDistance;
+
+        Vector3 lookAtPosition = transform.position + new Vector3(0f, _controller.height * 2 / 3, 0f);
+        Vector3 cameraPos = Camera.main.transform.position;
+        Vector3 rayOrigin = lookAtPosition + (cameraPos - lookAtPosition).normalized * _defaultCameraDistance;
+        float rayDistance = Vector3.Distance(rayOrigin, lookAtPosition) - 0.5f;
+
+
+        RaycastHit hit;
+        if (Physics.Raycast(rayOrigin, (lookAtPosition - rayOrigin).normalized, out hit, rayDistance))
+        {
+            cameraDistance = Mathf.Max(Vector3.Distance(hit.point, lookAtPosition) - _offset, 0f);
+        }
+        else
+        {
+            cameraDistance = _defaultCameraDistance;
+        }
+
+        //마우스 이동에 따른 카메라 회전, 이동
         float mouseX = Input.GetAxis("Mouse X") * _turnSpeed;
         float mouseY = Input.GetAxis("Mouse Y") * _turnSpeed;
 
@@ -102,12 +128,14 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = yRotation;
         Camera.main.transform.localRotation = xRotation * yRotation;
 
-        float y = Mathf.Sin(_xRotation * Mathf.Deg2Rad) * _cameraDistance;
-        float z = Mathf.Cos(_xRotation * Mathf.Deg2Rad) * _cameraDistance;
+        float y = Mathf.Sin(_xRotation * Mathf.Deg2Rad) * cameraDistance;
+        float z = Mathf.Cos(_xRotation * Mathf.Deg2Rad) * cameraDistance;
 
-        Camera.main.transform.position = transform.position + transform.TransformVector(0f, y, -z);
-        Camera.main.transform.LookAt(transform.position + new Vector3(0f, _controller.height / 2, 0f));
-
+        Vector3 targetPosition = transform.position + transform.TransformVector(0f, y, -z);
+        Vector3 currentPosition = Camera.main.transform.position;
+        Vector3 newPosition = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * _cameraMoveSpeed);
+        Camera.main.transform.position = newPosition;
+        Camera.main.transform.LookAt(lookAtPosition);
     }
 
 
@@ -115,6 +143,7 @@ public class PlayerController : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
     }
+
     void Update()
     {
 

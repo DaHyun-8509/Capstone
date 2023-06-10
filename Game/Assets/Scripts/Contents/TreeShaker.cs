@@ -5,13 +5,8 @@ using UnityEngine;
 
 public class TreeShaker : MonoBehaviour
 {
-    private GameObject uiText; //흔들기 텍스트를 보여줄 오브젝트
     private GameObject currentCrop = null; //현재 트리거에 잡힌 나무
 
-    void Awake()
-    {
-        uiText = GameObject.Find("UI_InteractionText");
-    }
 
     void Update() //매 프레임마다
     {
@@ -21,7 +16,7 @@ public class TreeShaker : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E))
             {
                 //텍스트 비활성화
-                uiText.gameObject.SetActive(false);
+                Managers.UI.DisableInteractText();
 
                 //나무 흔들기
                 StartCoroutine(ShakeTree());
@@ -40,8 +35,8 @@ public class TreeShaker : MonoBehaviour
             if (currentCrop.GetComponent<TreeField>().IsGrown)
             {
                 //텍스트 활성화
-                uiText.GetComponent<TextMeshProUGUI>().text = "흔들기[E]";
-                uiText.gameObject.SetActive(true);
+                Managers.UI.SetInteractText("흔들기[E]");
+                Managers.UI.EnableInteractText();
             }
         }
     }
@@ -51,7 +46,7 @@ public class TreeShaker : MonoBehaviour
         if (other.CompareTag("TreeTrigger"))
         {
             //텍스트 비활성화
-            uiText.gameObject.SetActive(false);
+            Managers.UI.DisableInteractText();
 
             //현재 잡힌 나무 null로 초기화
             currentCrop = null;

@@ -5,37 +5,61 @@ using UnityEngine;
 
 public class CropField : MonoBehaviour
 {
-    public float generateTime = 15f;
+    private float generateTime;
 
     private GameObject crop = null;
     private GameObject lv1 = null;
     private GameObject lv2 = null;
     private GameObject lv3 = null;
 
+    private FieldState state;
+    public FieldState State { get { return state; } set { state = value; } }
+
     public GameObject Crop { get { return crop; } set { crop = value; } }
 
-
-    private bool isGrown;
-    public bool IsGrown
+    public enum FieldState
     {
-        get { return isGrown; }
-        set { isGrown = value; }
+        Empty,
+        Growing,
+        Grown
     }
+    public enum CropType
+    {
+        None = 0,
+        Carrot = 1,
+        Corn = 2,
+        Cabbage = 3
+    }
+
 
     private void Start()
     {
-        isGrown = false;
+        state = FieldState.Empty;
     }
 
-    public void Plant(string name)
+    public void Plant(CropType type)
     {
-       
-
+        string name = "";
+        switch (type)
+        {
+            case CropType.Carrot:
+                name = "Prefabs/Farm/Carrot";
+                break;
+            case CropType.Cabbage:
+                name = "Prefabs/Farm/Cabbage";
+                break;
+            case CropType.Corn:
+                name = "Prefabs/Farm/Corn";
+                break;
+            default:
+                break;
+        }
 
         GameObject prefab = Resources.Load<GameObject>(name);
         crop = GameObject.Instantiate(prefab);
         crop.transform.SetParent(transform);
         crop.transform.localPosition = Vector3.zero;
+        generateTime = crop.GetComponent<Crop>().generateTime;
 
         //Lv별 작물 찾아두기 
         Transform[] children = crop.GetComponentsInChildren<Transform>();
@@ -50,8 +74,11 @@ public class CropField : MonoBehaviour
                 lv3 = child.gameObject;
         }
 
+        state = FieldState.Growing;
         lv2.SetActive(false);
         lv3.SetActive(false);
+
+        StartCoroutine(GrowToLv2AfterDelay());
     }
 
     public IEnumerator GrowToLv2AfterDelay()
@@ -73,7 +100,7 @@ public class CropField : MonoBehaviour
         lv2.SetActive(false);
         lv3.SetActive(true);
 
-        isGrown = true;
+        state = FieldState.Grown;
     }
 
 }
