@@ -8,12 +8,10 @@ using UnityEngine;
 
 public class CropPicker : MonoBehaviour
 {
-    private GameObject uiText; //줍기 텍스트를 보여줄 오브젝트
     private GameObject currentCrop = null; //현재 트리거에 잡힌 작물
 
     void Awake()
     {
-        uiText = GameObject.Find("UI_InteractionText");
     }
 
     void Update() //매 프레임마다
@@ -22,7 +20,7 @@ public class CropPicker : MonoBehaviour
         if (currentCrop != null && Input.GetKeyDown(KeyCode.E))
         {
             //텍스트 비활성화
-            uiText.gameObject.SetActive(false);
+            Managers.UI.DisableInteractText();
 
             //작물 수확
             Animator anim = GetComponent<Animator>();
@@ -42,8 +40,8 @@ public class CropPicker : MonoBehaviour
             currentCrop = other.gameObject.transform.parent.gameObject;
 
             //텍스트 활성화
-            uiText.GetComponent<TextMeshProUGUI>().text = "줍기[E]";
-            uiText.gameObject.SetActive(true);
+            Managers.UI.SetInteractText("줍기[E]");
+            Managers.UI.EnableInteractText();
         }
     }
 
@@ -52,7 +50,7 @@ public class CropPicker : MonoBehaviour
         if (other.CompareTag("PickableCropTrigger"))
         {
             //텍스트 비활성화
-            uiText.gameObject.SetActive(false);
+            Managers.UI.DisableInteractText();
 
             //현재 잡힌 작물 null로 초기화
             currentCrop = null;

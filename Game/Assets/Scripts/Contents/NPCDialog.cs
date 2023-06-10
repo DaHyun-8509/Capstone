@@ -11,7 +11,6 @@ public class NPCDialog : MonoBehaviour
     [SerializeField] private Transform standingPoint;
 
     private Transform avatar;
-    private GameObject uiText;
 
     void Update()
     {
@@ -22,22 +21,18 @@ public class NPCDialog : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        uiText = GameObject.Find("UI_InteractionText");
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        uiText.GetComponent<TextMeshProUGUI>().text = "대화하기[E]";
-        uiText.gameObject.SetActive(true);
+        Managers.UI.SetInteractText("대화하기[E]");
+        Managers.UI.EnableInteractText();
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
         {
-            uiText.gameObject.SetActive(false);
+            Managers.UI.DisableInteractText();
 
             avatar = other.transform;
 
@@ -65,7 +60,7 @@ public class NPCDialog : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            uiText.gameObject.SetActive(false);
+            Managers.UI.DisableInteractText();
         }
     }
 

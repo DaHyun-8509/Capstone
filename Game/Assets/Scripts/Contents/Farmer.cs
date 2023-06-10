@@ -9,19 +9,11 @@ using UnityEngine.UI;
 
 public class Farmer : MonoBehaviour
 {
-    private GameObject uiText; //수확하기 텍스트를 보여줄 오브젝트
-    private GameObject farmingUI;
     private GameObject currentCropField = null; //현재 트리거에 잡힌 작물 영역
 
     private bool isWaitingForSelecting = false;
 
 
-    void Awake()
-    {
-        uiText = GameObject.Find("UI_InteractionText");
-        farmingUI = GameObject.Find("UI_Farming");
-        farmingUI.SetActive(false);
-    }
 
     void Update() //매 프레임마다
     {
@@ -34,7 +26,7 @@ public class Farmer : MonoBehaviour
             {
                 GameObject crop = currentCropField;
                 //텍스트 비활성화
-                uiText.gameObject.SetActive(false);
+                Managers.UI.DisableFarmingUI();
 
                 if (crop != null)
                 {
@@ -53,7 +45,7 @@ public class Farmer : MonoBehaviour
                     else if (currentCropField.GetComponent<CropField>().Crop == null)
                     {
                         //UI보여주기 
-                        farmingUI.SetActive(true);
+                        Managers.UI.EnableFarmingUI();
 
                         //작물 고르고 심기
                         StartCoroutine(WaitforSelecting());
@@ -75,14 +67,14 @@ public class Farmer : MonoBehaviour
             //작물이 자란 상태면
             if (currentCropField.GetComponent<CropField>().State == CropField.FieldState.Grown)
             {
-                uiText.GetComponent<TextMeshProUGUI>().text = "수확하기[E]";
-                uiText.gameObject.SetActive(true);
+                Managers.UI.SetInteractText("수확하기[E]");
+                Managers.UI.EnableInteractText();
             }
             //작물이 없으면
             else if (currentCropField.GetComponent<CropField>().Crop == null)
             {
-                uiText.GetComponent<TextMeshProUGUI>().text = "심기[E]";
-                uiText.gameObject.SetActive(true);
+                Managers.UI.SetInteractText("심기[E]");
+                Managers.UI.EnableInteractText();
             }
         }
     }
@@ -92,7 +84,7 @@ public class Farmer : MonoBehaviour
         if (other.CompareTag("CropTrigger"))
         {
             //텍스트 비활성화
-            uiText.gameObject.SetActive(false);
+            Managers.UI.DisableInteractText();
 
             //현재 잡힌 작물 null로 초기화
             currentCropField = null;
@@ -158,6 +150,7 @@ public class Farmer : MonoBehaviour
                 isWaitingForSelecting = false;
             }
         }
-        farmingUI.SetActive(false);
+        Managers.UI.DisableInteractText();
+
     }
 }

@@ -36,6 +36,8 @@ public class Managers : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        UI.Start();
     }
 
     void Update()
