@@ -28,7 +28,15 @@ public class UIManager
             famringUI.SetActive(false);
         }
     }
+    public void EnableCanvas()
+    {
+        canvas.SetActive(true);
+    }
+    public void DisableCanvas()
+    {
+        canvas.SetActive(false);
 
+    }
     public void EnableInteractText()
     {
         interactText.SetActive(true);

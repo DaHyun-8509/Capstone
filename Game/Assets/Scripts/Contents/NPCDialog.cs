@@ -50,6 +50,7 @@ public class NPCDialog : MonoBehaviour
             // disable main cam, enable dialog cam
             mainCamera.SetActive(false);
             toActivate.SetActive(true);
+            Managers.UI.DisableCanvas();
 
             // gpt chat ui
 
@@ -58,6 +59,8 @@ public class NPCDialog : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
 
             toActivate.GetComponentInChildren<ChatGPT>().NPCType = npcType;
+
+
         }
     }
 
@@ -77,6 +80,8 @@ public class NPCDialog : MonoBehaviour
 
         mainCamera.SetActive(true);
         toActivate.SetActive(false);
+        Managers.UI.EnableCanvas();
+
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
