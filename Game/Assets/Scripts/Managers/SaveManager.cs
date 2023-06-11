@@ -9,6 +9,7 @@ public static class SaveManager
 {
     public static void Save(SaveData data)
     {
+        Debug.Log("저장완료");
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Path.Combine(Application.dataPath,"SaveG.bin");
         FileStream stream = File.Create(path);
@@ -22,6 +23,7 @@ public static class SaveManager
 
         try
         {
+        Debug.Log("불러오기성공");
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Path.Combine(Application.dataPath, "SaveG.bin");
         FileStream stream = File.OpenRead(path);

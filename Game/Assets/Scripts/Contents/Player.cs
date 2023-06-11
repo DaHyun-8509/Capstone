@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Load()
+    public void LoadPlayer()
     {
         SaveData save = SaveManager.Load();
         transform.position = new Vector3(save.x, save.y, save.z);

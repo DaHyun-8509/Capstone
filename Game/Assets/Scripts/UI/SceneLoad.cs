@@ -36,7 +36,11 @@ public class SceneLoad : MonoBehaviour
             if (loadType == 0)
                 Debug.Log("새게임");
             else if (loadType == 1)
+            {
                 Debug.Log("이어하기");
+                SaveData save = SaveManager.Load();
+            }
+              
 
 
 
