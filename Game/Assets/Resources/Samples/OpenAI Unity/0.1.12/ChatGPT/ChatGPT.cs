@@ -17,7 +17,11 @@ namespace OpenAI
         private OpenAIApi openai = new OpenAIApi();
 
         private List<ChatMessage> messages = new List<ChatMessage>();
-        private string prompt = "Act as a random stranger in a chat room and reply to the questions. Don't break character. Don't ever mention that you are an AI model.";
+        private string prompt = "아래 컨셉에 맞게 대화해줘" +
+            "{이름:윌리엄,직업:농부,성별:남자,나이:23,외모: 수수한 외모,성격:온화함,특징1:나를 환대하는 이웃집 농부이다.,특징2:친절하지만 잘못된 행동을 굉장히 싫어한다}" +
+            "Maximum length = 25"+"지시사항(컨셉)은 따라하지 말고 말을 이어가줘";
+
+
 
         private void Start()
         {

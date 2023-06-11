@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueGame()
     {
-        Debug.Log("ContinueGame");
+      Debug.Log("ContinueGame");
       SceneLoad.LoadSceneHandle("Main", 1);
 
     }
