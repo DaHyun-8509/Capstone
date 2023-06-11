@@ -1,3 +1,4 @@
+using OpenAI;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,10 @@ public class NPCDialog : MonoBehaviour
     [SerializeField] private GameObject toActivate;
 
     [SerializeField] private Transform standingPoint;
+    [SerializeField] private CharacterType npcType;
 
     private Transform avatar;
+    
 
     void Update()
     {
@@ -53,6 +56,8 @@ public class NPCDialog : MonoBehaviour
             // display cursor
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+
+            toActivate.GetComponentInChildren<ChatGPT>().NPCType = npcType;
         }
     }
 
