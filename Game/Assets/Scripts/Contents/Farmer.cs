@@ -14,48 +14,71 @@ public class Farmer : MonoBehaviour
     private bool isWaitingForSelecting = false;
 
 
+    [SerializeField]
+    private Slider stamina;
+
+    private float maxSTM = 100;
+    private float curSTM = 100;
+
+    void Start()
+    {
+        stamina.value = (float)curSTM / (float)maxSTM;    
+    }
 
     void Update() //매 프레임마다
     {
-
         //현재 트리거에 잡힌 작물 있고 작물이 자라는 중이 아니라면
         if (currentCropField != null && currentCropField.GetComponent<CropField>().State != CropField.FieldState.Growing)
         {
             //E키 누르면
-            if(Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                GameObject crop = currentCropField;
-                //텍스트 비활성화
-                Managers.UI.DisableFarmingUI();
+               
+                  GameObject crop = currentCropField;
+                  //텍스트 비활성화
+                  Managers.UI.DisableFarmingUI();
 
-                if (crop != null)
-                {
-                    //플레이어 상태 변경
-                    GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
+                  if (crop != null)
+                  {
+                      //플레이어 상태 변경
+                      GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
 
-                   
-                    //자란 상태면 작물 수확
-                    if (currentCropField.GetComponent<CropField>().State == CropField.FieldState.Grown)
-                    {
-                        Animator anim = GetComponent<Animator>();
-                        anim.SetTrigger("pull_plant");
-                        StartCoroutine(HarvestCrop());
-                    }
-                    //작물이 없으면 심기
-                    else if (currentCropField.GetComponent<CropField>().Crop == null)
-                    {
-                        //UI보여주기 
-                        Managers.UI.DisableInteractText();
-                        Managers.UI.EnableFarmingUI();
 
-                        //작물 고르고 심기
-                        StartCoroutine(WaitforSelecting());
-                        GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
-                    }
-                }
+                      //자란 상태면 작물 수확
+                      if (currentCropField.GetComponent<CropField>().State == CropField.FieldState.Grown)
+                      {
+                          // curSTM -= 5;
+                          Animator anim = GetComponent<Animator>();
+                          anim.SetTrigger("pull_plant");
+                          StartCoroutine(HarvestCrop());
+
+                      }
+                      //작물이 없으면 심기
+                      else if (currentCropField.GetComponent<CropField>().Crop == null)
+                      {
+                          //    curSTM -= 10;
+                          //UI보여주기 
+                          Managers.UI.DisableInteractText();
+                          Managers.UI.EnableFarmingUI();
+
+                          //작물 고르고 심기
+                          StartCoroutine(WaitforSelecting());
+                          GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+
+                      }
+                  }
+                
             }
-            
+           
+
         }
+        HandleSTM();
+    }
+
+    private void HandleSTM()
+    {
+        //stamina.value = Mathf.Lerp(stamina.value, (float)curSTM / (float)maxSTM, Time.deltaTime * 10);
+        stamina.value = (float)curSTM / (float)maxSTM;
     }
 
     private void OnTriggerEnter(Collider other) //트리거 잡힐 때

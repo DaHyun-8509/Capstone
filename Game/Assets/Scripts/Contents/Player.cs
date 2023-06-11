@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Saveplayer()
     {
-        
+        SaveData save = new SaveData();
+        save.x = transform.position.x;
+        save.y = transform.position.y;
+        save.z = transform.position.z;
+
+        SaveManager.Save(save);
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Load()
     {
-        
+        SaveData save = SaveManager.Load();
+        transform.position = new Vector3(save.x, save.y, save.z);
     }
 }
