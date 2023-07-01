@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class AIMove_William : MonoBehaviour
 {
@@ -27,14 +28,15 @@ public class AIMove_William : MonoBehaviour
             onFarm = true;
         }
 
-        // 상태에 따라 애니메이션 전환
         if (onFarm == true)
         {
-            // 목적지에 도달한 경우 Idle 상태로 전환
-            anim.SetTrigger("pick_fruit");
+            //anim.SetTrigger("pick_fruit");
+            Vector3 targetDirection = new Vector3(0f, 0f, 1f); // z방향 벡터
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10* Time.deltaTime);
             anim.SetFloat("move_speed", 0);
+            anim.SetTrigger("sit");
         }
+    
     }
-
-
 }
