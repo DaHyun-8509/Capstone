@@ -9,9 +9,6 @@ public class TimeManager
     float dayDuration = 600.0f;
 
     int hour = 0;
-    GameObject timeUI;
-
- 
 
     public void Update()
     {
@@ -24,8 +21,6 @@ public class TimeManager
             timeElapsed = 0;
             hour = 0;
         }
-        
-
     }
 
     public int GetHour() { return  hour; }

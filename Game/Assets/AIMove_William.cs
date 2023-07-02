@@ -9,38 +9,99 @@ using TMPro;
 public class AIMove_William : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
-    public Transform farm;
-    bool onFarm = false;
+    public Transform bench;
+    public Transform workplace1;
     Animator anim;
+    William_Location location = William_Location.Home;
+    bool ismoving = false;
+    bool onDestination = false;
+
+    enum William_Location
+    {
+        Home,
+        Workplace1,
+        Workplace2,
+        Workplace3,
+        Bench,
+        Restaurant
+    }
 
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.destination = farm.position;
         anim = GetComponent<Animator>();
-        anim.SetFloat("move_speed", 2);
-        
     }
 
     private void Update()
     {
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        if(!ismoving)
         {
-            navMeshAgent.isStopped = true;
-            navMeshAgent.SetDestination(transform.position);
-            onFarm = true;
+            //정해진 시간에 목적지 할당
+            switch (Managers.Time.GetHour())
+            {
+                case 1:
+                    {
+                        MoveToLocation(bench.position);
+                        location = William_Location.Bench;
+                    }
+                    break;
+                case 3:
+                    {
+                        MoveToLocation(workplace1.position);
+                        location = William_Location.Workplace1;
+                    }
+                    break;
+                case 10:
+                    break;
+                case 14:
+                    break;
+                default:
+                    break;
+            }
         }
-
-        if (onFarm == true)
+        
+        //도착했을 때 
+        if(ismoving&& navMeshAgent.hasPath && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            //anim.SetTrigger("pick_fruit");
-            Vector3 targetDirection = new Vector3(0f, 0f, 1f); // z방향 벡터
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10* Time.deltaTime);
-            anim.SetFloat("move_speed", 0);
-            anim.SetTrigger("sit");
+            ismoving = false;
+            onDestination = true;
+            switch (location)
+            {
+                case William_Location.Home:
+                    break;
+                case William_Location.Bench:
+                    SitOnTheBench();
+                    break;
+                case William_Location.Workplace1:
+                    Work();
+                    break;
+                case William_Location.Workplace2:
+                    Work();
+                    break;
+                default:
+                    break;
+            }
         }
+    }
 
-    
+    private void MoveToLocation(Vector3 location )
+    {
+        navMeshAgent.destination = location;
+        anim.SetFloat("move_speed", 2);
+        ismoving = true;
+    }
+
+    private void SitOnTheBench()
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+        anim.SetFloat("move_speed", 0);
+        anim.SetTrigger("sit");
+    }
+
+    private void Work()
+    {
+        anim.SetFloat("move_speed", 0);
+        anim.SetTrigger("pick_fruit");
     }
 }

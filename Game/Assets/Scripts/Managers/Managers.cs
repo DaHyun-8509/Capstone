@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Managers : MonoBehaviour
 {
     static Managers s_instance;
-    static Managers Instance { get { return s_instance; } }
+    static Managers Instance { get { Init(); return s_instance; } }
 
     DataManager _data  = new DataManager();
     FieldManager _field = new FieldManager();
@@ -47,5 +47,18 @@ public class Managers : MonoBehaviour
         Time.Update();
     }
 
-   
+    static void Init()
+    {
+        if(s_instance == null)
+        {
+            GameObject go = GameObject.Find("@Managers"); 
+            if(go == null) //@Managers 오브젝트가 없으면 추가
+            {
+                go = new GameObject { name = "@Managers" };
+                go.AddComponent<Managers>();
+            }
+            DontDestroyOnLoad(go);  //사라지지 않게 함
+            s_instance = go.GetComponent<Managers>();   
+        }
+    }
 }
