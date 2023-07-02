@@ -11,6 +11,7 @@ public class UIManager
     GameObject canvas;
     GameObject interactText;
     GameObject famringUI;
+    GameObject timeText;
 
     public void Start()
     {
@@ -27,7 +28,18 @@ public class UIManager
             famringUI = GameObject.Instantiate(prefab, canvas.transform);
             famringUI.SetActive(false);
         }
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_Time");
+            timeText = GameObject.Instantiate(prefab, canvas.transform);
+            timeText.SetActive(true);
+        }
     }
+
+    public void Update()
+    {
+        timeText.GetComponent<TextMeshProUGUI>().SetText(Managers.Time.GetHour().ToString() + "½Ã");
+    }
+
     public void EnableCanvas()
     {
         canvas.SetActive(true);

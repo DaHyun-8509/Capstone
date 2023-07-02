@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TimeManager
 {
-    // Start is called before the first frame update
-    void Start()
+    float timeElapsed = 0.0f;
+    float dayDuration = 600.0f;
+
+    int hour = 0;
+    GameObject timeUI;
+
+ 
+
+    public void Update()
     {
+
+        timeElapsed += Time.deltaTime;
+        hour = (int)(timeElapsed * 24/ dayDuration);
+
+        if(timeElapsed > dayDuration)
+        {
+            timeElapsed = 0;
+            hour = 0;
+        }
         
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int GetHour() { return  hour; }
 }

@@ -27,8 +27,12 @@ public class NPCDialog : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Managers.UI.SetInteractText("대화하기[E]");
-        Managers.UI.EnableInteractText();
+        if (other.CompareTag("Player"))
+         {
+            Managers.UI.SetInteractText("대화하기[E]");
+            Managers.UI.EnableInteractText();
+        }
+       
     }
 
     private void OnTriggerStay(Collider other)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
+using TMPro;
+
 
 public class AIMove_William : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class AIMove_William : MonoBehaviour
         navMeshAgent.destination = farm.position;
         anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", 2);
+        
     }
 
     private void Update()
@@ -37,6 +40,7 @@ public class AIMove_William : MonoBehaviour
             anim.SetFloat("move_speed", 0);
             anim.SetTrigger("sit");
         }
+
     
     }
 }
