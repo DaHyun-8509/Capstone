@@ -8,6 +8,7 @@ TagManager:
   - TreeTrigger
   - PickableCropTrigger
   - Sittable
+  - WilliamTrigger
   layers:
   - Default
   - TransparentFX
