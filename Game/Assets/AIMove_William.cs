@@ -41,31 +41,31 @@ public class AIMove_William : MonoBehaviour
             //정해진 시간에 목적지 할당
             switch (Managers.Time.GetHour())
             {
-                case 7:
+                case 0:
                     {
                         MoveToLocation(workplace[0].position);
                         location = William_Location.Workplace;
                     }
                     break;
-                case 8:
+                case 1:
                     {
                         MoveToLocation(workplace[1].position);
                         location = William_Location.Workplace;
                     }
                     break;
-                case 9:
+                case 2:
                     {
                         MoveToLocation(workplace[2].position);
                         location = William_Location.Workplace;
                     }
                     break;
-                case 10:
+                case 4:
                     {
                         MoveToLocation(workplace[3].position);
                         location = William_Location.Workplace;
                     }
                     break;
-                case 12:
+                case 3:
                     {
                         MoveToLocation(bench.position);
                         location = William_Location.Bench;
@@ -146,6 +146,7 @@ public class AIMove_William : MonoBehaviour
     {
         anim.SetFloat("move_speed", 0);
         anim.SetTrigger("pick_fruit");
+        anim.SetTrigger("stop");
     }
 
     private void SitInRestaurant()
