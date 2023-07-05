@@ -13,20 +13,26 @@ public class Farmer : MonoBehaviour
 
     private bool isWaitingForSelecting = false;
 
+    public int maxPirodo = 100;
+    public int currentPirodo;
 
-    [SerializeField]
-    private Slider stamina;
-
-    private float maxSTM = 100;
-    private float curSTM = 100;
+     public PirodoBar pirodoBar;
 
     void Start()
     {
-        stamina.value = (float)curSTM / (float)maxSTM;    
+        currentPirodo = maxPirodo;
+        pirodoBar.SetMaxpirodo(maxPirodo);
     }
 
     void Update() //매 프레임마다
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakePirodo(5);
+
+        }
+
         //현재 트리거에 잡힌 작물 있고 작물이 자라는 중이 아니라면
         if (currentCropField != null && currentCropField.GetComponent<CropField>().State != CropField.FieldState.Growing)
         {
@@ -44,41 +50,41 @@ public class Farmer : MonoBehaviour
                       GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
 
 
-                      //자란 상태면 작물 수확
-                      if (currentCropField.GetComponent<CropField>().State == CropField.FieldState.Grown)
-                      {
-                          // curSTM -= 5;
-                          Animator anim = GetComponent<Animator>();
-                          anim.SetTrigger("pull_plant");
-                          StartCoroutine(HarvestCrop());
+                    //자란 상태면 작물 수확
+                    if (currentCropField.GetComponent<CropField>().State == CropField.FieldState.Grown)
+                    {
+                        
+                        Animator anim = GetComponent<Animator>();
+                        anim.SetTrigger("pull_plant");
+                        StartCoroutine(HarvestCrop());
+                        
 
-                      }
-                      //작물이 없으면 심기
-                      else if (currentCropField.GetComponent<CropField>().Crop == null)
-                      {
-                          //    curSTM -= 10;
-                          //UI보여주기 
-                          Managers.UI.DisableInteractText();
-                          Managers.UI.EnableFarmingUI();
+                    }
+                    //작물이 없으면 심기
+                    else if (currentCropField.GetComponent<CropField>().Crop == null)
+                    {
+                        
+                        //UI보여주기 
+                        Managers.UI.DisableInteractText();
+                        Managers.UI.EnableFarmingUI();
 
-                          //작물 고르고 심기
-                          StartCoroutine(WaitforSelecting());
-                          GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+                        
+                        //작물 고르고 심기
+                        StartCoroutine(WaitforSelecting());
+                        GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+                        
 
-                      }
+                    }
                   }
                 
             }
-           
 
         }
-        HandleSTM();
     }
-
-    private void HandleSTM()
+    void TakePirodo(int pirodo)
     {
-        //stamina.value = Mathf.Lerp(stamina.value, (float)curSTM / (float)maxSTM, Time.deltaTime * 10);
-        stamina.value = (float)curSTM / (float)maxSTM;
+        currentPirodo -= pirodo;
+        pirodoBar.Setpirodo(currentPirodo);
     }
 
     private void OnTriggerEnter(Collider other) //트리거 잡힐 때
@@ -142,6 +148,8 @@ public class Farmer : MonoBehaviour
             }
 
             GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+
+            TakePirodo(5);
         }
     }
 
@@ -168,6 +176,7 @@ public class Farmer : MonoBehaviour
             //작물 선택되었으면
             if(type != CropField.CropType.None)
             {
+                TakePirodo(10);
                 Animator anim = GetComponent<Animator>();
                 anim.SetTrigger("pull_plant");
                 StartCoroutine(PlantCrop(type));
