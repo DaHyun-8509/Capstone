@@ -4,7 +4,10 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 21300000
-    second: Arrows_0
+    second: Previous
+  - first:
+      213: 21300002
+    second: Next
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -132,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Arrows_0
+      name: Previous
       rect:
         serializedVersion: 2
-        x: 81
-        y: 83
-        width: 89
-        height: 89
+        x: 4
+        y: 32
+        width: 112
+        height: 188
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,8 +149,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad6bd253fa257a1f0800000000000000
+      spriteID: 0031568e76a7e22498f4dffc39323c1b
       internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Next
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 32
+        width: 116
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20bcbac7085775a459fa0ee28f3ab2dd
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -163,7 +187,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Arrows_0: 21300000
+      Next: 21300002
+      Previous: 21300000
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
