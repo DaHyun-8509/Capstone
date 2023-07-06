@@ -83,8 +83,8 @@ public class Farmer : MonoBehaviour
     }
     void TakePirodo(int pirodo)
     {
-        currentPirodo -= pirodo;
-        pirodoBar.Setpirodo(currentPirodo);
+       // currentPirodo -= pirodo;
+       // pirodoBar.Setpirodo(currentPirodo);
     }
 
     private void OnTriggerEnter(Collider other) //트리거 잡힐 때
