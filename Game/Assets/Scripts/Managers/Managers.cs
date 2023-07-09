@@ -43,6 +43,8 @@ public class Managers : MonoBehaviour
     void Update()
     {
         Input.OnUpdate();
+        Time.Update();
+        UI.Update();
     }
 
     static void Init()
