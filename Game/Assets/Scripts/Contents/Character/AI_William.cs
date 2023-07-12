@@ -22,9 +22,14 @@ public class AI_William : MonoBehaviour
         Bench
     }
 
+    //Transforms
     public Transform homePos;
     public Transform benchPos;
     public Transform[] workPoses;
+
+    //Times
+    public int TimeToGoToWork;
+    public int TimeToGoBackHome;
 
     Animator anim;
     NavMeshAgent agent;
@@ -32,7 +37,7 @@ public class AI_William : MonoBehaviour
     Location location = Location.Home;
 
     bool finishedAct = false;
-    public int targetPlayCount = 3;
+    int nowIndex = 0;
 
 private void Start()
     {   
@@ -44,14 +49,20 @@ private void Start()
     {
         if (agent == null) return;
 
-        //아무것도 안하고있고 1시이면 
-        if(state == State.None && Managers.Time.GetHour() == 1)
+        //아무것도 안하고있고 TimeToGoToWork시이면 
+        if (state == State.None && Managers.Time.GetHour() == TimeToGoToWork)
         {
             //이동한다. 
-            state = State.Move;
+            agent.destination = workPoses[nowIndex].position;
+            MoveToWork();
+        }
+
+        //일이 끝났고 TimeToGoBackHome시 이후면
+        if (state == State.Act && finishedAct && Managers.Time.GetHour() >= TimeToGoBackHome)
+        {
+            agent.destination = homePos.position;
+            state = State.None;
             anim.SetTrigger("walk");
-            agent.destination = workPoses[0].position;
-            location = Location.Work;
         }
 
         //Move 상태이고 목적지에 도달했으면
@@ -70,41 +81,53 @@ private void Start()
                 case Location.Bench:
                     SitOnBench();
                     break;
-
             }
         }
 
         //Act 상태이고 행동이 끝났으면 
         if(state == State.Act && finishedAct == true)
         {
-            agent.destination = workPoses[1].position;
-            location = Location.Work;
-            state = State.Move;
-            anim.SetTrigger("walk");
             //목적지를 랜덤하게 선택해 이동한다. 
+            int idx;
+            while (true)
+            {
+                idx = Random.Range(0, workPoses.Length);
+                if (idx != nowIndex) break;
+            }
+            nowIndex = idx;
+            
+            agent.destination = workPoses[nowIndex].position;
+
             //Move 상태로 바꾸고 위치를 지정한다
+            MoveToWork();
         }
+    }
+
+    void MoveToWork()
+    {
+        state = State.Move;
+        location = Location.Work;
+        anim.SetTrigger("walk");
+        finishedAct = false;
+        StopAllCoroutines();
     }
 
     void DoWork()
     {
-        StartCoroutine(PlayWorkAimCoroutime());
+        StartCoroutine(PlayWorkAimCoroutine());
     }
-
 
     void SitOnBench()
     {
         //의자에서 앞방향을 바라본다. 
         //앉는 애니메이션
     }
-
-
-    private IEnumerator PlayWorkAimCoroutime()
+    private IEnumerator PlayWorkAimCoroutine()
     {
         anim.SetTrigger("pull_plant");
-        yield return new WaitForSeconds(15f);
+        //15.5초 후 애니메이션을 멈춘다
+        yield return new WaitForSeconds(15.5f);
+        finishedAct = true;
         anim.SetTrigger("stop");
-        state = State.Move;
-        anim.SetTrigger("walk");
     }
 }
