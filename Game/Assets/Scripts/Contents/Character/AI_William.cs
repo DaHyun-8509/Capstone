@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
@@ -11,32 +12,27 @@ public class AI_William : MonoBehaviour
     enum State
     {
         None,
-        Idle,
         Move,
-        Work,
-        Sit
+        Act
     }
     enum Location
     {
         Home,
-        Work1,
-        Work2,
-        Work3,
-        Bench,
-        Restaurant
+        Work,
+        Bench
     }
 
     public Transform homePos;
-    public Transform workPos;
-    public Transform workPos2;
-    public Transform workPos3;
     public Transform benchPos;
-    public Transform restaurantPos;
+    public Transform[] workPoses;
 
     Animator anim;
     NavMeshAgent agent;
-    State state = State.Idle;
+    State state = State.None;
     Location location = Location.Home;
+
+    bool finishedAct = false;
+    public int targetPlayCount = 3;
 
 private void Start()
     {   
@@ -46,90 +42,69 @@ private void Start()
 
     private void Update()
     {
-        int time = Managers.Time.GetHour();
-        if (state != State.Move)
-        {
-            switch (time)
-            {
-                case 7: //일터로 이동
-                    MovetoDestination(workPos.position);
-                    location = Location.Work1;
-                    break;
-                case 9: //일터로 이동
-                    MovetoDestination(workPos2.position);
-                    location = Location.Work2;
-                    break;
-                case 12: //벤치로 이동
-                    MovetoDestination(benchPos.position);
-                    location = Location.Bench;
-                    break;
-                case 15://일터로 이동
-                    MovetoDestination(workPos3.position);
-                    location = Location.Work3;
-                    break;
-                case 17: //식당으로 이동
-                    MovetoDestination(restaurantPos.position);
-                    location = Location.Restaurant;
-                    break;
-                case 19: //집으로 이동
-                    MovetoDestination(homePos.position);
-                    location = Location.Home;
-                    break;
-                default:
-                    break;
-            }
-        }
-  
+        if (agent == null) return;
 
-        //이동하여 도착했다면 
-        if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state == State.Move )
+        //아무것도 안하고있고 1시이면 
+        if(state == State.None && Managers.Time.GetHour() == 1)
         {
-            anim.SetFloat("move_speed", 0);
+            //이동한다. 
+            state = State.Move;
+            anim.SetTrigger("walk");
+            agent.destination = workPoses[0].position;
+            location = Location.Work;
+        }
+
+        //Move 상태이고 목적지에 도달했으면
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state==State.Move)
+        {
+            state = State.Act;
+            anim.SetTrigger("stop");
+
             switch (location)
             {
-                case Location.Work1:
-                    Work();
-                    break;
-                case Location.Work2:
-                    StartToWork();
-                    break;
-                case Location.Work3:
-                    StartToWork();
-                    break;
                 case Location.Home:
+                    break;
+                case Location.Work:
+                    DoWork();
                     break;
                 case Location.Bench:
                     SitOnBench();
                     break;
-                case Location.Restaurant:
-                    break;
+
             }
+        }
+
+        //Act 상태이고 행동이 끝났으면 
+        if(state == State.Act && finishedAct == true)
+        {
+            agent.destination = workPoses[1].position;
+            location = Location.Work;
+            state = State.Move;
+            anim.SetTrigger("walk");
+            //목적지를 랜덤하게 선택해 이동한다. 
+            //Move 상태로 바꾸고 위치를 지정한다
         }
     }
 
-    private void MovetoDestination(Vector3 dest)
+    void DoWork()
     {
-        
-        anim.SetFloat("move_speed", 2.0f);
-        agent.destination = dest;
-        state = State.Move;
+        StartCoroutine(PlayWorkAimCoroutime());
     }
-    private void StartToWork()
+
+
+    void SitOnBench()
     {
-        InvokeRepeating("Work", 2, 3);
-        state = State.Work;
-    }
-    private void SitOnBench()
-    {
+        //의자에서 앞방향을 바라본다. 
         //앉는 애니메이션
-        state = State.Sit;
     }
 
-   private void Work()
+
+    private IEnumerator PlayWorkAimCoroutime()
     {
-        anim.SetTrigger("pick_fruit");
-        state = State.Work;
+        anim.SetTrigger("pull_plant");
+        yield return new WaitForSeconds(15f);
+        anim.SetTrigger("stop");
+        state = State.Move;
+        anim.SetTrigger("walk");
     }
-
-
 }
