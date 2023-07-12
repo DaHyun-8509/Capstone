@@ -13,7 +13,10 @@ public class NPCDialog : MonoBehaviour
     [SerializeField] private CharacterType npcType;
 
     private Transform avatar;
-    
+    public Transform Avatar { get { return avatar; } }
+
+    private bool isTalking = false;
+    public bool Talking { get { return isTalking; } set { isTalking = value; } }
 
     void Update()
     {
@@ -39,8 +42,10 @@ public class NPCDialog : MonoBehaviour
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
         {
             Managers.UI.DisableInteractText();
+            Talking = true;
 
             avatar = other.transform;
+
 
             // disable player input
             avatar.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
@@ -85,7 +90,7 @@ public class NPCDialog : MonoBehaviour
         toActivate.SetActive(false);
         Managers.UI.EnableCanvas();
 
-
+        Talking = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }

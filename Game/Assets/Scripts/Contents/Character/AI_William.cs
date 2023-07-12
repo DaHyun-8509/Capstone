@@ -33,16 +33,20 @@ public class AI_William : MonoBehaviour
 
     Animator anim;
     NavMeshAgent agent;
+    NPCDialog dialog;
+
     State state = State.None;
     Location location = Location.Home;
 
     bool finishedAct = false;
+    bool isTalking = false;
     int nowIndex = 0;
 
 private void Start()
     {   
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        dialog = GetComponentInChildren<NPCDialog>();
     }
 
     private void Update()
@@ -101,6 +105,24 @@ private void Start()
             //Move 상태로 바꾸고 위치를 지정한다
             MoveToWork();
         }
+
+        //플레이어가 대화를 걸었을 때 
+        if(dialog.Talking == true && isTalking == false)
+        {
+            agent.isStopped = true;
+            anim.SetTrigger("stop");
+            transform.LookAt(dialog.Avatar);
+            isTalking = true;
+        }
+        //대화가 끝났을 때
+        if (dialog.Talking == false && isTalking == true)
+        {
+            agent.isStopped = false;
+            isTalking = false;
+            if (state == State.Move)
+                anim.SetTrigger("walk");
+        }
+
     }
 
     void MoveToWork()
