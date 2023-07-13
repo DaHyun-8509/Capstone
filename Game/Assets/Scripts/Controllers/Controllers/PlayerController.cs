@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.CodeAnalysis;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -105,7 +106,10 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayOrigin, (lookAtPosition - rayOrigin).normalized, out hit, rayDistance))
         {
-            cameraDistance = Mathf.Max(Vector3.Distance(hit.point, lookAtPosition) - _offset, 0f);
+            if (!hit.transform.gameObject.CompareTag("NPC"))
+                cameraDistance = Mathf.Max(Vector3.Distance(hit.point, lookAtPosition) - _offset, 0f);
+            else
+                cameraDistance = _defaultCameraDistance;
         }
         else
         {
