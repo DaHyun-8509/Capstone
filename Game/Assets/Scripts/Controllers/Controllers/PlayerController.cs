@@ -10,6 +10,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class PlayerController : MonoBehaviour
 {
     CharacterController _controller;
+    Animator anim;
 
     //이동
     public float _walkSpeed = 3.0f;
@@ -43,7 +44,6 @@ public class PlayerController : MonoBehaviour
     {
         Move(_walkSpeed);
         Rotate();
-        Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", 0);
     }
 
@@ -51,8 +51,6 @@ public class PlayerController : MonoBehaviour
     {
         Move(_walkSpeed);
         Rotate();
-
-        Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", _walkSpeed);
     }
 
@@ -60,14 +58,11 @@ public class PlayerController : MonoBehaviour
     {
         Move(_runSpeed);
         Rotate();
-
-        Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", _runSpeed);
     }
     
     void UpdateInteract()
     {
-        Animator anim = GetComponent<Animator>();
         anim.SetFloat("move_speed", 0);
     }
 
@@ -79,6 +74,9 @@ public class PlayerController : MonoBehaviour
         //키 입력 이벤트 -> 키보드 이동 처리
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+
+        anim.SetFloat("vertical", vertical);
+        anim.SetFloat("horizontal", horizontal);
 
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
         _controller.Move(transform.TransformDirection(moveDirection * speed * Time.deltaTime));
@@ -142,6 +140,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
