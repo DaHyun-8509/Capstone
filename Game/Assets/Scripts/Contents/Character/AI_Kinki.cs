@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,7 +9,8 @@ public class AI_Kinki : MonoBehaviour
     enum State
     {
         None,
-        Move
+        Move,
+        Act
     }
     enum Location
     {
@@ -21,6 +23,7 @@ public class AI_Kinki : MonoBehaviour
     //Transforms
     public Transform homePos;
     public Transform restaurantPos;
+    public Transform restaurantLookAtPos;
     public Transform yardPos;
     public Transform walkPos;
 
@@ -31,7 +34,6 @@ public class AI_Kinki : MonoBehaviour
     public int TimeToGoForaWalk;
     public int TimeToGoHome2;
 
-
     Animator anim;
     NavMeshAgent agent;
     NPCDialog dialog;
@@ -39,14 +41,24 @@ public class AI_Kinki : MonoBehaviour
     State state = State.None;
     Location location = Location.Home;
 
-    bool finishedAct = false;
     bool isTalking = false;
-    int nowIndex = 0;
+
+    GameObject hamburger;
+    GameObject coke;
+    GameObject fries;
+
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
+        hamburger = GameObject.Find("Hamburger_Kinki");
+        coke = GameObject.Find("Coke_Kinki");
+        fries = GameObject.Find("Fries_Kinki");
+        hamburger.SetActive(false);
+        coke.SetActive(false);
+        fries.SetActive(false);
     }
 
     private void Update()
@@ -61,19 +73,17 @@ public class AI_Kinki : MonoBehaviour
             Move();
             location = Location.Restaurant;
         }
-
-
-        //아무것도 안하고있고 TimeToGoYard시이면  
-        if (state == State.None && Managers.Time.GetHour() == TimeToGoYard)
+        //TimeToGoYard시이면  
+        if (state != State.Move && Managers.Time.GetHour() == TimeToGoYard)
         {
+            //일어난다. 
+            StandUp();
             //집앞 마당으로 이동한다. 
             agent.destination = yardPos.position;
             Move();
             location = Location.Yard;
         }
-
-
-        //아무것도 안하고있고 TimeToGoHome1시이면  
+        //움직이지 않고있고 TimeToGoHome1시이면  
         if (state == State.None && Managers.Time.GetHour() == TimeToGoHome1)
         {
             //집으로 이동한다. 
@@ -81,8 +91,6 @@ public class AI_Kinki : MonoBehaviour
             Move();
             location = Location.Restaurant;
         }
-
-
         //아무것도 안하고있고 TimeToGoForaWalk시이면  
         if (state == State.None && Managers.Time.GetHour() == TimeToGoForaWalk)
         {
@@ -91,7 +99,6 @@ public class AI_Kinki : MonoBehaviour
             Move();
             location = Location.OnAWalk;
         }
-
         //아무것도 안하고있고 TimeToGoHome2시이면  
         if (state == State.None && Managers.Time.GetHour() == TimeToGoHome2)
         {
@@ -113,6 +120,7 @@ public class AI_Kinki : MonoBehaviour
                 case Location.Home:
                     break;
                 case Location.Restaurant:
+                    SitAndEatBurger();
                     break;
                 case Location.OnAWalk:
                     break;
@@ -123,7 +131,7 @@ public class AI_Kinki : MonoBehaviour
             }
         }
 
-       
+
 
         //플레이어가 대화를 걸었을 때 
         if (dialog.Talking == true && isTalking == false)
@@ -141,16 +149,30 @@ public class AI_Kinki : MonoBehaviour
             if (state == State.Move)
                 anim.SetTrigger("walk");
         }
-
-
     }
     void Move()
     {
         state = State.Move;
         anim.SetTrigger("walk");
-        finishedAct = false;
-        StopAllCoroutines();
     }
 
+    void SitAndEatBurger()
+    {
+        transform.LookAt(restaurantLookAtPos.position);
+        state = State.Act;
+        anim.SetTrigger("sit");
+        hamburger.SetActive(true);
+        coke.SetActive(true);
+        fries.SetActive(true);
+    }
+
+    void StandUp()
+    {
+        anim.SetTrigger("stop");
+        state = State.None;
+        hamburger.SetActive(false);
+        coke.SetActive(false);
+        fries.SetActive(false);
+    }
 
 }
