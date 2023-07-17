@@ -23,4 +23,9 @@ public class TimeManager
     }
 
     public int GetHour() { return hour; }
+
+    public int GetOneHourTime()
+    {
+        return (int)dayDuration / 24;
+    }
 }
