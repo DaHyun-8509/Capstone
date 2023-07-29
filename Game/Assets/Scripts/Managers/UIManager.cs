@@ -56,15 +56,12 @@ public class UIManager
     public void DisableInteractText()
     {
         interactText.SetActive(false);
-
     }
-    
+
     public void SetInteractText(string text)
     {
         interactText.GetComponent<TextMeshProUGUI>().text = text;
     }
-
-
     public void EnableFarmingUI()
     {
         famringUI.SetActive(true);
@@ -72,7 +69,6 @@ public class UIManager
     public void DisableFarmingUI()
     {
         famringUI.SetActive(false);
-
     }
 
 }

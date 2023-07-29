@@ -17,6 +17,7 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     TimeManager _time = new TimeManager();
     UIManager _ui = new UIManager();
+    EnergyManager _energy = new EnergyManager();
     
 
     public static DataManager Data { get { return Instance._data; } }
@@ -27,8 +28,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static TimeManager Time { get { return Instance._time; } }
     public static UIManager UI { get { return Instance._ui; } }
-    
-
+    public static EnergyManager Energy { get { return Instance._energy; } }
 
     void Start()
     {
@@ -38,6 +38,7 @@ public class Managers : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         UI.Start();
+        Energy.Start();
     }
 
     void Update()
@@ -45,6 +46,7 @@ public class Managers : MonoBehaviour
         Input.OnUpdate();
         Time.Update();
         UI.Update();
+        Energy.Update();
     }
 
     static void Init()

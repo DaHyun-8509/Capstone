@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         Move(_walkSpeed);
         Rotate();
         anim.SetFloat("move_speed", _walkSpeed);
+        Managers.Energy.DecreaseEnergy(1 * Time.deltaTime);
     }
 
     void UpdateRun()
@@ -60,8 +61,10 @@ public class PlayerController : MonoBehaviour
         Move(_runSpeed);
         Rotate();
         anim.SetFloat("move_speed", _runSpeed);
+        Managers.Energy.DecreaseEnergy(2 * Time.deltaTime);
+
     }
-    
+
     void UpdateInteract()
     {
         anim.SetFloat("move_speed", 0);
