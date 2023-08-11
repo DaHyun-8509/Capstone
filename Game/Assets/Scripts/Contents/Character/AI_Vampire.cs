@@ -1,8 +1,16 @@
 using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.AI;
+
+/*뱀파이어
+ *  18시 : 집에서 나와서 식당으로 감
+ *  24시 : 식당에서 나와 강이나 호수 산책
+ *  4시 : 벤치에 앉아있음
+ *  6시 : 집에 들어감
+ */
 
 public class AI_Vampire : MonoBehaviour
 {
@@ -17,21 +25,30 @@ public class AI_Vampire : MonoBehaviour
         Home,
         Restaurant,
         Bench,
-        LackorRiver
+        River
     }
 
     //Transforms
     public Transform homePos;
     public Transform benchPos;
-    public Transform lakePos;
+    public Transform benchForwardPos;
     public Transform riverPos;
+    public Transform riverPos2;
     public Transform restaurantPos;
+    public Transform restaurantForwardPos;
+    public Transform WineGlassTablePos;
 
     //Times
     public int TimeToGoRestaurant;
     public int TimeToGoBench;
     public int TimeToGoHome;
-    public int TimeToGoLakeorRiver;
+    public int TimeToGoRiver;
+
+    //Items
+    public GameObject WineGlass;
+    public GameObject WineGlassPos;
+    public GameObject WineBottle;
+    public GameObject Food;
 
     Animator anim;
     NavMeshAgent agent;
@@ -47,6 +64,13 @@ public class AI_Vampire : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
         anim.SetTrigger("walk");
+
+        WineGlassTablePos.position = WineGlass.transform.position;
+        WineGlassTablePos.rotation = WineGlass.transform.rotation;
+
+        WineGlass.SetActive(false);
+        Food.SetActive(false);
+        WineBottle.SetActive(false);
     }
 
 
@@ -65,20 +89,23 @@ public class AI_Vampire : MonoBehaviour
 
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoBench)
         {
+            //벤치로 이동 
             agent.destination = benchPos.position;
             location = Location.Bench;
             Move();
         }
-
-        else if (state == State.None && Managers.Time.GetHour() == TimeToGoLakeorRiver)
+        
+        else if (state == State.None && Managers.Time.GetHour() == TimeToGoRiver)
         {
+            //강 또는 호수로 이동
+            StandUp();
             int rand = Random.Range(0, 2);
             if (rand == 0)
-                agent.destination = lakePos.position;
-            else
                 agent.destination = riverPos.position;
+            else
+                agent.destination = riverPos2.position;
             Move();
-            location = Location.LackorRiver;
+            location = Location.River;
 
         }
 
@@ -101,10 +128,12 @@ public class AI_Vampire : MonoBehaviour
                 case Location.Home:
                     break;
                 case Location.Restaurant:
+                    SitAndDrink();
                     break;
-                case Location.LackorRiver:
+                case Location.River:
                     break;
                 case Location.Bench:
+                    SitOnBench();
                     break;
                 default:
                     break;
@@ -139,6 +168,43 @@ public class AI_Vampire : MonoBehaviour
         yield return new WaitForSeconds(Managers.Time.GetOneHourTime());
 
         state = State.None;
+    }
+    
+    void SitOnBench()
+    {
+        transform.LookAt(benchForwardPos.position);
+        anim.SetTrigger("sit");
+    }
+
+    void SitAndDrink()
+    {
+        transform.LookAt(restaurantForwardPos.position);
+        anim.SetTrigger("drink");
+        WineGlass.SetActive(true);
+        Food.SetActive(true);
+        WineBottle.SetActive(true);
+    }
+
+    void StandUp()
+    {
+        anim.SetTrigger("stop");
+        state = State.None;
+        WineGlass.SetActive(false);
+        Food.SetActive(false);
+        WineBottle.SetActive(false);
+    }
+
+    public void GrabWineGlass()
+    {
+        WineGlass.transform.parent = WineGlassPos.transform;
+    }
+
+    public void LayDownWineGlass()
+    {
+        WineGlass.transform.parent = WineGlassTablePos;
+        WineGlass.transform.position = WineGlassTablePos.position;
+        WineGlass.transform.rotation = WineGlassTablePos.rotation;
 
     }
+
 }
