@@ -17,7 +17,8 @@ public class AI_Cheif : MonoBehaviour
         Home,
         Restaurant,
         Market,
-        HomeStand,
+        HomeSit,
+        Park,
         Work
     }
 
@@ -27,29 +28,37 @@ public class AI_Cheif : MonoBehaviour
     public Transform restaurantForwardPos;
     public Transform marketPos;
     public Transform marketForwardPos;
-    public Transform homeStandPos;
+    public Transform homeSitPos;
+    public Transform homeSitForwardPos;
+    public Transform parkPos;
     public Transform[] workPoses;
+    public Transform BeerGlassTablePos;
 
     //Times
     public int TimeToGoToWork;
-    public int Type1_TimeToStand;
-    public int Type1_TimeToGoToWork2;
-    public int Type2_TimeToGoToMarket;
-    public int TimeToGoToRestaurant;
+    public int TimeToGoMarketOrPark;
+    public int TimeToGoToRestaruantOrHomeSit;
     public int TimeToGoHome;
+
+    //Items
+    public GameObject BeerGlass;
+    public GameObject BeerGlassPos;
+    
 
     Animator anim;
     NavMeshAgent agent;
     NPCDialog dialog;
 
+    [SerializeField]
     State state = State.None;
+    [SerializeField]
     Location location = Location.Home;
 
     int type = 1;
     bool randValueSelected = false;
     bool isTalking = false;
 
-    bool finishedAct = false;
+    bool finishedAct = true;
     int nowIndex = 0;
 
 
@@ -59,6 +68,11 @@ public class AI_Cheif : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
         anim.SetTrigger("walk");
+
+        BeerGlassTablePos.position = BeerGlass.transform.position;
+        BeerGlassTablePos.rotation = BeerGlass.transform.rotation;
+
+        BeerGlass.SetActive(false);
     }
 
     private void Update()
@@ -78,29 +92,39 @@ public class AI_Cheif : MonoBehaviour
             MoveToWork();
         }
 
-        else if (type == 1 && location != Location.HomeStand &&  state != State.Move && finishedAct && Managers.Time.GetHour() == Type1_TimeToStand)
+        else if (state != State.Move && finishedAct && Managers.Time.GetHour() == TimeToGoMarketOrPark)
         {
-            
-            agent.destination = homeStandPos.position;
-            Move();
-            location = Location.HomeStand;
+            if(type == 1)
+            {
+                agent.destination = marketPos.position;
+                Move();
+                location = Location.Market;
+            }
+            else if (type == 2)
+            {
+                agent.destination = marketPos.position;
+                Move();
+                location = Location.Park;
+            }
         }
-
-        else if (type == 1 && state == State.None && Managers.Time.GetHour() == Type1_TimeToGoToWork2)
+        else if (state == State.None && Managers.Time.GetHour() == TimeToGoToRestaruantOrHomeSit)
         {
-            agent.destination = workPoses[nowIndex].position;
-            MoveToWork();
+            if (true)
+            {
+                agent.destination = restaurantPos.position;
+                Move();
+                location = Location.Restaurant;
+            }
+            else if (type == 2)
+            {
+                agent.destination = homeSitPos.position;
+                Move();
+                location = Location.HomeSit;
+            }
         }
-
-        else if (type == 2 && state == State.Act && finishedAct && Managers.Time.GetHour() == Type2_TimeToGoToMarket)
-        {
-            agent.destination = marketPos.position;
-            Move();
-            location = Location.Market;
-        }
-
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoHome)
         {
+            //이동한다. 
             agent.destination = homePos.position;
             Move();
             location = Location.Home;
@@ -136,13 +160,17 @@ public class AI_Cheif : MonoBehaviour
                 case Location.Home:
                     break;
                 case Location.Restaurant:
+                    OnRestaurant();
                     break;
-                case Location.HomeStand:
+                case Location.HomeSit:
                     break;
                 case Location.Work:
                     DoWork();
                     break;
                 case Location.Market:
+                    OnMarket();
+                    break;
+                case Location.Park:
                     break;
                 default:
                     break;
@@ -204,4 +232,30 @@ public class AI_Cheif : MonoBehaviour
         anim.SetTrigger("stop");
     }
 
+    void OnRestaurant()
+    {
+        transform.LookAt(restaurantForwardPos.position);
+        anim.SetTrigger("drink");
+        BeerGlass.SetActive(true);
+    }
+
+    void OnMarket()
+    {
+        transform.LookAt(marketForwardPos.position);
+        anim.SetTrigger("talk");
+    }
+
+    public void GrabBeerGlass()
+    {
+        BeerGlass.transform.parent = BeerGlassPos.transform;
+        BeerGlass.transform.position = BeerGlassPos.transform.position;
+        BeerGlass.transform.rotation = BeerGlassPos.transform.rotation;
+    }
+
+    public void LayDownBeerGlass()
+    {
+        BeerGlass.transform.parent = BeerGlassTablePos;
+        BeerGlass.transform.position = BeerGlassTablePos.position;
+        BeerGlass.transform.rotation = BeerGlassTablePos.rotation;
+    }
 }
