@@ -18,7 +18,6 @@ public class Managers : MonoBehaviour
     TimeManager _time = new TimeManager();
     UIManager _ui = new UIManager();
     EnergyManager _energy = new EnergyManager();
-    
 
     public static DataManager Data { get { return Instance._data; } }
     public static FieldManager Field { get { return Instance._field; } }

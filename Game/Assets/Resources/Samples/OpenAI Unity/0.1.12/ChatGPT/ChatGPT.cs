@@ -54,6 +54,14 @@ namespace OpenAI
             }
         }
 
+        public void ResetDialogs()
+        {
+            foreach( Transform message in scroll.content)
+            {
+                Destroy(message.gameObject);
+            }
+        }
+
         private void AppendMessage(ChatMessage message)
         {
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);

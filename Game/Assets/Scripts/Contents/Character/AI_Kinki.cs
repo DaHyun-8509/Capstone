@@ -43,9 +43,9 @@ public class AI_Kinki : MonoBehaviour
 
     bool isTalking = false;
 
-    GameObject hamburger;
-    GameObject coke;
-    GameObject fries;
+    public GameObject hamburger;
+    public GameObject coke;
+    public GameObject fries;
 
 
     private void Start()
@@ -53,9 +53,7 @@ public class AI_Kinki : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
-        hamburger = GameObject.Find("Hamburger_Kinki");
-        coke = GameObject.Find("Coke_Kinki");
-        fries = GameObject.Find("Fries_Kinki");
+
         hamburger.SetActive(false);
         coke.SetActive(false);
         fries.SetActive(false);
@@ -131,14 +129,13 @@ public class AI_Kinki : MonoBehaviour
             }
         }
 
-
-
         //플레이어가 대화를 걸었을 때 
         if (dialog.Talking == true && isTalking == false)
         {
+            if (state == State.Move)
+                anim.SetTrigger("stop");
+
             agent.isStopped = true;
-            anim.SetTrigger("stop");
-            transform.LookAt(dialog.Avatar);
             isTalking = true;
         }
         //대화가 끝났을 때

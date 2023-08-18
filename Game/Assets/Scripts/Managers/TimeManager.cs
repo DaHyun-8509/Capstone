@@ -7,19 +7,34 @@ public class TimeManager
 
     float timeElapsed = 0.0f;
     float dayDuration = 600.0f;
+    bool isTimeRunning = true;
+
+    public bool IsRunning { get { return isTimeRunning; } set { isTimeRunning = value; } }
 
     int hour = 0;
     public void Update()
     {
+        if(isTimeRunning)
+        {
+            timeElapsed += Time.deltaTime;
+            hour = (int)(timeElapsed * 24 / dayDuration);
 
-        timeElapsed += Time.deltaTime;
-        hour = (int)(timeElapsed * 24 / dayDuration);
+        }
 
         if (timeElapsed > dayDuration)
         {
-            timeElapsed = 0;
             hour = 0;
+
         }
+    }
+
+    public void StopTime()
+    {
+        Time.timeScale = 0;
+    }
+    public void RunTime()
+    {
+        Time.timeScale = 1;
     }
 
     public int GetHour() { return hour; }

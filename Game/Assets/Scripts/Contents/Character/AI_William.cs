@@ -110,19 +110,24 @@ private void Start()
         if(dialog.Talking == true && isTalking == false)
         {
             agent.isStopped = true;
-            anim.SetTrigger("stop");
-            transform.LookAt(dialog.Avatar);
             isTalking = true;
+            StopAllCoroutines();
+
         }
         //대화가 끝났을 때
         if (dialog.Talking == false && isTalking == true)
         {
-            agent.isStopped = false;
             isTalking = false;
+            agent.isStopped = false;
             if (state == State.Move)
                 anim.SetTrigger("walk");
-        }
+            else if (state == State.Act && location == Location.Work)
+            {
+                finishedAct = false;
+                DoWork();
+            }
 
+        }
     }
 
     void MoveToWork()

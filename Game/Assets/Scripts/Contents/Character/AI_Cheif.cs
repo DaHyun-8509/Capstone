@@ -184,7 +184,6 @@ public class AI_Cheif : MonoBehaviour
         {
             agent.isStopped = true;
             anim.SetTrigger("stop");
-            transform.LookAt(dialog.Avatar);
             isTalking = true;
         }
         //대화가 끝났을 때

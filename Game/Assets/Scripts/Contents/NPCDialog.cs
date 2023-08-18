@@ -2,21 +2,29 @@ using OpenAI;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
 
 public class NPCDialog : MonoBehaviour
 {
     [SerializeField] private GameObject mainCamera;
+    [SerializeField] private GameObject dialogCamera;
     [SerializeField] private GameObject toActivate;
-
-    [SerializeField] private Transform standingPoint;
     [SerializeField] private CharacterType npcType;
 
-    private Transform avatar;
-    public Transform Avatar { get { return avatar; } }
+    private Transform npc;
+    private Transform player;
+    public Transform Player { get { return player; } }
 
     private bool isTalking = false;
     public bool Talking { get { return isTalking; } set { isTalking = value; } }
+
+    private void Start()
+    {
+        npc = gameObject.transform.parent;
+    }
 
     void Update()
     {
@@ -24,9 +32,9 @@ public class NPCDialog : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Recover();
+            npc.GetComponentInChildren<ChatGPT>().ResetDialogs();
         }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,35 +47,32 @@ public class NPCDialog : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("Player") && Input.GetKey(KeyCode.E) && isTalking == false)
         {
             Managers.UI.DisableInteractText();
             Talking = true;
 
-            avatar = other.transform;
-
+            player = other.transform;
+            StartCoroutine(FaceEachOtherAfterDelay());
 
             // disable player input
-            avatar.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
-            avatar.GetComponent<CharacterController>().enabled = false;
+            player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
+            player.GetComponent<CharacterController>().enabled = false;
+            player.GetComponent<Animator>().updateMode = AnimatorUpdateMode.UnscaledTime;
+            npc.GetComponent<Animator>().updateMode = AnimatorUpdateMode.UnscaledTime;
 
-            //teleport the avartar to staning point
-            avatar.position = standingPoint.position;
-            avatar.rotation = standingPoint.rotation;
-
-            // disable main cam, enable dialog cam
-            mainCamera.SetActive(false);
             toActivate.SetActive(true);
             Managers.UI.DisableCanvas();
 
-            // gpt chat ui
+            //Camera
+            mainCamera.SetActive(false);
+            dialogCamera.SetActive(true);
 
             // display cursor
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
             toActivate.GetComponentInChildren<ChatGPT>().NPCType = npcType;
-
 
         }
     }
@@ -77,22 +82,40 @@ public class NPCDialog : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Managers.UI.DisableInteractText();
+
         }
     }
 
 
     public void Recover()
     {
-        avatar.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
-        avatar.GetComponent<CharacterController>().enabled = true;
+        player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+        player.GetComponent<CharacterController>().enabled = true;
+        player.GetComponent<Animator>().updateMode = AnimatorUpdateMode.Normal;
+        npc.GetComponent<Animator>().updateMode = AnimatorUpdateMode.Normal;
 
-        mainCamera.SetActive(true);
+
         toActivate.SetActive(false);
         Managers.UI.EnableCanvas();
+        Managers.Time.RunTime();
 
         Talking = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        //Camera
+        mainCamera.SetActive(true);
+        dialogCamera.SetActive(false);
     }
-    // recover
+
+    private IEnumerator FaceEachOtherAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+
+        player.GetComponentInChildren<Animator>().SetTrigger("stop");
+        npc.LookAt(player);
+        player.LookAt(npc); 
+        Managers.Time.StopTime();
+
+    }
 }
