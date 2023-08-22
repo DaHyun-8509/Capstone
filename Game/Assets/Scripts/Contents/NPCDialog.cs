@@ -32,7 +32,7 @@ public class NPCDialog : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Recover();
-            npc.GetComponentInChildren<ChatGPT>().ResetDialogs();
+            npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().ResetDialogs();
         }
     }
 

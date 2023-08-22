@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Playables;
 
 public enum CharacterType
 {
@@ -56,9 +57,11 @@ namespace OpenAI
 
         public void ResetDialogs()
         {
-            foreach( Transform message in scroll.content)
+            Transform contentObject = scroll.gameObject.transform.GetChild(0).GetChild(0);
+            int size = contentObject.childCount;
+            for (int i = 0; i < size; i++)
             {
-                Destroy(message.gameObject);
+                Destroy(contentObject.GetChild(i).gameObject);
             }
         }
 
@@ -73,6 +76,7 @@ namespace OpenAI
             height += item.sizeDelta.y;
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             scroll.verticalNormalizedPosition = 0;
+            
         }
 
         private async void SendReply()
