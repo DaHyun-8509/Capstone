@@ -17,7 +17,6 @@ public class AI_Cheif : MonoBehaviour
         Home,
         Restaurant,
         Market,
-        HomeSit,
         Park,
         Work
     }
@@ -28,8 +27,6 @@ public class AI_Cheif : MonoBehaviour
     public Transform restaurantForwardPos;
     public Transform marketPos;
     public Transform marketForwardPos;
-    public Transform homeSitPos;
-    public Transform homeSitForwardPos;
     public Transform parkPos;
     public Transform[] workPoses;
     public Transform BeerGlassTablePos;
@@ -37,7 +34,7 @@ public class AI_Cheif : MonoBehaviour
     //Times
     public int TimeToGoToWork;
     public int TimeToGoMarketOrPark;
-    public int TimeToGoToRestaruantOrHomeSit;
+    public int TimeToGoToRestaruant;
     public int TimeToGoHome;
 
     //Items
@@ -107,20 +104,11 @@ public class AI_Cheif : MonoBehaviour
                 location = Location.Park;
             }
         }
-        else if (state == State.None && Managers.Time.GetHour() == TimeToGoToRestaruantOrHomeSit)
+        else if (state == State.None && Managers.Time.GetHour() == TimeToGoToRestaruant)
         {
-            if (true)
-            {
-                agent.destination = restaurantPos.position;
-                Move();
-                location = Location.Restaurant;
-            }
-            else if (type == 2)
-            {
-                agent.destination = homeSitPos.position;
-                Move();
-                location = Location.HomeSit;
-            }
+            agent.destination = restaurantPos.position;
+            Move();
+            location = Location.Restaurant;
         }
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoHome)
         {
@@ -161,8 +149,6 @@ public class AI_Cheif : MonoBehaviour
                     break;
                 case Location.Restaurant:
                     OnRestaurant();
-                    break;
-                case Location.HomeSit:
                     break;
                 case Location.Work:
                     DoWork();
