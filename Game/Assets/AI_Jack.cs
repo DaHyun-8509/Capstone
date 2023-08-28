@@ -28,6 +28,7 @@ public class AI_Jack : MonoBehaviour
     public Transform chopForwardPos;
     public Transform panPos;
     public Transform panForwardPos;
+    public Transform fryingpanStovePos;
 
     //Times
     public int TimeToGoToWork;
@@ -35,7 +36,12 @@ public class AI_Jack : MonoBehaviour
 
     //Items
     public GameObject knife;
-    public GameObject pan;
+    public GameObject turnner;
+    public GameObject fryingpan;
+    public GameObject fryingpanPos;
+    public GameObject foods;
+    public GameObject cutFoods;
+    public GameObject cutFoods2;
 
     Animator anim;
     NavMeshAgent agent;
@@ -50,13 +56,17 @@ public class AI_Jack : MonoBehaviour
 
     bool finishedAct = true;
 
-
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
         anim.SetTrigger("walk");
+        knife.SetActive(false);
+        turnner.SetActive(false);
+        foods.SetActive(false);
+        cutFoods.SetActive(false);
+        cutFoods2.SetActive(false);
     }
 
     private void Update()
@@ -81,14 +91,29 @@ public class AI_Jack : MonoBehaviour
                 switch (rand)
                 {
                     case 0:
+                        if (location == Location.Counter)
+                        {
+                            anim.SetTrigger("stop");
+                            break;
+                        }
                         agent.destination = counterPos.position;
                         location = Location.Counter;
                         break;
                     case 1:
+                        if (location == Location.Chop)
+                        {
+                            anim.SetTrigger("stop");
+                            break;
+                        }
                         agent.destination = chopPos.position;
                         location = Location.Chop;
                         break;
                     case 2:
+                        if (location == Location.Pan)
+                        {
+                            anim.SetTrigger("stop");
+                            break;
+                        }
                         agent.destination = panPos.position;
                         location = Location.Pan;
                         break;
@@ -111,7 +136,6 @@ public class AI_Jack : MonoBehaviour
         else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state == State.Move)
         {
             state = State.Act;
-            anim.SetTrigger("stop");
             StopAllCoroutines();
 
             switch (location)
@@ -156,7 +180,10 @@ public class AI_Jack : MonoBehaviour
 
     private IEnumerator PanActCoroutine()
     {
+        transform.LookAt(panForwardPos);
+        anim.SetTrigger("stop");
         yield return new WaitForSeconds(1f);
+
         anim.SetTrigger("pan");
         transform.LookAt(panForwardPos);
         yield return new WaitForSeconds(15f);
@@ -166,6 +193,8 @@ public class AI_Jack : MonoBehaviour
 
     private IEnumerator ChopActCoroutine()
     {
+        transform.LookAt(chopForwardPos);
+        anim.SetTrigger("stop");
         yield return new WaitForSeconds(1f);
         anim.SetTrigger("chop");
         transform.LookAt(chopForwardPos);
@@ -176,11 +205,74 @@ public class AI_Jack : MonoBehaviour
 
     private IEnumerator FinishCounterActCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        transform.LookAt(counterForwardPos);
         anim.SetTrigger("stop");
+        yield return new WaitForSeconds(1f);
         transform.LookAt(counterForwardPos);
         yield return new WaitForSeconds(20f);
         finishedAct = true;
         state = State.None;
+    }
+    public void GrabFryingPan()
+    {
+        fryingpan.transform.parent = fryingpanPos.transform;
+        fryingpan.transform.position = fryingpanPos.transform.position;
+        fryingpan.transform.rotation = fryingpanPos.transform.rotation;
+    }
+
+    public void LayDownFryPan()
+    {
+        fryingpan.transform.parent = fryingpanStovePos;
+        fryingpan.transform.position = fryingpanStovePos.position;
+        fryingpan.transform.rotation = fryingpanStovePos.rotation;
+    }
+    public void StartChop()
+    {
+        foods.SetActive(true);
+        knife.SetActive(true);
+        StartCoroutine(Chopping());
+    }
+
+    private IEnumerator Chopping()
+    {
+        yield return new WaitForSeconds(1.5f);
+        foods.SetActive(false);
+        cutFoods.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        cutFoods2.SetActive(true);
+    }
+    public void EndChop()
+    {
+        knife.SetActive(false);
+        cutFoods.SetActive(false);
+        cutFoods2.SetActive(false);
+    }
+    public void StartFrying()
+    {
+        turnner.SetActive(true);
+        GrabFryingPan();
+    }
+    public void EndFrying()
+    {
+        turnner.SetActive(false);
+        LayDownFryPan();
+    }
+
+
+    //Collision - Door
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Door"))
+        {
+            other.gameObject.GetComponent<RestaurantDoor>().OpenDoor();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Door"))
+        {
+            other.gameObject.GetComponent<RestaurantDoor>().CloseDoor();
+        }
     }
 }

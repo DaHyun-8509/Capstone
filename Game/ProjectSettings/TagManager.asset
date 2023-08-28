@@ -8,6 +8,7 @@ TagManager:
   - TreeTrigger
   - PickableCropTrigger
   - NPC
+  - Door
   layers:
   - Default
   - TransparentFX
