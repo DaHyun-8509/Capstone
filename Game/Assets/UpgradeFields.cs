@@ -19,37 +19,35 @@ public class UpgradeFields : MonoBehaviour
             buttons[i].GetComponent<ButtonAction>().DeactiveButton();
         }
     }
-
     public void UpgradeTo1()
     {
         //골드 체크 및 차감
-        fields[0].SetActive(true);
-        buttons[0].GetComponent<ButtonAction>().DeactiveButton();
-        buttons[0].GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
-        buttons[1].GetComponent<ButtonAction>().ActiveButton();
+        UpgradeButton(0);
     }
     public void UpgradeTo2()
     {
         //골드 체크 및 차감
-        fields[1].SetActive(true);
-        buttons[1].GetComponent<ButtonAction>().DeactiveButton();
-        buttons[1].GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
-        buttons[2].GetComponent<ButtonAction>().ActiveButton();
+        UpgradeButton(1);
     }
     public void UpgradeTo3()
     {
         //골드 체크 및 차감
-        fields[2].SetActive(true);
-        buttons[2].GetComponent<ButtonAction>().DeactiveButton();
-        buttons[2].GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
-        buttons[3].GetComponent<ButtonAction>().ActiveButton();
+        UpgradeButton(2);
     }
     public void UpgradeTo4()
     {
         //골드 체크 및 차감
-        fields[3].SetActive(true);
-        buttons[3].GetComponent<ButtonAction>().DeactiveButton();
-        buttons[3].GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
+        UpgradeButton(3);
+    }
+
+    private void UpgradeButton(int now)
+    {
+        fields[now].SetActive(true);
+        buttons[now].GetComponent<ButtonAction>().DeactiveButton();
+        buttons[now].GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
+
+        if (now < buttons.Length)
+            buttons[now + 1].GetComponent<ButtonAction>().ActiveButton();
     }
 
 }
