@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class OpenUpgradeUI : MonoBehaviour
         {
             playerIn = true;
             player = collider.gameObject;
+            Managers.UI.EnableInteractText();
+            Managers.UI.SetInteractText("[E] 업그레이드 창 열기");
         }
     }
 
@@ -31,9 +34,10 @@ public class OpenUpgradeUI : MonoBehaviour
             Managers.Time.StopTime();
             player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
             player.GetComponent<CharacterController>().enabled = false;
+            Managers.UI.SetInteractText("[ESC] 창 닫기");
         }
 
-        if(playerIn && Input.GetKey(KeyCode.Escape))
+        if (playerIn && Input.GetKey(KeyCode.Escape))
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -44,6 +48,7 @@ public class OpenUpgradeUI : MonoBehaviour
             Managers.Time.RunTime();
             player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
             player.GetComponent<CharacterController>().enabled = true;
+            Managers.UI.SetInteractText("[E] 업그레이드 창 열기");
         }
     }
 
@@ -52,6 +57,8 @@ public class OpenUpgradeUI : MonoBehaviour
         if(playerIn && collider.CompareTag("Player"))
         {
             playerIn = false;
+            Managers.UI.SetInteractText("");
+            Managers.UI.DisableInteractText();
         }
     }
 
