@@ -38,6 +38,7 @@ public class Managers : MonoBehaviour
 
         UI.Start();
         Energy.Start();
+        Data.Start();
     }
 
     void Update()
@@ -62,4 +63,6 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();   
         }
     }
+
+    
 }
