@@ -37,7 +37,6 @@ public class Managers : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         UI.Start();
-        Energy.Start();
         Data.Start();
     }
 
@@ -47,6 +46,7 @@ public class Managers : MonoBehaviour
         Time.Update();
         UI.Update();
         Energy.Update();
+
     }
 
     static void Init()
@@ -64,5 +64,6 @@ public class Managers : MonoBehaviour
         }
     }
 
-    
+   
+
 }

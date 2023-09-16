@@ -1,28 +1,45 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JsonItem : RawData
+[Serializable]
+public class ItemBase : RawData
 {
     public string name;
     public string description;
     public int purchase_price;
     public int sell_price;
-    public int type;
+
 }
 
-public class JsonCrop : JsonItem
+[Serializable]
+public class Crop : ItemBase
 {
     public int crop_grade;
 }
 
-public class JsonIngredient : JsonItem
+[Serializable]
+public class Ingredient : ItemBase
 {
 
 }
 
-public class JsonFood : JsonItem
+[Serializable]
+public class Food : ItemBase
 {
     public int food_grade;
     public int energy;
+}
+
+[Serializable]
+public class Data
+{
+    public RawData[] info;
+}
+
+[Serializable]
+public class FoodData : Data
+{
+    public new Food[] info;
 }

@@ -20,6 +20,7 @@ public class TreeShaker : MonoBehaviour
 
                 //³ª¹« Èçµé±â
                 StartCoroutine(ShakeTree());
+
             }
         }
     }

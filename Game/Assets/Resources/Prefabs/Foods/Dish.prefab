@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1345961079382690728}
   - component: {fileID: 8694534133774995653}
   - component: {fileID: 267150881292202911}
+  - component: {fileID: -1620992421560361479}
   m_Layer: 5
   m_Name: Dish
   m_TagString: Untagged
@@ -125,6 +126,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-1620992421560361479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629719364253330227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1938ec26af88ca48b047cb247fa0fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description_name: {fileID: 3042324076431631932}
+  description_price: {fileID: 3804305663221508591}
+  description_energy: {fileID: 131038460390623056}
+  description_desc: {fileID: 0}
 --- !u!1 &2406576402208000790
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100 GOLD
+  m_text: 500GOLD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 252db725327f69b478403b717b2484ec, type: 2}
   m_sharedMaterial: {fileID: 4471951769250422884, guid: 252db725327f69b478403b717b2484ec, type: 2}
@@ -326,7 +343,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD53C\uC790\n"
+  m_text: "\uD53C\uC790"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 252db725327f69b478403b717b2484ec, type: 2}
   m_sharedMaterial: {fileID: 4471951769250422884, guid: 252db725327f69b478403b717b2484ec, type: 2}
@@ -430,7 +447,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.2554569}
   m_AnchorMax: {x: 0.36100003, y: 1}
-  m_AnchoredPosition: {x: 9.1125, y: -13.033}
+  m_AnchoredPosition: {x: 9.112488, y: -13.033001}
   m_SizeDelta: {x: 18.2251, y: 26.617}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4289878498722236698
@@ -506,7 +523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 0.5632586}
-  m_AnchoredPosition: {x: -0.13495636, y: 19.9645}
+  m_AnchoredPosition: {x: -0.13494873, y: 19.9645}
   m_SizeDelta: {x: 0.27002, y: -38.7969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3052561221645025781
