@@ -73,7 +73,7 @@ public class Restaurant_Order : MonoBehaviour
         {
             foreach(var food in foodData.info)
             {
-                //if (dishButtons.Count <= i) continue;
+                if (dishButtons.Count <= i) continue;
                 dishButtons[i].GetComponent<Restaurant_Item>().Init(food);
                 i++;
             }

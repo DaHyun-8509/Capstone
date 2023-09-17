@@ -142,6 +142,7 @@ MonoBehaviour:
   description_price: {fileID: 3804305663221508591}
   description_energy: {fileID: 131038460390623056}
   description_desc: {fileID: 0}
+  description_image: {fileID: 959810408469167927}
 --- !u!1 &2406576402208000790
 GameObject:
   m_ObjectHideFlags: 0
