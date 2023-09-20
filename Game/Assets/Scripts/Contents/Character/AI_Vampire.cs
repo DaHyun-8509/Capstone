@@ -65,9 +65,6 @@ public class AI_Vampire : MonoBehaviour
         dialog = GetComponentInChildren<NPCDialog>();
         anim.SetTrigger("walk");
 
-        WineGlassTablePos.position = WineGlass.transform.position;
-        WineGlassTablePos.rotation = WineGlass.transform.rotation;
-
         WineGlass.SetActive(false);
         Food.SetActive(false);
         WineBottle.SetActive(false);

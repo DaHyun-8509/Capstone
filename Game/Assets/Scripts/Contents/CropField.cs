@@ -59,7 +59,7 @@ public class CropField : MonoBehaviour
         crop = GameObject.Instantiate(prefab);
         crop.transform.SetParent(transform);
         crop.transform.localPosition = Vector3.zero;
-        generateTime = crop.GetComponent<Crop>().generateTime;
+        generateTime = crop.GetComponent<FarmCrop>().generateTime;
 
         //Lv별 작물 찾아두기 
         Transform[] children = crop.GetComponentsInChildren<Transform>();

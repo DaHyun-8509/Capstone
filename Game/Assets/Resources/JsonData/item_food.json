@@ -1,0 +1,17 @@
+{"info":
+[
+{"id":"R0","name":"빵","description":"딱딱한 빵입니다.","purchase_price":50,"sell_price":10,"food_grade":2,"energy":5},
+{"id":"R1","name":"계란과 베이컨","description":"아침 식사로 좋습니다.","purchase_price":200,"sell_price":40,"food_grade":2,"energy":18},
+{"id":"R2","name":"소세지와 감자구이","description":"든든한 한 끼입니다.","purchase_price":300,"sell_price":60,"food_grade":2,"energy":30},
+{"id":"R3","name":"미트볼 정식","description":"미트볼과 감자튀김, 샐러드.","purchase_price":560,"sell_price":112,"food_grade":2,"energy":50},
+{"id":"R4","name":"닭가슴살","description":"단백질 덩어리입니다.","purchase_price":400,"sell_price":80,"food_grade":2,"energy":37},
+{"id":"R5","name":"모듬초밥","description":"밥알 320알의 든든한 초밥입니다.","purchase_price":430,"sell_price":86,"food_grade":2,"energy":40},
+{"id":"R6","name":"피자","description":"콤비네이션 피자입니다.","purchase_price":700,"sell_price":140,"food_grade":2,"energy":64},
+{"id":"R7","name":"핫도그","description":"먹기 간편합니다.","purchase_price":160,"sell_price":32,"food_grade":2,"energy":13},
+{"id":"R8","name":"햄버거","description":"입을 크게 벌려야 합니다.","purchase_price":260,"sell_price":52,"food_grade":2,"energy":24},
+{"id":"R9","name":"감자튀김","description":"햄버거와 짝꿍입니다.","purchase_price":120,"sell_price":24,"food_grade":2,"energy":10},
+{"id":"R10","name":"새우구이","description":"바다를 느껴보세요.","purchase_price":660,"sell_price":132,"food_grade":2,"energy":60},
+{"id":"R11","name":"스테이크","description":"입에서 살살 녹습니다.","purchase_price":950,"sell_price":190,"food_grade":2,"energy":80},
+{"id":"R12","name":"칠면조구이","description":"혼자 먹어도 말리진 않겠습니다.", "purchase_price":1200,"sell_price":240,"food_grade":2,"energy":100},
+{"id":"R13","name":"꼬치구이","description":"고기와 야채의 환상적인 조합!", "purchase_price":760,"sell_price":152,"food_grade":2,"energy":67}
+]}

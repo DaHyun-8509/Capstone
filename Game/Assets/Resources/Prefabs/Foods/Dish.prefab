@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1345961079382690728}
   - component: {fileID: 8694534133774995653}
   - component: {fileID: 267150881292202911}
+  - component: {fileID: -1620992421560361479}
   m_Layer: 5
   m_Name: Dish
   m_TagString: Untagged
@@ -38,10 +39,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.03880037, y: 0.5892086}
-  m_AnchorMax: {x: 0.3495989, y: 0.77558285}
-  m_AnchoredPosition: {x: 108.900024, y: -24.043015}
-  m_SizeDelta: {x: -0.68390083, y: 0.36569977}
+  m_AnchorMin: {x: 0.096, y: 0.5672223}
+  m_AnchorMax: {x: 0.40633336, y: 0.754}
+  m_AnchoredPosition: {x: -0.5999756, y: -0.5430145}
+  m_SizeDelta: {x: 0.31610107, y: -0.63430023}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1345961079382690728
 CanvasRenderer:
@@ -50,7 +51,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629719364253330227}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!114 &8694534133774995653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -102,8 +103,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -125,6 +126,23 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-1620992421560361479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629719364253330227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1938ec26af88ca48b047cb247fa0fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description_name: {fileID: 3042324076431631932}
+  description_price: {fileID: 3804305663221508591}
+  description_energy: {fileID: 131038460390623056}
+  description_desc: {fileID: 0}
+  description_image: {fileID: 959810408469167927}
 --- !u!1 &2406576402208000790
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100 GOLD
+  m_text: 500GOLD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 252db725327f69b478403b717b2484ec, type: 2}
   m_sharedMaterial: {fileID: 4471951769250422884, guid: 252db725327f69b478403b717b2484ec, type: 2}
@@ -326,7 +344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD53C\uC790\n"
+  m_text: "\uD53C\uC790"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 252db725327f69b478403b717b2484ec, type: 2}
   m_sharedMaterial: {fileID: 4471951769250422884, guid: 252db725327f69b478403b717b2484ec, type: 2}
@@ -430,7 +448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.2554569}
   m_AnchorMax: {x: 0.36100003, y: 1}
-  m_AnchoredPosition: {x: 9.1125, y: -13.033}
+  m_AnchoredPosition: {x: 9.112488, y: -13.033001}
   m_SizeDelta: {x: 18.2251, y: 26.617}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4289878498722236698
@@ -506,7 +524,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 0.5632586}
-  m_AnchoredPosition: {x: -0.13495636, y: 19.9645}
+  m_AnchoredPosition: {x: -0.13494873, y: 19.9645}
   m_SizeDelta: {x: 0.27002, y: -38.7969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3052561221645025781
@@ -546,8 +564,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283979980
-  m_fontColor: {r: 0.8018868, g: 0.34420612, b: 0.34420612, a: 1}
+    rgba: 4284581112
+  m_fontColor: {r: 0.9716981, g: 0.5164486, b: 0.38042897, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

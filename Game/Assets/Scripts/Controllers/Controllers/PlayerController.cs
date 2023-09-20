@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayOrigin, (lookAtPosition - rayOrigin).normalized, out hit, rayDistance))
         {
-            if (!hit.transform.gameObject.CompareTag("NPC"))
+            if (!hit.transform.gameObject.CompareTag("NPC") && hit.collider.isTrigger == false)
                 cameraDistance = Mathf.Max(Vector3.Distance(hit.point, lookAtPosition) - _offset, 0f);
             else
                 cameraDistance = _defaultCameraDistance;

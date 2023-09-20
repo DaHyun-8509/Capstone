@@ -66,9 +66,6 @@ public class AI_Cheif : MonoBehaviour
         dialog = GetComponentInChildren<NPCDialog>();
         anim.SetTrigger("walk");
 
-        BeerGlassTablePos.position = BeerGlass.transform.position;
-        BeerGlassTablePos.rotation = BeerGlass.transform.rotation;
-
         BeerGlass.SetActive(false);
     }
 
