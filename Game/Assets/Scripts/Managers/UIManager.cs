@@ -12,11 +12,12 @@ public class UIManager
     GameObject interactText;
     GameObject famringUI;
     GameObject timeText;
+    GameObject goldUI;
 
     public void Start()
     {
         {
-            canvas = GameObject.Find("Canvas");
+            canvas = GameObject.Find("MainCanvas");
         }
         {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_InteractionText");
@@ -33,11 +34,18 @@ public class UIManager
             timeText = GameObject.Instantiate(prefab, canvas.transform);
             timeText.SetActive(true);
         }
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_Gold");
+            goldUI = GameObject.Instantiate(prefab, canvas.transform);
+            goldUI.SetActive(true);
+        }
     }
 
     public void Update()
     {
         timeText.GetComponent<TextMeshProUGUI>().SetText(Managers.Time.GetHour().ToString() + "½Ã");
+        goldUI.GetComponent<TextMeshProUGUI>().SetText("{0} Gold", Managers.Gold.GetGold());
+
     }
 
     public void EnableCanvas()

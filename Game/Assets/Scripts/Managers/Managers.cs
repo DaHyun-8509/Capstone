@@ -18,6 +18,7 @@ public class Managers : MonoBehaviour
     TimeManager _time = new TimeManager();
     UIManager _ui = new UIManager();
     EnergyManager _energy = new EnergyManager();
+    GoldManager _gold = new GoldManager();
 
     public static DataManager Data { get { return Instance._data; } }
     public static FieldManager Field { get { return Instance._field; } }
@@ -29,6 +30,7 @@ public class Managers : MonoBehaviour
     public static UIManager UI { get { return Instance._ui; } }
     public static EnergyManager Energy { get { return Instance._energy; } }
 
+    public static GoldManager Gold { get { return Instance._gold;} }
     void Start()
     {
         Init();
@@ -38,6 +40,7 @@ public class Managers : MonoBehaviour
 
         UI.Start();
         Data.Start();
+        Sound.Start();
     }
 
     void Update()
