@@ -6,15 +6,16 @@ using UnityEngine;
 
 public class SoundManager 
 {
-    AudioSource source = new AudioSource();
+    AudioSource bgm = new AudioSource();
+    AudioSource effect = new AudioSource();
     public void Start()
     {
-        GameObject root = GameObject.Find("@Sound");
-        source = root.GetComponent<AudioSource>();
+        bgm = GameObject.Find("Bgm").GetComponent<AudioSource>();
+        effect = GameObject.Find("Effect").GetComponent<AudioSource>();
     }
     public void PlayEating()
     {
-        source.clip = Resources.Load<AudioClip>("Sound/eating_sound");
-        source.Play();
+        effect.clip = Resources.Load<AudioClip>("Sound/eating_sound");
+        effect.Play();
     }
 }
