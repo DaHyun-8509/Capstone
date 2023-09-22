@@ -66,18 +66,14 @@ public class Restaurant_Order : MonoBehaviour
 
     private void LoadMenu()
     {
-        var foodDatas = Managers.Data.GetDatas<FoodData>();
+        var foodData = Managers.Data.FoodList;
 
         int i = 0;
-        foreach (var foodData in foodDatas)
+        foreach (var food in foodData)
         {
-            foreach(var food in foodData.info)
-            {
-                if (dishButtons.Count <= i) continue;
-                dishButtons[i].GetComponent<Restaurant_Item>().Init(food);
-                i++;
-            }
-
+            if (dishButtons.Count <= i) continue;
+            dishButtons[i].GetComponent<Restaurant_Item>().Init(food);
+            i++;
         }
     }
 }

@@ -24,38 +24,52 @@ public class Inventory : MonoBehaviour
     public delegate void OnChangeItem();
     public OnChangeItem onChangeItem;
 
-    public List<Item> items = new List<Item>();
-         
+    LinkedList<string> items = new LinkedList<string>();
+    Dictionary</*id*/ string,/*count*/ int> itemCounts = new Dictionary<string, int>();
 
-
-    private int slotCnt;
-    public int SlotCnt
+    
+    private int slotCount;
+    public int SlotCount
     {
-        get => slotCnt;
+        get => slotCount;
         set
         {
-            slotCnt = value;
-            onSlotCountChange.Invoke(slotCnt);
+            slotCount = value;
+            onSlotCountChange.Invoke(slotCount);
         }
     }
 
     void Start()
     {
-        SlotCnt = 4;   
+        slotCount = 20;   
+
     }
 
-    public bool AddItem(Item _item)
+    public void GetInventoryItems(out LinkedList<string> itemList, out Dictionary<string, int> itemCountDict)
     {
-        if (items.Count < SlotCnt)
+        itemList = items;
+        itemCountDict = itemCounts;
+    }
+
+    public bool AddItem(string itemId)
+    {
+        if (items.Count < slotCount)
         {
-            items.Add(_item);
+            
+            if(itemCounts.ContainsKey(itemId))
+            {
+                itemCounts[itemId]++;
+            }
+            else
+            {
+                itemCounts.Add(itemId, 1);
+                items.AddLast(itemId);
+            }
+
             onChangeItem.Invoke();
             return true;
         }
         return false;
     }
- //   private void OnTriggerEnter2D(Collider2D collision)
- //   {
-        
- //   }
+
 }

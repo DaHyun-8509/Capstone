@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     CharacterController _controller;
     Animator anim;
 
+
     //¿Ãµø
     public float _walkSpeed = 3.0f;
     public float _runSpeed = 6.0f;

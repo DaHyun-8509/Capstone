@@ -35,11 +35,11 @@ public class Food : ItemBase
 [Serializable]
 public class Data
 {
-    public RawData[] info;
+    
 }
 
 [Serializable]
 public class FoodData : Data
 {
-    public new Food[] info;
+    public Food[] info;
 }
