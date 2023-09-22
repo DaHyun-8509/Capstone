@@ -40,6 +40,10 @@ public class UI_Inventory : MonoBehaviour
             slots[slotNum].Set(itemId, itemCountDict[itemId]);
             slotNum++;
         }
+        for(int slot = slotNum; slot < slots.Length; slot++)
+        {
+            slots[slot].SetNull();
+        }
     }
 
     private void SlotChange(int val)

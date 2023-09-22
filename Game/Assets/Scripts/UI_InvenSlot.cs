@@ -22,9 +22,21 @@ public class UI_InvenSlot : MonoBehaviour
         item = Managers.Data.GetItemData(itemId);
 
         item_image.sprite = Resources.Load<Sprite>("JsonData/" + item.id);
+        Color color = item_image.color;
+        color.a = 1f;
+        item_image.color = color;
 
         //°³¼ö
         itemCount = count;
         item_count.SetText(itemCount.ToString());
+    }
+
+    public void SetNull()
+    {
+        Color color = item_image.color;
+        color.a = 0f;
+        item_image.color = color;
+
+        item_count.SetText("");
     }
 }
