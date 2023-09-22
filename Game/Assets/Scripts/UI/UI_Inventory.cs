@@ -22,6 +22,7 @@ public class UI_Inventory : MonoBehaviour
         slots = slotHolder.GetComponentsInChildren<Slot>(); // content안의 slot 전부 갖고올수 있는 것
         inven.onSlotCountChange += SlotChange;
         inventoryPanel.SetActive(activateInventory);
+
     }
 
     private void SlotChange(int val)
@@ -41,6 +42,9 @@ public class UI_Inventory : MonoBehaviour
         {
             activateInventory = !activateInventory;
             inventoryPanel.SetActive(activateInventory);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
