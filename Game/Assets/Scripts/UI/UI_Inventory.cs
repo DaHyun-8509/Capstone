@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,12 @@ public class UI_Inventory : MonoBehaviour
     UI_InvenSlot[] slots;
     public Transform slotHolder;
 
+    [SerializeField]
+    GameObject slotInfo;
+    public GameObject SlotInfo {  get { return slotInfo; } }
+    public TextMeshProUGUI itemInfo_name;
+    public TextMeshProUGUI itemInfo_price;
+    public TextMeshProUGUI itemInfo_energy;
 
     private void Start()
     {
@@ -24,6 +31,8 @@ public class UI_Inventory : MonoBehaviour
         inven.onSlotCountChange += SlotChange;
         inventoryPanel.SetActive(activateInventory);
         inven.onChangeItem += InventoryChanged;
+
+        slotInfo.SetActive(false);
     }
 
     private void InventoryChanged()
@@ -76,11 +85,13 @@ public class UI_Inventory : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
                 player.GetComponent<CharacterController>().enabled = true;
+
+                slotInfo.SetActive(false);
             }
         }
     }
 
-public void AddSlot()
+    public void AddSlot()
     {
         inven.SlotCount++;
     }
@@ -89,4 +100,5 @@ public void AddSlot()
     {
         inven.AddItem(item);
     }
+
 }
