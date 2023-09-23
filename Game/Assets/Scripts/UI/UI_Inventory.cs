@@ -14,12 +14,22 @@ public class UI_Inventory : MonoBehaviour
     bool activateInventory = false;
     public GameObject player;
 
+    //slot
     UI_InvenSlot[] slots;
     public Transform slotHolder;
+
+    UI_InvenSlot selectedSlot;
+    public UI_InvenSlot SelectedSlot { get { return selectedSlot; } set { selectedSlot = value; } }
 
     [SerializeField]
     GameObject slotInfo;
     public GameObject SlotInfo {  get { return slotInfo; } }
+
+    [SerializeField]
+    GameObject interactBtn;
+    public GameObject InteractBtn { get {  return interactBtn; } }
+
+
     public TextMeshProUGUI itemInfo_name;
     public TextMeshProUGUI itemInfo_price;
     public TextMeshProUGUI itemInfo_energy;

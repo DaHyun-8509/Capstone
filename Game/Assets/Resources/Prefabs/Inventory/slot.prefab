@@ -38,6 +38,7 @@ RectTransform:
   - {fileID: 323271667240798517}
   - {fileID: 7139829562660068408}
   - {fileID: 6897211432980681710}
+  - {fileID: 3983367494916358757}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,6 +159,7 @@ MonoBehaviour:
   item_count: {fileID: 1333743990542432547}
   item_image: {fileID: 323271667240798516}
   infoPos: {fileID: 6897211432980681710}
+  interactBtnPos: {fileID: 3983367494916358757}
 --- !u!223 &2629762121959375719
 Canvas:
   m_ObjectHideFlags: 0
@@ -443,3 +445,39 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5615859565636828531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3983367494916358757}
+  m_Layer: 5
+  m_Name: InteractBtnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3983367494916358757
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5615859565636828531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 323271666848444267}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.03437907}
+  m_AnchorMax: {x: 1, y: 0.03437907}
+  m_AnchoredPosition: {x: 6.562118, y: 5.8}
+  m_SizeDelta: {x: 13.161663, y: 12.565139}
+  m_Pivot: {x: 0.5, y: 0.49999997}

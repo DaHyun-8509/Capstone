@@ -74,4 +74,14 @@ public class Inventory: MonoBehaviour
         return false;
     }
 
+    public void RemoveItem(string itemId, int count)
+    {
+        itemCounts[itemId] -= count;
+        if (itemCounts[itemId] <= 0)
+        {
+            items.Remove(itemId);
+        }
+
+        onChangeItem.Invoke();
+    }
 }

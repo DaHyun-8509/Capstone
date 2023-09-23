@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     UI_Inventory inventoryUI;
 
@@ -13,11 +13,17 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     int itemCount = 0;
     public TextMeshProUGUI item_count;
     public Image item_image;
+
+    bool mouseOn = false;
+    public bool MouseOn { get { return mouseOn; } }
     
     GameObject item_slotInfo;
 
     [SerializeField]
     Transform infoPos;
+
+    [SerializeField]
+    Transform interactBtnPos;
 
     private void Start()
     {
@@ -44,6 +50,7 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void SetNull()
     {
+        item = null;
         Color color = item_image.color;
         color.a = 0f;
         item_image.color = color;
@@ -52,9 +59,12 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (item == null)
+    { 
+        if(item == null)
             return;
+
+        mouseOn = true;
+        inventoryUI.SelectedSlot = this;
 
         // info 위치 조정
         RectTransform infoUIPos = item_slotInfo.GetComponent<RectTransform>();
@@ -73,9 +83,58 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        item_slotInfo.SetActive(false);
+        if (item == null)
+            return;
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            if((Food)item != null)
+            {
+                // 버튼 위치 조정
+                RectTransform uiPos = inventoryUI.InteractBtn.GetComponent<RectTransform>();
+                Vector3 localPosition = inventoryUI.transform.InverseTransformPoint(interactBtnPos.position);
+                uiPos.localPosition = localPosition;
+                inventoryUI.InteractBtn.SetActive(true);
+            }
+        }
     }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+        mouseOn = false;
+
+        item_slotInfo.SetActive(false);
+        StartCoroutine(CloseInteractBtn());
+       
+    }
+
+    private IEnumerator CloseInteractBtn()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        //상호작용 버튼에서도 마우스가 떼어져있으면 상호작용 버튼을 닫음
+        if (inventoryUI.InteractBtn.GetComponent<UI_ItemInteractBtn>().MouseOn == false)
+        {
+            inventoryUI.InteractBtn.SetActive(false);
+        }
+      
+    }
+
+    public void EatItem()
+    {
+        //먹기 효과 
+        Managers.Sound.PlayEating();
+        Managers.Energy.IncreaseEnergy(((Food)item).energy);
+        RemoveItem(1);
+    }
+
+    public void RemoveItem(int count)
+    {
+        Inventory.instance.RemoveItem(item.id, count);
+    }
+    
 }
