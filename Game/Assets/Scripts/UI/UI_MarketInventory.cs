@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_MarketInventory : MonoBehaviour
 {
     public GameObject inventoryPanel;
-    bool activateInventory = false;
     public GameObject player;
 
     //slot
@@ -25,14 +25,40 @@ public class UI_MarketInventory : MonoBehaviour
     public TextMeshProUGUI itemInfo_price;
     public TextMeshProUGUI itemInfo_energy;
 
+    //For selling
+    [SerializeField]
+    UI_MarketInvenSlot checkSlot;
+    public UI_MarketInvenSlot CheckSlot { get { return checkSlot; } }
+    int checkCount = 1;
+    public int CheckCount
+    {
+        get { return checkCount; }
+        set
+        {
+            checkCount = value;
+            checkCountUI.SetText("{0}", checkCount);
+            if (checkSlot != null)
+                checkGoldUI.SetText("{0}", checkCount * checkSlot.Item.sell_price);
+            else
+                checkGoldUI.SetText("0");
+        }
+    }
+
+    [SerializeField]
+    TextMeshProUGUI checkCountUI;
+
+    [SerializeField]
+    TextMeshProUGUI checkGoldUI;
+
+    [SerializeField]
+    TextMeshProUGUI guideTextUI;
+
     private void Start()
     {
         slots = slotHolder.GetComponentsInChildren<UI_MarketInvenSlot>(); // content안의 slot 전부 갖고올수 있는 것
         Inventory.instance.onSlotCountChange += SlotChange;
-        inventoryPanel.SetActive(activateInventory);
         Inventory.instance.onChangeItem += InventoryChanged;
-
-        slotInfo.SetActive(false);
+        Inventory.instance.onChangeItem.Invoke();
     }
 
     private void InventoryChanged()
@@ -76,4 +102,49 @@ public class UI_MarketInventory : MonoBehaviour
         Inventory.instance.AddItem(item);
     }
 
+    public void IncreaseCheckCount()
+    {
+        if(checkSlot.ItemCount > checkCount)
+        {
+            CheckCount = CheckCount +1;
+        }
+    }
+    public void IncreaseMaxCheckCount()
+    {
+        CheckCount = checkSlot.ItemCount;
+    }
+    public void DecreaseCheckCount()
+    {
+        if(checkCount > 1)
+        {
+            CheckCount = CheckCount - 1;
+        }
+    }
+    public void DecreaseMinCheckCount()
+    {
+        CheckCount = 1;
+    }
+
+
+
+    public void SellItem()
+    {
+        //플레이어 골드 추가
+        Managers.Gold.AddGold(checkSlot.Item.sell_price * CheckCount);
+        guideTextUI.SetText("판매 완료!");
+        guideTextUI.color = Color.green;
+        StartCoroutine(WaitAndRemoveGuideText());
+
+        //인벤토리에서 아이템 삭제
+        Inventory.instance.RemoveItem(checkSlot.Item.id, checkCount);
+
+        CheckCount = 0;
+        checkSlot.SetNull();
+    }
+
+    IEnumerator WaitAndRemoveGuideText()
+    {
+        yield return new WaitForSeconds(1f);
+        guideTextUI.SetText("");
+    }
 }

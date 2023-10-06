@@ -5,12 +5,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_MarketInvenSlot : MonoBehaviour
+public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     UI_MarketInventory inventoryUI;
 
     ItemBase item;
+    public ItemBase Item { get {  return item; } }
     int itemCount = 0;
+    public int ItemCount { get { return itemCount; } }
+
     public TextMeshProUGUI item_count;
     public Image item_image;
 
@@ -21,6 +24,7 @@ public class UI_MarketInvenSlot : MonoBehaviour
 
     [SerializeField]
     Transform infoPos;
+
 
     private void Start()
     {
@@ -55,20 +59,46 @@ public class UI_MarketInvenSlot : MonoBehaviour
         item_count.SetText("");
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+
+        mouseOn = true;
+        inventoryUI.SelectedSlot = this;
+
+        // info 위치 조정
+        RectTransform infoUIPos = item_slotInfo.GetComponent<RectTransform>();
+        Vector3 localPosition = inventoryUI.transform.InverseTransformPoint(infoPos.position);
+        infoUIPos.localPosition = localPosition;
+        item_slotInfo.SetActive(true);
+
+        // info 텍스트 변경
+        inventoryUI.itemInfo_name.text = item.name;
+        inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
+        if ((Food)item != null)
+            inventoryUI.itemInfo_energy.text = "에너지 +" + ((Food)item).energy;
+        else
+            inventoryUI.itemInfo_energy.text = "";
+
+
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (item == null)
             return;
+        inventoryUI.CheckSlot.Set(item.id, itemCount);
+        inventoryUI.CheckCount = 1;
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+        mouseOn = false;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if ((Food)item != null)
-            {
-                //TODO
-                //아래 슬롯에 뜨게 하기
-            }
-        }
+        item_slotInfo.SetActive(false);
+
     }
 
     public void RemoveItem(int count)
