@@ -121,7 +121,6 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             inventoryUI.InteractBtn.SetActive(false);
         }
-      
     }
 
     public void EatItem()
