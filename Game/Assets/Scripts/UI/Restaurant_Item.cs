@@ -61,7 +61,7 @@ public class Restaurant_Item : MonoBehaviour
             //구매 완료
             //소리
             //TODO
-            Inventory.instance.AddItem(food.id);
+            Inventory.instance.AddItem(food.id, 1);
         }
         else
         {

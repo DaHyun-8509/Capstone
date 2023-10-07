@@ -101,14 +101,5 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    public void AddSlot()
-    {
-        inven.SlotCount++;
-    }
-
-    public void AddItem(string item)
-    {
-        inven.AddItem(item);
-    }
-
+  
 }

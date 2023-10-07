@@ -13,6 +13,10 @@ public class DataManager
     private List<Crop> cropList = new List<Crop>();
     public List<Crop> CropList { get { return cropList; } }
 
+    private List<Grocery> groceryList = new List<Grocery>();
+    public List<Grocery> GroceryList { get { return groceryList; } }
+
+
 
     public void Start()
     {
@@ -23,6 +27,12 @@ public class DataManager
             foreach(var food in foodData.info) { foodList.Add(food); }
         }
 
+        //GroceryData Load
+        {
+            var json = ReadFile("JsonData/item_grocery").text;
+            GroceryData groceryData = JsonUtility.FromJson<GroceryData>(json);
+            foreach (var grocery in groceryData.info) { groceryList.Add(grocery); }
+        }
     }
 
     private TextAsset ReadFile(string path)
@@ -52,6 +62,17 @@ public class DataManager
         return null;
     }
 
+    public Grocery GetGroceryData(string id)
+    {
+        foreach (var grocery in groceryList)
+        {
+            if (grocery.id == id)
+                return grocery;
+        }
+        return null;
+    }
+
+
     public ItemBase GetItemData(string id)
     {
         {
@@ -64,6 +85,10 @@ public class DataManager
             if (item != null) return item;
         }
 
+        {
+            ItemBase item = GetGroceryData(id);
+            if (item != null) return item;
+        }
         return null;
     }
 

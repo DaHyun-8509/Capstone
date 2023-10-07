@@ -8,6 +8,10 @@ using UnityEngine.UI;
 public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     UI_MarketInventory inventoryUI;
+    UI_Market marketUI;
+
+    [SerializeField]
+    bool forMarket = false;
 
     ItemBase item;
     public ItemBase Item { get {  return item; } }
@@ -29,6 +33,7 @@ public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEn
     private void Start()
     {
         inventoryUI = GameObject.Find("Market_InventoryUI").GetComponent<UI_MarketInventory>();
+        marketUI = GameObject.Find("MarketUI").GetComponent<UI_Market>();
         item_slotInfo = inventoryUI.SlotInfo;
 
     }
@@ -88,8 +93,18 @@ public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEn
     {
         if (item == null)
             return;
-        inventoryUI.CheckSlot.Set(item.id, itemCount);
-        inventoryUI.CheckCount = 1;
+        if (!forMarket)
+        {
+            inventoryUI.CheckSlot.Set(item.id, itemCount);
+            inventoryUI.CheckCount = 1;
+        }    
+        else
+        {
+            marketUI.CheckSlot.Set(item.id, itemCount);
+            marketUI.CheckCount = 1;
+        }
+
+        
     }
     public void OnPointerExit(PointerEventData eventData)
     {

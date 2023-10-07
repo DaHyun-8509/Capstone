@@ -26,13 +26,20 @@ public class Crop : ItemBase
 }
 
 [Serializable]
-public class Data
+public class Grocery : ItemBase 
+{ 
+
+}
+
+
+[Serializable]
+public class FoodData
 {
-    
+    public  Food[] info;
 }
 
 [Serializable]
-public class FoodData : Data
+public class GroceryData
 {
-    public  Food[] info;
+    public Grocery[] info;
 }

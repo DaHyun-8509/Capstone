@@ -53,18 +53,18 @@ public class Inventory: MonoBehaviour
         itemCountDict = itemCounts;
     }
 
-    public bool AddItem(string itemId)
+    public bool AddItem(string itemId, int itemCount)
     {
         if (items.Count < slotCount)
         {
             
             if(itemCounts.ContainsKey(itemId))
             {
-                itemCounts[itemId]++;
+                itemCounts[itemId] += itemCount;
             }
             else
             {
-                itemCounts.Add(itemId, 1);
+                itemCounts.Add(itemId, itemCount);
                 items.AddLast(itemId);
             }
 

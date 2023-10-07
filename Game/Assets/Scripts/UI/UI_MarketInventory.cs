@@ -56,7 +56,6 @@ public class UI_MarketInventory : MonoBehaviour
     private void Start()
     {
         slots = slotHolder.GetComponentsInChildren<UI_MarketInvenSlot>(); // content안의 slot 전부 갖고올수 있는 것
-        Inventory.instance.onSlotCountChange += SlotChange;
         Inventory.instance.onChangeItem += InventoryChanged;
         Inventory.instance.onChangeItem.Invoke();
     }
@@ -79,27 +78,6 @@ public class UI_MarketInventory : MonoBehaviour
         {
             slots[slot].SetNull();
         }
-    }
-
-    private void SlotChange(int val)
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (i < Inventory.instance.SlotCount)
-                slots[i].GetComponent<Button>().interactable = true;
-            else
-                slots[i].GetComponent<Button>().interactable = false;
-        }
-    }
-
-    public void AddSlot()
-    {
-        Inventory.instance.SlotCount++;
-    }
-
-    public void AddItem(string item)
-    {
-        Inventory.instance.AddItem(item);
     }
 
     public void IncreaseCheckCount()
