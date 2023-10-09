@@ -109,6 +109,7 @@ public class UI_MarketInventory : MonoBehaviour
     {
         //플레이어 골드 추가
         Managers.Gold.AddGold(checkSlot.Item.sell_price * CheckCount);
+
         guideTextUI.SetText("판매 완료!");
         guideTextUI.color = Color.green;
         StartCoroutine(WaitAndRemoveGuideText());
@@ -120,9 +121,9 @@ public class UI_MarketInventory : MonoBehaviour
         checkSlot.SetNull();
     }
 
-    IEnumerator WaitAndRemoveGuideText()
+     IEnumerator WaitAndRemoveGuideText()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
         guideTextUI.SetText("");
     }
 }

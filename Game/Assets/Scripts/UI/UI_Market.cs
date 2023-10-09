@@ -164,8 +164,8 @@ public class UI_Market : MonoBehaviour
     }
     IEnumerator WaitAndRemoveGuideText()
     {
+        yield return new WaitForSecondsRealtime(1f);
         guideTextUI.SetText("");
-        yield return new WaitForSeconds(1f);
     }
 
     private void RemoveItem(string itemId, int count)
