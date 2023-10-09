@@ -7,7 +7,6 @@ using UnityEngine;
 public class ItemBase : RawData
 {
     public string name;
-    public string description;
     public int purchase_price;
     public int sell_price;
 }

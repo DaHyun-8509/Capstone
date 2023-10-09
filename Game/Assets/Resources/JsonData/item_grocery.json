@@ -1,8 +1,15 @@
 {"info":
 [
-{"id":"G0","name":"우유","description":"딱딱한 빵입니다.","purchase_price":50,"sell_price":10},
-{"id":"G1","name":"소시지","description":"딱딱한 빵입니다.","purchase_price":50,"sell_price":10},
-{"id":"G2","name":"빵","description":"딱딱한 빵입니다.","purchase_price":50,"sell_price":10},
-{"id":"G3","name":"소고기","description":"딱딱한 빵입니다.","purchase_price":50,"sell_price":10}
+{"id":"G0","name":"우유","purchase_price":50,"sell_price":10},
+{"id":"G1","name":"빵","purchase_price":50,"sell_price":10},
+{"id":"G2","name":"생크림","purchase_price":50,"sell_price":10},
+{"id":"G3","name":"치즈","purchase_price":50,"sell_price":10},
+{"id":"G4","name":"베이컨","purchase_price":50,"sell_price":10},
+{"id":"G5","name":"닭가슴살","purchase_price":50,"sell_price":10},
+{"id":"G6","name":"달걀","purchase_price":50,"sell_price":10},
+{"id":"G7","name":"생선","purchase_price":50,"sell_price":10},
+{"id":"G8","name":"소시지","purchase_price":50,"sell_price":10},
+{"id":"G9","name":"소고기","purchase_price":50,"sell_price":10},
+{"id":"G10","name":"인스턴트 커피","purchase_price":50,"sell_price":10}
 ]
 }

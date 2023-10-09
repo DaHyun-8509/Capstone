@@ -44,7 +44,7 @@ public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEn
 
         item = Managers.Data.GetItemData(itemId);
 
-        item_image.sprite = Resources.Load<Sprite>("JsonData/" + item.id);
+        item_image.sprite = Managers.Resource.GetSprite(itemId);
         Color color = item_image.color;
         color.a = 1f;
         item_image.color = color;
@@ -80,13 +80,14 @@ public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEn
 
         // info 텍스트 변경
         inventoryUI.itemInfo_name.text = item.name;
-        inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
-        if ((Food)item != null)
+        if(forMarket)
+            inventoryUI.itemInfo_price.text = item.purchase_price + "GOLD";
+        else
+            inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
+        if (item.id[0] != 'G')
             inventoryUI.itemInfo_energy.text = "에너지 +" + ((Food)item).energy;
         else
             inventoryUI.itemInfo_energy.text = "";
-
-
     }
 
     public void OnPointerDown(PointerEventData eventData)
