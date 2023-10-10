@@ -40,16 +40,17 @@ public class Managers : MonoBehaviour
 
         UI.Start();
         Data.Start();
+        Energy.Start();
         Sound.Start();
+        
     }
 
     void Update()
     {
         Input.OnUpdate();
         Time.Update();
-        UI.Update();
         Energy.Update();
-
+        UI.Update();
     }
 
     static void Init()

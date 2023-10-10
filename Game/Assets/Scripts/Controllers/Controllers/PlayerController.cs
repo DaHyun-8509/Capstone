@@ -62,7 +62,8 @@ public class PlayerController : MonoBehaviour
         Move(_runSpeed);
         Rotate();
         anim.SetFloat("move_speed", _runSpeed);
-        Managers.Energy.DecreaseEnergy(2 * Time.deltaTime);
+        if(Input.GetKey(KeyCode.W))
+            Managers.Energy.DecreaseEnergy(2 * Time.deltaTime);
 
     }
 

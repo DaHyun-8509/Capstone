@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnergyManager : MonoBehaviour
+public class EnergyManager
 {
     public Slider slider;
 
@@ -14,9 +14,9 @@ public class EnergyManager : MonoBehaviour
 
     public void Start()
     {
-        slider = GameObject.Find("pirodo").GetComponent<Slider>();
+        slider = GameObject.Find("Energy").GetComponent<Slider>();
         maxEnergy = 100;
-        curEnergy = maxEnergy;
+        curEnergy = 100;
         slider.maxValue = maxEnergy;
         slider.minValue = 0;
         slider.value = curEnergy;

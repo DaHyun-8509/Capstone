@@ -6,7 +6,7 @@ public class TimeManager
 {
 
     float timeElapsed = 0.0f;
-    float dayDuration = 30.0f;
+    float dayDuration = 600.0f;
     bool isTimeRunning = true;
 
     public bool IsRunning { get { return isTimeRunning; } set { isTimeRunning = value; } }

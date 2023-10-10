@@ -40,8 +40,8 @@ public class UIManager
             timeText.SetActive(true);
         }
         {
-            goldUI = GameObject.Find("GoldText");
-            goldUI.SetActive(true);
+            //goldUI = GameObject.Find("GoldText");
+            //goldUI.SetActive(true);
         }
     }
 
