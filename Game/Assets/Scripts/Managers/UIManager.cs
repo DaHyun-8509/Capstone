@@ -11,6 +11,7 @@ public class UIManager
     GameObject canvas;
     GameObject interactText;
     GameObject famringUI;
+    GameObject dayText;
     GameObject timeText;
     GameObject goldUI;
 
@@ -30,13 +31,16 @@ public class UIManager
             famringUI.SetActive(false);
         }
         {
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_Time");
-            timeText = GameObject.Instantiate(prefab, canvas.transform);
+            dayText = GameObject.Find("DayText");
+            dayText.SetActive(true);
+        }
+
+        {
+            timeText = GameObject.Find("TimeText");
             timeText.SetActive(true);
         }
         {
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_Gold");
-            goldUI = GameObject.Instantiate(prefab, canvas.transform);
+            goldUI = GameObject.Find("GoldText");
             goldUI.SetActive(true);
         }
     }
@@ -44,8 +48,8 @@ public class UIManager
     public void Update()
     {
         timeText.GetComponent<TextMeshProUGUI>().SetText(Managers.Time.GetHour().ToString() + "½Ã");
-        goldUI.GetComponent<TextMeshProUGUI>().SetText("{0} Gold", Managers.Gold.GetGold());
-
+        //goldUI.GetComponent<TextMeshProUGUI>().SetText("{0} Gold", Managers.Gold.GetGold());
+        dayText.GetComponent<TextMeshProUGUI>().SetText(Managers.Time.GetDay());
     }
 
     public void EnableCanvas()
