@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class DataManager
@@ -32,6 +33,14 @@ public class DataManager
             var json = ReadFile("JsonData/item_grocery").text;
             GroceryData groceryData = JsonUtility.FromJson<GroceryData>(json);
             foreach (var grocery in groceryData.info) { groceryList.Add(grocery); }
+        }
+
+
+        //CropData Load
+        {
+            var json = ReadFile("JsonData/item_crop").text;
+            CropData cropData = JsonUtility.FromJson<CropData>(json);
+            foreach (var crop in cropData.info) { cropList.Add(crop); }
         }
     }
 

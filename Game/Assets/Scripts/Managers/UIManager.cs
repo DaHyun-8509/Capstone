@@ -14,11 +14,14 @@ public class UIManager
     GameObject dayText;
     GameObject timeText;
     GameObject goldUI;
+    GameObject player;
+    TextMeshProUGUI harvestText;
 
     public void Start()
     {
         {
             canvas = GameObject.Find("MainCanvas");
+            player = GameObject.Find("Player");
         }
         {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_InteractionText");
@@ -26,8 +29,7 @@ public class UIManager
             interactText.SetActive(false);
         }
         {
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/UI_Farming");
-            famringUI = GameObject.Instantiate(prefab, canvas.transform);
+            famringUI = GameObject.Find("UI_Farming");
             famringUI.SetActive(false);
         }
         {
@@ -42,6 +44,10 @@ public class UIManager
         {
             //goldUI = GameObject.Find("GoldText");
             //goldUI.SetActive(true);
+        }
+
+        {
+            harvestText = GameObject.Find("UI_HarvestText").GetComponent<TextMeshProUGUI>();
         }
     }
 
@@ -77,10 +83,30 @@ public class UIManager
     public void EnableFarmingUI()
     {
         famringUI.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Managers.Time.StopTime();
+        player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
+        player.GetComponent<CharacterController>().enabled = false;
     }
     public void DisableFarmingUI()
     {
-        famringUI.SetActive(false);
+        famringUI.SetActive(false); 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Managers.Time.RunTime();
+        player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+        player.GetComponent<CharacterController>().enabled = true;
     }
 
+    public void HarvestText(string name, int count)
+    {
+        harvestText.SetText(name + " +{0}", count);
+    }
+
+    public void ClearHarvestText()
+    {
+
+        harvestText.SetText("");
+    }
 }

@@ -75,7 +75,7 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // info 텍스트 변경
         inventoryUI.itemInfo_name.text = item.name;
         inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
-        if (item.id[0] != 'G')
+        if (item.id[0] == 'R')
             inventoryUI.itemInfo_energy.text = "에너지 +" + ((Food)item).energy;
         else
             inventoryUI.itemInfo_energy.text = "";
@@ -88,7 +88,7 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if(Input.GetMouseButtonDown(1))
         {
-            if((Food)item != null)
+            if(true)
             {
                 // 버튼 위치 조정
                 RectTransform uiPos = inventoryUI.InteractBtn.GetComponent<RectTransform>();

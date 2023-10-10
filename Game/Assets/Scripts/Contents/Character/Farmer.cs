@@ -13,6 +13,7 @@ public class Farmer : MonoBehaviour
 
     private bool isWaitingForSelecting = false;
 
+
     void Update() //매 프레임마다
     {
         //현재 트리거에 잡힌 작물 있고 작물이 자라는 중이 아니라면
@@ -46,7 +47,7 @@ public class Farmer : MonoBehaviour
 
                             //작물 고르고 심기
                             StartCoroutine(WaitforSelecting());
-                            GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+                            
                     }
                   }
             }
@@ -86,10 +87,11 @@ public class Farmer : MonoBehaviour
         }
     }
 
-    private IEnumerator PlantCrop(CropField.CropType type)
+
+    private IEnumerator PlantCrop(string cropId)
     {
         yield return new WaitForSeconds(1);
-        currentCropField.GetComponent<CropField>().Plant(type);
+        currentCropField.GetComponent<CropField>().Plant(cropId);
 
         GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
     }
@@ -101,10 +103,19 @@ public class Farmer : MonoBehaviour
         {
             GameObject crop = currentCropField.GetComponent<CropField>().Crop;
             yield return new WaitForSeconds(1f);
-            Managers.Energy.DecreaseEnergy(3);
+            Managers.Energy.DecreaseEnergy(2);
 
             if (crop != null)
             {
+                FarmCrop farmCrop = crop.GetComponent<FarmCrop>();
+                int cropNum = farmCrop.CropNum;
+                //인벤토리에 아이템 추가
+                Inventory.instance.AddItem(farmCrop.CropId, cropNum);
+
+                //텍스트 띄우기
+                Managers.UI.HarvestText(Managers.Data.GetCropData(farmCrop.CropId).name, cropNum);
+                StartCoroutine(WaitAndClearHarvestText());
+
                 //기존 작물 삭제
                 GameObject.Destroy(crop);
                 currentCropField.GetComponent<CropField>().State = CropField.FieldState.Empty;
@@ -127,29 +138,25 @@ public class Farmer : MonoBehaviour
             //입력 있을 때까지 대기
             yield return null;
 
-            CropField.CropType type = CropField.CropType.None;
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                type = CropField.CropType.Carrot;
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-                type = CropField.CropType.Corn;
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-                type = CropField.CropType.Cabbage;
-            else if (Input.GetKeyDown(KeyCode.Escape)) //ESC누르면 종료
+           if (Input.GetKeyDown(KeyCode.Escape)) //ESC누르면 종료
                 isWaitingForSelecting = false;
-
-            //작물 선택되었으면
-            if(type != CropField.CropType.None)
-            {
-                Animator anim = GetComponent<Animator>();
-                anim.SetTrigger("pull_plant");
-                StartCoroutine(PlantCrop(type));
-                isWaitingForSelecting = false;
-                Managers.Energy.DecreaseEnergy(5);
-            }
         }
         
         Managers.UI.DisableFarmingUI();
+    }
 
+    IEnumerator WaitAndClearHarvestText()
+    {
+        yield return new WaitForSeconds(1f);
+        Managers.UI.ClearHarvestText();
+    }
+
+    public void SelectCrop(string cropId)
+    {
+        Animator anim = GetComponent<Animator>();
+        anim.SetTrigger("pull_plant");
+        StartCoroutine(PlantCrop(cropId));
+        isWaitingForSelecting = false;
+        Managers.Energy.DecreaseEnergy(3); 
     }
 }

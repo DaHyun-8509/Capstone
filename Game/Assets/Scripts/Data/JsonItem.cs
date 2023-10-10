@@ -21,7 +21,7 @@ public class Food : ItemBase
 [Serializable]
 public class Crop : ItemBase
 {
-
+    public int generate_time;
 }
 
 [Serializable]
@@ -41,4 +41,11 @@ public class FoodData
 public class GroceryData
 {
     public Grocery[] info;
+}
+
+
+[Serializable]
+public class CropData
+{
+    public Crop[] info;
 }

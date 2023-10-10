@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         Move(_walkSpeed);
         Rotate();
         anim.SetFloat("move_speed", _walkSpeed);
-        Managers.Energy.DecreaseEnergy(1 * Time.deltaTime);
+        Managers.Energy.DecreaseEnergy(0.5f * Time.deltaTime);
     }
 
     void UpdateRun()
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         Rotate();
         anim.SetFloat("move_speed", _runSpeed);
         if(Input.GetKey(KeyCode.W))
-            Managers.Energy.DecreaseEnergy(2 * Time.deltaTime);
+            Managers.Energy.DecreaseEnergy(1 * Time.deltaTime);
 
     }
 
@@ -154,7 +154,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         //플레이어 상태 변화
         switch (_state)
         {

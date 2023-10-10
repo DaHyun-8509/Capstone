@@ -23,43 +23,21 @@ public class CropField : MonoBehaviour
         Growing,
         Grown
     }
-    public enum CropType
-    {
-        None = 0,
-        Carrot = 1,
-        Corn = 2,
-        Cabbage = 3
-    }
-
 
     private void Start()
     {
         state = FieldState.Empty;
     }
 
-    public void Plant(CropType type)
+    public void Plant(string cropId)
     {
-        string name = "";
-        switch (type)
-        {
-            case CropType.Carrot:
-                name = "Prefabs/Farm/Carrot";
-                break;
-            case CropType.Cabbage:
-                name = "Prefabs/Farm/Cabbage";
-                break;
-            case CropType.Corn:
-                name = "Prefabs/Farm/Corn";
-                break;
-            default:
-                break;
-        }
-
+        string name = "Prefabs/Farm/" + cropId;
         GameObject prefab = Resources.Load<GameObject>(name);
         crop = GameObject.Instantiate(prefab);
         crop.transform.SetParent(transform);
         crop.transform.localPosition = Vector3.zero;
-        generateTime = crop.GetComponent<FarmCrop>().generateTime;
+        generateTime = Managers.Data.GetCropData(cropId).generate_time;
+        crop.GetComponent<FarmCrop>().CropId = cropId;
 
         //Lv별 작물 찾아두기 
         Transform[] children = crop.GetComponentsInChildren<Transform>();
