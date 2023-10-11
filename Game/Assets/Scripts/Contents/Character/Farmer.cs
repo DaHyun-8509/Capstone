@@ -53,7 +53,7 @@ public class Farmer : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider other) //트리거 잡힐 때
+    private void OnTriggerStay(Collider other) //트리거 잡힐 때
     {
         if (other.CompareTag("CropTrigger") && currentCropField == null)
         {
@@ -74,6 +74,7 @@ public class Farmer : MonoBehaviour
             }
         }
     }
+
 
     private void OnTriggerExit(Collider other) //트리거에서 빠져나올 때
     {
@@ -147,7 +148,7 @@ public class Farmer : MonoBehaviour
 
     IEnumerator WaitAndClearHarvestText()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Managers.UI.ClearHarvestText();
     }
 
