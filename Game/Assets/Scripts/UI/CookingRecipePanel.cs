@@ -24,7 +24,6 @@ public class CookingRecipePanel : MonoBehaviour
     {
         food.Set(foodId);
 
-        food.ClearDark();
         int i = 0;
         for(;i<ingredientIds.Length;i++)
         {
@@ -46,7 +45,7 @@ public class CookingRecipePanel : MonoBehaviour
         Inventory.instance.GetInventoryItems(out itemList, out itemCountDict);
 
         checkImage.gameObject.SetActive(true);
-
+        food.ClearDark();
         int i = 0;
         for (; i < ingredientIds.Length; i++)
         {
@@ -55,11 +54,34 @@ public class CookingRecipePanel : MonoBehaviour
             {
                 ingredients[i].AddDark();
                 checkImage.gameObject.SetActive(false);
+                food.AddDark();
             }
             else //있으면
             {
                 ingredients[i].ClearDark();
             }
         }
+    }
+
+    public void Cook()
+    {
+        LinkedList<string> itemList;
+        Dictionary<string, int> itemCountDict;
+        Inventory.instance.GetInventoryItems(out itemList, out itemCountDict);
+
+        for (int i = 0; i < ingredientIds.Length; i++)
+        {
+            //아이템이 없으면 요리 불가
+            if (itemList.Find(ingredientIds[i]) == null)
+                return;
+        }
+
+        for(int i = 0; i < ingredientIds.Length; i++)
+        {
+            Inventory.instance.RemoveItem(ingredientIds[i],1);
+        }
+
+        Inventory.instance.AddItem(foodId, 1);
+        
     }
 }
