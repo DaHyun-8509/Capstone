@@ -13,12 +13,17 @@ public class UpgradeInterior : MonoBehaviour
 
     int interiorLevel = 0;
 
+    [SerializeField]
+    GameObject Kitchen;
+
     private void Start()
     {
         for (int i = 1; i < buttons.Length; i++)
         {
             buttons[i].GetComponent<ButtonAction>().DeactiveButton();
         }
+        Kitchen.SetActive(false);
+
     }
     public void UpgradeTo1()
     {
@@ -29,6 +34,7 @@ public class UpgradeInterior : MonoBehaviour
     {
         //골드 체크 및 차감
         UpgradeButton(1);
+        Kitchen.SetActive(true);
     }
     public void UpgradeTo3()
     {

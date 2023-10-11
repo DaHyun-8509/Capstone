@@ -17,6 +17,10 @@ public class Restaurant_Item : MonoBehaviour
     bool clicked = false;
     float clickTime = 0.0f;
 
+
+    [SerializeField]
+    TextMeshProUGUI guideTextUI;
+
     public void Init(Food item)
     {
         food = item;
@@ -57,15 +61,35 @@ public class Restaurant_Item : MonoBehaviour
     {
         if(Managers.Gold.SubGold(food.purchase_price))
         {
-            //구매 완료
-            //소리
-            //TODO
-            Inventory.instance.AddItem(food.id, 1);
+            //구매 시도
+            if(Inventory.instance.AddItem(food.id, 1))
+            { //구매 가능
+
+                guideTextUI.SetText("구매 완료!");
+                guideTextUI.color = Color.green;
+                StartCoroutine(WaitAndRemoveGuideText());
+            }
+            else
+            {   //구매 불가능 (슬롯 부족)
+
+                guideTextUI.SetText("인벤토리 공간이 부족합니다!");
+                guideTextUI.color = Color.red;
+                StartCoroutine(WaitAndRemoveGuideText());
+                //차감된 골드 다시 복구
+                Managers.Gold.AddGold(food.purchase_price);
+            }
         }
         else
         {
             //구매 불가능 (돈 부족) 
-            
+            guideTextUI.SetText("골드가 부족합니다!");
+            guideTextUI.color = Color.red;
+            StartCoroutine(WaitAndRemoveGuideText());
         }
+    }
+    IEnumerator WaitAndRemoveGuideText()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        guideTextUI.SetText("");
     }
 }

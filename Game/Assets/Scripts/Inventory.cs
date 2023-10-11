@@ -55,7 +55,7 @@ public class Inventory: MonoBehaviour
 
     public bool AddItem(string itemId, int itemCount)
     {
-        if (items.Count < slotCount)
+        if (items.Count < slotCount || itemCounts.ContainsKey(itemId))
         {
             
             if(itemCounts.ContainsKey(itemId))

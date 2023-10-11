@@ -139,20 +139,32 @@ public class UI_Market : MonoBehaviour
     {
 
         //플레이어 골드 차감
-        if(Managers.Gold.SubGold(checkSlot.Item.sell_price * CheckCount))
+        if (Managers.Gold.SubGold(checkSlot.Item.sell_price * CheckCount))
         {
-            guideTextUI.SetText("구매 완료!");
-            guideTextUI.color = Color.green;
-            StartCoroutine(WaitAndRemoveGuideText());
-
-            //상점인벤에서 아이템 삭제
-            RemoveItem(checkSlot.Item.id, CheckCount);
 
             //인벤토리에 아이템 추가
-            Inventory.instance.AddItem(checkSlot.Item.id, checkCount);
+            if (Inventory.instance.AddItem(checkSlot.Item.id, checkCount))
+            {
+                //추가 성공
 
-            CheckCount = 0;
-            checkSlot.SetNull();
+                //상점인벤에서 아이템 삭제
+                RemoveItem(checkSlot.Item.id, CheckCount);
+
+                guideTextUI.SetText("구매 완료!");
+                guideTextUI.color = Color.green;
+                StartCoroutine(WaitAndRemoveGuideText());
+                CheckCount = 0;
+                checkSlot.SetNull();
+            }
+            else
+            {
+                //아이템 슬롯 부족
+                guideTextUI.SetText("인벤토리 공간이 부족합니다!");
+                guideTextUI.color = Color.red;
+                StartCoroutine(WaitAndRemoveGuideText());
+                //차감된 골드 다시 복구
+                Managers.Gold.AddGold(checkSlot.Item.sell_price * CheckCount);
+            }
         }
         else //구매 실패
         {

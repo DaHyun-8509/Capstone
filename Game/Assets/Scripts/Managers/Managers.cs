@@ -31,7 +31,7 @@ public class Managers : MonoBehaviour
     public static EnergyManager Energy { get { return Instance._energy; } }
 
     public static GoldManager Gold { get { return Instance._gold;} }
-    void Start()
+    void Awake()
     {
         Init();
 

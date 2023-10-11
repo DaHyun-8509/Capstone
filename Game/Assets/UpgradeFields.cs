@@ -63,7 +63,7 @@ public class UpgradeFields : MonoBehaviour
         buttons[now].GetComponent<ButtonAction>().DeactiveButton();
         buttons[now].GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
 
-        if (now < buttons.Length)
+        if (now < buttons.Length - 1)
             buttons[now + 1].GetComponent<ButtonAction>().ActiveButton();
     }
 
