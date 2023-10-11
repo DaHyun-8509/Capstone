@@ -4,7 +4,7 @@
 {"id":"R1","name":"계란과 베이컨","purchase_price":200,"sell_price":40,"food_grade":2,"energy":18},
 {"id":"R2","name":"소세지와 감자구이","purchase_price":300,"sell_price":60,"food_grade":2,"energy":30},
 {"id":"R3","name":"미트볼 정식","purchase_price":560,"sell_price":112,"food_grade":2,"energy":50},
-{"id":"R4","name":"닭가슴살","purchase_price":400,"sell_price":80,"food_grade":2,"energy":37},
+{"id":"R4","name":"삶은 닭가슴살","purchase_price":400,"sell_price":80,"food_grade":2,"energy":37},
 {"id":"R5","name":"모듬초밥","purchase_price":430,"sell_price":86,"food_grade":2,"energy":40},
 {"id":"R6","name":"피자","purchase_price":700,"sell_price":140,"food_grade":2,"energy":64},
 {"id":"R7","name":"핫도그","purchase_price":160,"sell_price":32,"food_grade":2,"energy":13},

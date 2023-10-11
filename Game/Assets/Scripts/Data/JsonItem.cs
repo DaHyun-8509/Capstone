@@ -38,6 +38,12 @@ public class FoodData
 }
 
 [Serializable]
+public class CookFoodData
+{
+    public Food[] info;
+}
+
+[Serializable]
 public class GroceryData
 {
     public Grocery[] info;

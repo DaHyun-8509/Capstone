@@ -11,6 +11,9 @@ public class DataManager
     private List<Food> foodList = new List<Food>();
     public List<Food> FoodList { get { return foodList; } }
 
+    private List<Food> cookFoodList = new List<Food>();
+    public List<Food> CookFoodList { get { return cookFoodList; } }
+
     private List<Crop> cropList = new List<Crop>();
     public List<Crop> CropList { get { return cropList; } }
 
@@ -27,7 +30,12 @@ public class DataManager
             FoodData foodData = JsonUtility.FromJson<FoodData>(json);
             foreach(var food in foodData.info) { foodList.Add(food); }
         }
-
+        //CookFoodData Load
+        {
+            var json = ReadFile("JsonData/item_cookFood").text;
+            CookFoodData cookFoodData = JsonUtility.FromJson<CookFoodData>(json);
+            foreach (var cookFood in cookFoodData.info) { cookFoodList.Add(cookFood); }
+        }
         //GroceryData Load
         {
             var json = ReadFile("JsonData/item_grocery").text;
@@ -60,6 +68,15 @@ public class DataManager
         }
         return null;
     }
+    public Food GetCookFoodData(string id)
+    {
+        foreach (var food in cookFoodList)
+        {
+            if (food.id == id)
+                return food;
+        }
+        return null;
+    }
 
     public Crop GetCropData(string id)
     {
@@ -86,6 +103,11 @@ public class DataManager
     {
         {
             ItemBase item = GetFoodData(id);
+            if (item != null) return item;
+        }
+
+        {
+            ItemBase item = GetCookFoodData(id);
             if (item != null) return item;
         }
 

@@ -8,6 +8,9 @@ public class KictchenTrigger : MonoBehaviour
     GameObject canvas;
     bool playerIn = false;
 
+    [SerializeField]
+    GameObject inventoryUI;
+
     GameObject player;
 
     private void OnTriggerEnter(Collider collider)
@@ -27,6 +30,7 @@ public class KictchenTrigger : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             canvas.SetActive(true);
+            inventoryUI.SetActive(true);
             Managers.Time.StopTime();
             player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
             player.GetComponent<CharacterController>().enabled = false;
@@ -39,6 +43,7 @@ public class KictchenTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             canvas.SetActive(false);
+            inventoryUI.SetActive(false);
 
             Managers.Time.RunTime();
             player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
