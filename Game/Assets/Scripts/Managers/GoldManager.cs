@@ -5,7 +5,7 @@ using UnityEngine;
 public class GoldManager : MonoBehaviour
 {
     [SerializeField]
-    private int gold = 3000;
+    private int gold = 500;
 
     public int GetGold() { return gold; }
     public void AddGold(int amount)

@@ -42,8 +42,8 @@ public class UIManager
             timeText.SetActive(true);
         }
         {
-            //goldUI = GameObject.Find("GoldText");
-            //goldUI.SetActive(true);
+            goldUI = GameObject.Find("GoldText");
+            goldUI.SetActive(true);
         }
 
         {
@@ -54,7 +54,7 @@ public class UIManager
     public void Update()
     {
         timeText.GetComponent<TextMeshProUGUI>().SetText(Managers.Time.GetHour().ToString() + "½Ã");
-        //goldUI.GetComponent<TextMeshProUGUI>().SetText("{0} Gold", Managers.Gold.GetGold());
+        goldUI.GetComponent<TextMeshProUGUI>().SetText("{0}G", Managers.Gold.GetGold());
         dayText.GetComponent<TextMeshProUGUI>().SetText(Managers.Time.GetDay());
     }
 

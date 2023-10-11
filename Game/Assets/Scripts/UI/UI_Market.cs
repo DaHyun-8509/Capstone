@@ -156,7 +156,7 @@ public class UI_Market : MonoBehaviour
         }
         else //구매 실패
         {
-            guideTextUI.SetText("금액이 부족합니다!");
+            guideTextUI.SetText("골드가 부족합니다!");
             guideTextUI.color = Color.red;
             StartCoroutine(WaitAndRemoveGuideText());
         }
