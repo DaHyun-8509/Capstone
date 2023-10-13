@@ -61,7 +61,7 @@ public class CropField : MonoBehaviour
 
     public IEnumerator GrowToLv2AfterDelay()
     { //작물을 Lv2로 
-        yield return new WaitForSeconds(generateTime / 2);
+        yield return new WaitForSeconds(generateTime *Managers.Time.DayDuration / 2);
 
         //일정 시간 후 보이게
         lv1.SetActive(false);
@@ -72,7 +72,7 @@ public class CropField : MonoBehaviour
 
     public IEnumerator GrowToLv3AfterDelay()
     { //작물을 Lv3으로
-        yield return new WaitForSeconds(generateTime / 2);
+        yield return new WaitForSeconds(generateTime * Managers.Time.DayDuration / 2);
 
         //일정 시간 후 보이게
         lv2.SetActive(false);

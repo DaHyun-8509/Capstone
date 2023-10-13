@@ -39,6 +39,9 @@ public class UpgradeAnimal : MonoBehaviour
 
     int chickenCount = 0;
 
+    [SerializeField]
+    int[] golds;
+
     private void Start()
     {
         extendedCageButton.GetComponent<ButtonAction>().DeactiveButton();    
@@ -47,47 +50,54 @@ public class UpgradeAnimal : MonoBehaviour
     public void BuyBasicCage()
     {
         //골드 체크 및 차감
-        basicCage.SetActive(true);
-        state = CageState.Basic;
+        if (Managers.Gold.SubGold(golds[0]))
+        {
+            basicCage.SetActive(true);
+            state = CageState.Basic;
 
-        basicCageButton.GetComponent<ButtonAction>().DeactiveButton();
-        basicCageButton.GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
-        extendedCageButton.GetComponent<ButtonAction>().ActiveButton();
-        getChickenButton.GetComponent<ButtonAction>().ActiveButton();
+            basicCageButton.GetComponent<ButtonAction>().DeactiveButton();
+            basicCageButton.GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
+            extendedCageButton.GetComponent<ButtonAction>().ActiveButton();
+            getChickenButton.GetComponent<ButtonAction>().ActiveButton();
+        }
+
     }
     public void BuyExtendedCage()
     {
-        //골드 체크 및 차감
-        basicCage.SetActive(false);
-        extendedCage.SetActive(true);
-        state = CageState.Extended;
+        if (Managers.Gold.SubGold(golds[1]))
+        {
+            basicCage.SetActive(false);
+            extendedCage.SetActive(true);
+            state = CageState.Extended;
 
-        extendedCageButton.GetComponent<ButtonAction>().DeactiveButton();
-        extendedCageButton.GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
+            extendedCageButton.GetComponent<ButtonAction>().DeactiveButton();
+            extendedCageButton.GetComponentInChildren<TextMeshProUGUI>().text = "구매완료";
 
-        getChickenButton.GetComponent<ButtonAction>().ActiveButton();
-        getChickenButton.GetComponentInChildren<TextMeshProUGUI>().text = "구매";
+            getChickenButton.GetComponent<ButtonAction>().ActiveButton();
+            getChickenButton.GetComponentInChildren<TextMeshProUGUI>().text = "구매";
+        }
+
     }
     public void BuyChicken()
     {
-        //골드 체크 및 차감
-        
-        if((state == CageState.Basic && chickenCount < basicChickenCount)
-            ||(state == CageState.Extended && chickenCount < extendedChickenCount)) 
+        if (Managers.Gold.SubGold(golds[2]))
         {
-            
-            GameObject newChicken = Instantiate(chicken, chickenSpawnPos);
-            newChicken.transform.parent = chickenSpawnPos;
+            if ((state == CageState.Basic && chickenCount < basicChickenCount)
+            || (state == CageState.Extended && chickenCount < extendedChickenCount))
+            {
 
-            chickenCount++;
-        }
+                GameObject newChicken = Instantiate(chicken, chickenSpawnPos);
+                newChicken.transform.parent = chickenSpawnPos;
 
-        if((state == CageState.Basic && chickenCount >= basicChickenCount)
-            || (state == CageState.Extended && chickenCount >= extendedChickenCount))
-        {
-            getChickenButton.GetComponent<ButtonAction>().DeactiveButton();
-            getChickenButton.GetComponentInChildren<TextMeshProUGUI>().text = "최대";
+                chickenCount++;
+            }
+
+            if ((state == CageState.Basic && chickenCount >= basicChickenCount)
+                || (state == CageState.Extended && chickenCount >= extendedChickenCount))
+            {
+                getChickenButton.GetComponent<ButtonAction>().DeactiveButton();
+                getChickenButton.GetComponentInChildren<TextMeshProUGUI>().text = "최대";
+            }
         }
     }
-
 }

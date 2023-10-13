@@ -5,8 +5,10 @@ using UnityEngine;
 public class TimeManager
 {
 
-    float timeElapsed = 0.0f;
+    float totalTimeElapsed = 0.0f;
+    float dayTimeElapsed = 0.0f;
     float dayDuration = 600.0f;
+    public float DayDuration { get { return dayDuration; } }
     bool isTimeRunning = true;
 
     public bool IsRunning { get { return isTimeRunning; } set { isTimeRunning = value; } }
@@ -20,15 +22,16 @@ public class TimeManager
     {
         if(isTimeRunning)
         {
-            timeElapsed += Time.deltaTime;
-            hour = (int)(timeElapsed * 24 / dayDuration);
+            totalTimeElapsed += Time.deltaTime;
+            dayTimeElapsed += Time.deltaTime;
+            hour = (int)(dayTimeElapsed * 24 / dayDuration);
 
         }
 
-        if (timeElapsed > dayDuration)
+        if (dayTimeElapsed > dayDuration)
         {
             hour = 0;
-            timeElapsed = 0;
+            dayTimeElapsed = 0;
             day++;
             if (day >= days.Length)
                 day = 0;

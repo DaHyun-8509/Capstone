@@ -27,34 +27,42 @@ public class UpgradeFields : MonoBehaviour
     }
     public void UpgradeTo1()
     {
-        Managers.Gold.SubGold(golds[0]);
-        UpgradeButton(0);
-        cropButtons[0].SetActive(true);
-        cropButtons[1].SetActive(true);
-        cropButtons[2].SetActive(true);
+        if(Managers.Gold.SubGold(golds[0]))
+        {
+            UpgradeButton(0);
+            cropButtons[0].SetActive(true);
+            cropButtons[1].SetActive(true);
+            cropButtons[2].SetActive(true);
+        }
     }
     public void UpgradeTo2()
     {
-        Managers.Gold.SubGold(golds[1]);
-        UpgradeButton(1);
-        cropButtons[3].SetActive(true);
-        cropButtons[4].SetActive(true);
-        cropButtons[5].SetActive(true);
+        if(Managers.Gold.SubGold(golds[1]))
+        {
+            UpgradeButton(1);
+            cropButtons[3].SetActive(true);
+            cropButtons[4].SetActive(true);
+            cropButtons[5].SetActive(true);
+        }
     }
     public void UpgradeTo3()
     {
-        Managers.Gold.SubGold(golds[2]);
-        UpgradeButton(2);
-        cropButtons[6].SetActive(true);
-        cropButtons[7].SetActive(true);
-        cropButtons[8].SetActive(true);
+        if(Managers.Gold.SubGold(golds[2]))
+        {
+            UpgradeButton(2);
+            cropButtons[6].SetActive(true);
+            cropButtons[7].SetActive(true);
+            cropButtons[8].SetActive(true);
+        }
     }
     public void UpgradeTo4()
     {
-        Managers.Gold.SubGold(golds[3]);
-        UpgradeButton(3);
-        cropButtons[9].SetActive(true);
-        cropButtons[10].SetActive(true);
+        if(Managers.Gold.SubGold(golds[3]))
+        {
+            UpgradeButton(3);
+            cropButtons[9].SetActive(true);
+            cropButtons[10].SetActive(true);
+        }
     }
 
     private void UpgradeButton(int now)

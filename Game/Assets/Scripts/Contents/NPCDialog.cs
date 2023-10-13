@@ -29,7 +29,7 @@ public class NPCDialog : MonoBehaviour
     void Update()
     {
         // ESC Escape
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (isTalking && Input.GetKeyDown(KeyCode.Escape))
         {
             Recover();
             npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().ResetDialogs();

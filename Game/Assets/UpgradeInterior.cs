@@ -16,6 +16,9 @@ public class UpgradeInterior : MonoBehaviour
     [SerializeField]
     GameObject Kitchen;
 
+    [SerializeField]
+    int[] golds;
+
     private void Start()
     {
         for (int i = 1; i < buttons.Length; i++)
@@ -27,24 +30,32 @@ public class UpgradeInterior : MonoBehaviour
     }
     public void UpgradeTo1()
     {
-        //골드 체크 및 차감
-        UpgradeButton(0);
+        if (Managers.Gold.SubGold(golds[0]))
+        {
+            UpgradeButton(0);
+        }
     }
     public void UpgradeTo2()
     {
-        //골드 체크 및 차감
-        UpgradeButton(1);
-        Kitchen.SetActive(true);
+        if (Managers.Gold.SubGold(golds[1]))
+        {
+            UpgradeButton(1);
+            Kitchen.SetActive(true);
+        }     
     }
     public void UpgradeTo3()
     {
-        //골드 체크 및 차감
-        UpgradeButton(2);
+        if (Managers.Gold.SubGold(golds[2]))
+        {
+            UpgradeButton(2);
+        } 
     }
     public void UpgradeTo4()
     {
-        //골드 체크 및 차감
-        UpgradeButton(3);
+        if (Managers.Gold.SubGold(golds[3]))
+        {
+            UpgradeButton(3);
+        }  
     }
 
     private void UpgradeButton(int now)
