@@ -1,4 +1,3 @@
-using Palmmedia.ReportGenerator.Core.CodeAnalysis;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UIElements;
 using UnityEngineInternal;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {

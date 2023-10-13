@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.Android;
 using UnityEngine.UIElements;
-using static UnityEditor.FilePathAttribute;
 
 public class AI_Chicken : MonoBehaviour
 {

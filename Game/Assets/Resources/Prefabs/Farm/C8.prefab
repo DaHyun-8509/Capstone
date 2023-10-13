@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fada1b854ef3e4da8d0137cc2a4e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cropNum_min: 15
+  cropNum_max: 20
 --- !u!1001 &3958344953074263589
 PrefabInstance:
   m_ObjectHideFlags: 0
