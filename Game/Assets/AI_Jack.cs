@@ -61,7 +61,6 @@ public class AI_Jack : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
-        anim.SetTrigger("walk");
         knife.SetActive(false);
         turnner.SetActive(false);
         foods.SetActive(false);

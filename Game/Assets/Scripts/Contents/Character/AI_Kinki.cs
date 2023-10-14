@@ -47,6 +47,8 @@ public class AI_Kinki : MonoBehaviour
     public GameObject coke;
     public GameObject fries;
 
+    float agentSpeed;
+    float agentAccel;
 
     private void Start()
     {
@@ -57,6 +59,8 @@ public class AI_Kinki : MonoBehaviour
         hamburger.SetActive(false);
         coke.SetActive(false);
         fries.SetActive(false);
+
+        agentAccel = agent.acceleration;
     }
 
     private void Update()
@@ -132,15 +136,16 @@ public class AI_Kinki : MonoBehaviour
         //플레이어가 대화를 걸었을 때 
         if (dialog.Talking == true && isTalking == false)
         {
-            if (state == State.Move)
-                anim.SetTrigger("stop");
-
+            agent.acceleration = 0;
+            agent.velocity = Vector3.zero;
             agent.isStopped = true;
+            
             isTalking = true;
         }
         //대화가 끝났을 때
         if (dialog.Talking == false && isTalking == true)
         {
+            agent.acceleration = agentAccel;
             agent.isStopped = false;
             isTalking = false;
             if (state == State.Move)

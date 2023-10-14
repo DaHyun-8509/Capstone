@@ -6,7 +6,7 @@ public class TimeManager
 {
 
     float totalTimeElapsed = 0.0f;
-    float dayTimeElapsed = 0.0f;
+    float dayTimeElapsed = 0f;
     float dayDuration = 600.0f;
     public float DayDuration { get { return dayDuration; } }
     bool isTimeRunning = true;
@@ -18,8 +18,10 @@ public class TimeManager
 
     string[] days = { "월", "화", "수", "목", "금", "토", "일" };
 
+
     public void Update()
     {
+        
         if(isTimeRunning)
         {
             totalTimeElapsed += Time.deltaTime;

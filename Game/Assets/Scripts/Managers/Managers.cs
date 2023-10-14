@@ -42,7 +42,12 @@ public class Managers : MonoBehaviour
         Data.Start();
         Energy.Start();
         Sound.Start();
-        
+    }
+
+    private void Start()
+    {
+        StartCoroutine(RecoverTimeRun());
+        UnityEngine.Time.timeScale = 100f;
     }
 
     void Update()
@@ -51,6 +56,8 @@ public class Managers : MonoBehaviour
         Time.Update();
         Energy.Update();
         UI.Update();
+
+        Resources.UnloadUnusedAssets();
     }
 
     static void Init()
@@ -66,8 +73,13 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);  //사라지지 않게 함
             s_instance = go.GetComponent<Managers>();   
         }
+
     }
 
-   
+    IEnumerator RecoverTimeRun()
+    {
+        yield return new WaitUntil(() => Time.GetHour() == 10);
+        UnityEngine.Time.timeScale = 1;
+    }
 
 }

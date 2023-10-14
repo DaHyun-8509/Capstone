@@ -17,8 +17,7 @@ public class AI_William : MonoBehaviour
     enum Location
     {
         Home,
-        Work,
-        Bench
+        Work
     }
 
     //Transforms
@@ -41,11 +40,15 @@ public class AI_William : MonoBehaviour
     bool isTalking = false;
     int nowIndex = 0;
 
+    float agentAccel;
+
 private void Start()
     {   
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         dialog = GetComponentInChildren<NPCDialog>();
+
+        agentAccel = agent.acceleration;
     }
 
     private void Update()
@@ -81,9 +84,7 @@ private void Start()
                 case Location.Work:
                     DoWork();
                     break;
-                case Location.Bench:
-                    SitOnBench();
-                    break;
+
             }
         }
 
@@ -108,6 +109,8 @@ private void Start()
         //플레이어가 대화를 걸었을 때 
         if(dialog.Talking == true && isTalking == false)
         {
+            agent.acceleration = 0;
+            agent.velocity = Vector3.zero;
             agent.isStopped = true;
             isTalking = true;
             StopAllCoroutines();
@@ -118,6 +121,7 @@ private void Start()
         {
             isTalking = false;
             agent.isStopped = false;
+            agent.acceleration = agentAccel;
             if (state == State.Move)
                 anim.SetTrigger("walk");
             else if (state == State.Act && location == Location.Work)
@@ -143,11 +147,6 @@ private void Start()
         StartCoroutine(PlayWorkAimCoroutine());
     }
 
-    void SitOnBench()
-    {
-        //의자에서 앞방향을 바라본다. 
-        //앉는 애니메이션
-    }
     private IEnumerator PlayWorkAimCoroutine()
     {
         anim.SetTrigger("pull_plant");

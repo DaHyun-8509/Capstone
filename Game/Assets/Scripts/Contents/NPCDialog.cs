@@ -20,6 +20,7 @@ public class NPCDialog : MonoBehaviour
 
     private bool isTalking = false;
     public bool Talking { get { return isTalking; } set { isTalking = value; } }
+    private bool isFacing = false;
 
     private void Start()
     {
@@ -34,6 +35,15 @@ public class NPCDialog : MonoBehaviour
             Recover();
             npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().ResetDialogs();
         }
+
+        if(isTalking && !isFacing)
+        {
+            Vector3 directionToPlayer = player.position - npc.position;
+            npc.rotation = Quaternion.Lerp(npc.transform.rotation, Quaternion.LookRotation(directionToPlayer), Time.deltaTime);
+
+            Vector3 directionToNPC = npc.position - player.position;
+            player.rotation = Quaternion.Lerp(player.transform.rotation, Quaternion.LookRotation(directionToNPC), Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,6 +53,8 @@ public class NPCDialog : MonoBehaviour
             Managers.UI.SetInteractText("대화하기[E]");
             Managers.UI.EnableInteractText();
         }
+
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -53,8 +65,8 @@ public class NPCDialog : MonoBehaviour
             Talking = true;
 
             player = other.transform;
-            StartCoroutine(FaceEachOtherAfterDelay());
 
+            StartCoroutine(FaceEachOtherAfterDelay());
             // disable player input
             player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
             player.GetComponent<CharacterController>().enabled = false;
@@ -100,6 +112,7 @@ public class NPCDialog : MonoBehaviour
         Managers.Time.RunTime();
 
         Talking = false;
+        isFacing = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -110,12 +123,9 @@ public class NPCDialog : MonoBehaviour
 
     private IEnumerator FaceEachOtherAfterDelay()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2.5f);
 
-        player.GetComponentInChildren<Animator>().SetTrigger("stop");
-        npc.LookAt(player);
-        player.LookAt(npc); 
-        Managers.Time.StopTime();
-
+        npc.GetComponent<Animator>().SetTrigger("stop");
+        isFacing = true;
     }
 }
