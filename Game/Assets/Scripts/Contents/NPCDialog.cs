@@ -53,8 +53,6 @@ public class NPCDialog : MonoBehaviour
             Managers.UI.SetInteractText("대화하기[E]");
             Managers.UI.EnableInteractText();
         }
-
-
     }
 
     private void OnTriggerStay(Collider other)

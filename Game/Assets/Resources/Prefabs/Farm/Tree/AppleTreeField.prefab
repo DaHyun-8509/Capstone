@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grownTreePrefab: {fileID: 8955422712446756353, guid: 69c588a42352fec40a76c03caf781dee, type: 3}
-  genertateTime: 10
+  genertateTime: 3000
 --- !u!1001 &6036899551124252180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8955422712446756353, guid: 69c588a42352fec40a76c03caf781dee, type: 3}
       propertyPath: m_Name
-      value: Tree_Apple
+      value: Tree
       objectReference: {fileID: 0}
     - target: {fileID: 9031495498369197260, guid: 69c588a42352fec40a76c03caf781dee, type: 3}
       propertyPath: m_IsActive

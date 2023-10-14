@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using OpenAI;
 
 public class AI_Kinki : MonoBehaviour
 {
@@ -47,9 +48,9 @@ public class AI_Kinki : MonoBehaviour
     public GameObject coke;
     public GameObject fries;
 
-    float agentSpeed;
     float agentAccel;
 
+    ChatGPT gpt;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -61,6 +62,8 @@ public class AI_Kinki : MonoBehaviour
         fries.SetActive(false);
 
         agentAccel = agent.acceleration;
+        gpt = gameObject.transform.Find("ToActivate").GetComponentInChildren<ChatGPT>();
+
     }
 
     private void Update()
@@ -73,6 +76,7 @@ public class AI_Kinki : MonoBehaviour
             //레스토랑으로 이동한다. 
             agent.destination = restaurantPos.position;
             Move();
+            gpt.nowState = "햄버거 먹으러 식당에 가고있음";
             location = Location.Restaurant;
         }
         //TimeToGoYard시이면  
@@ -82,6 +86,7 @@ public class AI_Kinki : MonoBehaviour
             StandUp();
             //집앞 마당으로 이동한다. 
             agent.destination = yardPos.position;
+            gpt.nowState = "오늘 방송을 어떻게 할지 생각중임";
             Move();
             location = Location.Yard;
         }
@@ -98,6 +103,7 @@ public class AI_Kinki : MonoBehaviour
         {
             //산책장소로 이동한다. 
             agent.destination = walkPos.position;
+            gpt.nowState = "잠시 산책 나옴";
             Move();
             location = Location.OnAWalk;
         }
@@ -106,6 +112,7 @@ public class AI_Kinki : MonoBehaviour
         {
             //집으로 이동한다. 
             agent.destination = homePos.position;
+            gpt.nowState = "산책을 끝내고 집에 가는 중";
             Move();
             location = Location.Home;
         }

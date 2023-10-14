@@ -19,7 +19,7 @@ public class TreeField : MonoBehaviour
 
     private void Start()
     {
-        currentTree = transform.Find("Tree_Apple").gameObject;
+        currentTree = transform.Find("Tree").gameObject;
         isGrown = true;
     }
 

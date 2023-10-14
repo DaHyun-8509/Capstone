@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using OpenAI;
 
 public class AI_William : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class AI_William : MonoBehaviour
 
     float agentAccel;
 
+    ChatGPT gpt;
+
 private void Start()
     {   
         agent = GetComponent<NavMeshAgent>();
@@ -49,6 +52,8 @@ private void Start()
         dialog = GetComponentInChildren<NPCDialog>();
 
         agentAccel = agent.acceleration;
+
+        gpt = gameObject.transform.Find("ToActivate").GetComponentInChildren<ChatGPT>();
     }
 
     private void Update()
@@ -60,6 +65,7 @@ private void Start()
         {
             //이동한다. 
             agent.destination = workPoses[nowIndex].position;
+            gpt.nowState = "옥수수 농장에 일하러 가는 중";
             MoveToWork();
         }
 
@@ -67,6 +73,7 @@ private void Start()
         if (state == State.Act && finishedAct && Managers.Time.GetHour() >= TimeToGoBackHome)
         {
             agent.destination = homePos.position;
+            gpt.nowState = "일을 끝내고 집에 가는 중";
             state = State.None;
             anim.SetTrigger("walk");
         }
@@ -83,6 +90,7 @@ private void Start()
                     break;
                 case Location.Work:
                     DoWork();
+                    gpt.nowState = "옥수수 농장에서 일 하는 중(잡초 뽑기)";
                     break;
 
             }

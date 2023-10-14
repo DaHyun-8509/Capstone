@@ -71,6 +71,7 @@ public class CropPicker : MonoBehaviour
             //작물 비활성화
             crop.GetComponent<PickableCrop>().ClearCrop();
 
+            Managers.Energy.DecreaseEnergy(0.2f);
             //현재 작물 null 초기화
             currentCrop = null;
         }

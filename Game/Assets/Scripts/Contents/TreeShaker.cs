@@ -62,6 +62,7 @@ public class TreeShaker : MonoBehaviour
 
         Animator anim = GetComponent<Animator>();
         anim.SetTrigger("shake_tree");
+        Managers.Energy.DecreaseEnergy(1f);
 
         yield return new WaitForSeconds(1);
 

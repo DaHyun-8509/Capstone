@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
         Move(_walkSpeed);
         Rotate();
         anim.SetFloat("move_speed", _walkSpeed);
-        Managers.Energy.DecreaseEnergy(0.5f * Time.deltaTime);
     }
 
     void UpdateRun()
@@ -61,7 +60,7 @@ public class PlayerController : MonoBehaviour
         Rotate();
         anim.SetFloat("move_speed", _runSpeed);
         if(Input.GetKey(KeyCode.W))
-            Managers.Energy.DecreaseEnergy(1 * Time.deltaTime);
+            Managers.Energy.DecreaseEnergy(0.3f * Time.deltaTime);
 
     }
 
@@ -87,12 +86,16 @@ public class PlayerController : MonoBehaviour
 
         //움직임이 있으면 Walk 없으면 Idle
         if (moveDirection.magnitude > 0.0001f)
-            _state = PlayerState.Walk;
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+                _state = PlayerState.Run;
+            else
+                _state = PlayerState.Walk;
+        }    
         else
             _state = PlayerState.Idle;
 
-        if(Input.GetKey(KeyCode.LeftShift))
-            _state = PlayerState.Run;
+
     }
 
     void Rotate()//마우스 이동에 따른 시야 회전

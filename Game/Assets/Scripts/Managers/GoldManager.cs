@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldManager : MonoBehaviour
-{
-    [SerializeField]
+public class GoldManager
+{ 
     private int gold = 500;
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.G))
+        if(Input.GetKeyDown(KeyCode.F1) )
         {
-            gold += 1000;
+            AddGold(1000);
         }
     }
 
