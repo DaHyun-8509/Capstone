@@ -34,6 +34,7 @@ public class NPCDialog : MonoBehaviour
         {
             Recover();
             npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().ResetDialogs();
+            Managers.Time.RunTime();
         }
 
         if(isTalking && !isFacing)
@@ -62,6 +63,8 @@ public class NPCDialog : MonoBehaviour
             Managers.UI.DisableInteractText();
             Talking = true;
 
+            npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().UpdateLikeability();
+
             player = other.transform;
 
             StartCoroutine(FaceEachOtherAfterDelay());
@@ -83,6 +86,7 @@ public class NPCDialog : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
 
             toActivate.GetComponentInChildren<ChatGPT>().NPCType = npcType;
+
 
         }
     }
@@ -122,8 +126,8 @@ public class NPCDialog : MonoBehaviour
     private IEnumerator FaceEachOtherAfterDelay()
     {
         yield return new WaitForSeconds(2.5f);
-
         npc.GetComponent<Animator>().SetTrigger("stop");
         isFacing = true;
+        Managers.Time.StopTime();
     }
 }

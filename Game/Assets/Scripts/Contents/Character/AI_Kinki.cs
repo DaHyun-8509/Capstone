@@ -16,7 +16,6 @@ public class AI_Kinki : MonoBehaviour
     enum Location
     {
         Home,
-        Yard,
         Restaurant,
         OnAWalk
     }
@@ -25,12 +24,11 @@ public class AI_Kinki : MonoBehaviour
     public Transform homePos;
     public Transform restaurantPos;
     public Transform restaurantLookAtPos;
-    public Transform yardPos;
     public Transform walkPos;
 
     //Times
     public int TimeToGoRestaurant;
-    public int TimeToGoYard;
+ 
     public int TimeToGoHome1;
     public int TimeToGoForaWalk;
     public int TimeToGoHome2;
@@ -39,7 +37,9 @@ public class AI_Kinki : MonoBehaviour
     NavMeshAgent agent;
     NPCDialog dialog;
 
+    [SerializeField]
     State state = State.None;
+    [SerializeField]
     Location location = Location.Home;
 
     bool isTalking = false;
@@ -79,20 +79,10 @@ public class AI_Kinki : MonoBehaviour
             gpt.nowState = "햄버거 먹으러 식당에 가고있음";
             location = Location.Restaurant;
         }
-        //TimeToGoYard시이면  
-        if (state != State.Move && Managers.Time.GetHour() == TimeToGoYard)
-        {
-            //일어난다. 
-            StandUp();
-            //집앞 마당으로 이동한다. 
-            agent.destination = yardPos.position;
-            gpt.nowState = "오늘 방송을 어떻게 할지 생각중임";
-            Move();
-            location = Location.Yard;
-        }
         //움직이지 않고있고 TimeToGoHome1시이면  
-        if (state == State.None && Managers.Time.GetHour() == TimeToGoHome1)
+        if (state == State.Act && Managers.Time.GetHour() == TimeToGoHome1)
         {
+            StandUp();
             //집으로 이동한다. 
             agent.destination = homePos.position;
             Move();
@@ -132,8 +122,6 @@ public class AI_Kinki : MonoBehaviour
                     SitAndEatBurger();
                     break;
                 case Location.OnAWalk:
-                    break;
-                case Location.Yard:
                     break;
                 default:
                     break;

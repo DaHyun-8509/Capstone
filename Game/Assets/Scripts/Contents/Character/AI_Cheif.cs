@@ -1,3 +1,4 @@
+using OpenAI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -58,7 +59,7 @@ public class AI_Cheif : MonoBehaviour
     bool finishedAct = true;
     int nowIndex = 0;
 
-
+    ChatGPT gpt;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -67,6 +68,8 @@ public class AI_Cheif : MonoBehaviour
         anim.SetTrigger("walk");
 
         BeerGlass.SetActive(false);
+        gpt = gameObject.transform.Find("ToActivate").GetComponentInChildren<ChatGPT>();
+
     }
 
     private void Update()
@@ -83,6 +86,7 @@ public class AI_Cheif : MonoBehaviour
         {
             //이동한다. 
             agent.destination = workPoses[nowIndex].position;
+            gpt.nowState = "going to work(weed in the field)";
             MoveToWork();
         }
 
@@ -93,12 +97,15 @@ public class AI_Cheif : MonoBehaviour
                 agent.destination = marketPos.position;
                 Move();
                 location = Location.Market;
+                gpt.nowState = "going to the market";
             }
             else if (type == 2)
             {
                 agent.destination = marketPos.position;
                 Move();
                 location = Location.Park;
+                gpt.nowState = "going to the park.";
+
             }
         }
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoToRestaruant)
@@ -106,6 +113,8 @@ public class AI_Cheif : MonoBehaviour
             agent.destination = restaurantPos.position;
             Move();
             location = Location.Restaurant;
+            gpt.nowState = "going to the restaurant.";
+
         }
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoHome)
         {
@@ -113,6 +122,8 @@ public class AI_Cheif : MonoBehaviour
             agent.destination = homePos.position;
             Move();
             location = Location.Home;
+            gpt.nowState = "going to home to sleep";
+
         }
         //Act 상태이고 행동이 끝났으면 
         else if (location == Location.Work && state == State.Act && finishedAct == true)
@@ -202,6 +213,7 @@ public class AI_Cheif : MonoBehaviour
 
     void DoWork()
     {
+        gpt.nowState = "working(weeding) in the field next to the house";
         StartCoroutine(PlayWorkAimCoroutine());
     }
 
@@ -219,12 +231,14 @@ public class AI_Cheif : MonoBehaviour
         transform.LookAt(restaurantForwardPos.position);
         anim.SetTrigger("drink");
         BeerGlass.SetActive(true);
+        gpt.nowState = "drink beear in the restaurant";
     }
 
     void OnMarket()
     {
         transform.LookAt(marketForwardPos.position);
         anim.SetTrigger("talk");
+        gpt.nowState = "chattering with market owner";
     }
 
     public void GrabBeerGlass()
