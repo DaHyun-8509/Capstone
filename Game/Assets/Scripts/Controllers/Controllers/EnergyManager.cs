@@ -39,9 +39,13 @@ public class EnergyManager
     public void IncreaseEnergy(float energy)
     {
         curEnergy += energy;
-        if(curEnergy > maxEnergy)
+        if (curEnergy > maxEnergy)
         {
             curEnergy = maxEnergy;
+        }
+        if (curEnergy < 0)
+        {
+            curEnergy = 0;
         }
     }
 }

@@ -6,7 +6,6 @@ public class Inventory: MonoBehaviour
 {
 
 
-    #region Singleton
     public static Inventory instance;
     private void Awake()
     {
@@ -17,9 +16,8 @@ public class Inventory: MonoBehaviour
         }
         instance = this;
     }
-    #endregion
 
-    public delegate void OnSlotCountChange(int val); // 대리자 정의
+    public delegate void OnSlotCountChange(int val); 
     public OnSlotCountChange onSlotCountChange;
 
 

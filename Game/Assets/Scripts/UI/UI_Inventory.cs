@@ -37,7 +37,7 @@ public class UI_Inventory : MonoBehaviour
     private void Start()
     {
         inven = Inventory.instance;
-        slots = slotHolder.GetComponentsInChildren<UI_InvenSlot>(); // content안의 slot 전부 갖고올수 있는 것
+        slots = slotHolder.GetComponentsInChildren<UI_InvenSlot>(); 
         inven.onSlotCountChange += SlotChange;
         inventoryPanel.SetActive(activateInventory);
         inven.onChangeItem += InventoryChanged;

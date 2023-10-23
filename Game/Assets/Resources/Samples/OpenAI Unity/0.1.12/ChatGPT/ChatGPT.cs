@@ -20,7 +20,7 @@ namespace OpenAI
         [SerializeField] private InputField inputField;
         [SerializeField] private Button button;
         [SerializeField] private ScrollRect scroll;
-        
+
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
 
@@ -36,8 +36,8 @@ namespace OpenAI
         [SerializeField] int likeGrade = 0;
         [SerializeField] int like = 0;
         public int Like { get { return like; } }
-        void AddLike(int num) 
-        { 
+        void AddLike(int num)
+        {
             like += num;
             if (like == 0)
                 likeGrade = 0;
@@ -56,22 +56,25 @@ namespace OpenAI
         public static string player_name = "example";
 
         string prompt_prev = "아래의 지시사항에 맞게 대화해줘. "
-            + " \n 너는 상대방 (이름 :"+ player_name +") 과 대화하고 있어. 아래에 너의 정보가 있으니 컨셉에 맞게 대화해줘. 호감도가 높을수록 친밀하게, 낮을수록 딱딱하게 말해줘.";
+            + " \n 너는 상대방 (이름 :" + player_name + ") 과 대화하고 있어. 아래에 너가 연기해야 하는 인물 정보가 있으니 컨셉에 맞게 대화해줘. 호감도가 높을수록 친밀하게, 낮을수록 딱딱하게 말해줘.";
 
         private string prompt_william =
-           "\n\n<<너(chatGPT)의 정보>>\n{농사일 외에는 관심이 없는 무뚝뚝한 23세 농부 윌리엄. 요즘에는 옥수수농사를 하고 있다. 최대한 무뚝뚝한 말투로 짧게 말한다. 자기 얘기는 잘 안한다.} ";
+           "\n\n<<너가 연기할 인물의 정보>>{농사일 외에는 관심이 없는 무뚝뚝한 23세 농부 윌리엄. 요즘에는 옥수수농사를 하고 있다. 최대한 무뚝뚝한 말투로 짧게 말한다. 자기 얘기는 잘 안한다.} ";
 
         private string prompt_kinki =
-            "\n\n<<너의 정보>>\n{ 햄버거를 제일 좋아하는 먹방유튜버 킨키. 나이는 17세이며 귀여운 말투로 말한다. 저녁 6시마다 방송을 한다.";
+            "\n\n<<너가 연기할 인물의 정보>>{ 햄버거를 제일 좋아하는 먹방유튜버 킨키. 나이는 17세이며 귀여운 말투로 말한다. 저녁 6시마다 방송을 한다.";
 
         private string prompt_cheif =
-             "\n\n<<너의 정보>>\n{마을의 촌장인 67세 중년 남성 로버트. 호탕한 말투로, '하하하' 하고 웃는 것이 말버릇이다. 마을에 대해 잘 알고 있으며 마을과 농사에 대해 알려주고 싶어하지만, 친절하지는 않다.";
+             "\n\n<<너가 연기할 인물의 정보>>{마을의 촌장인 67세 중년 남성 로버트. 호탕한 말투로, '하하하' 하고 웃는 것이 말버릇이다. 마을에 대해 잘 알고 있으며 마을과 농사에 대해 알려주고 싶어하지만, 친절하지는 않다.";
+
+        private string prompt_vampire =
+            "\n\n<<너가 연기할 인물의 정보>> {이름과 나이가 비밀인 젊은 여성. 자신을 뱀파이어라고 생각한다. 저녁부터 새벽 사이에만 마을을 돌아다닌다. 고상한 말투.'호호'를 붙여 말한다.";
 
         string prompt_common_info = "\n\n<<마을에 대한 정보>> \r\n" +
             "1. 마을 주민 : 킨키, 로버트, 뱀파이어(이름 불명), 윌리엄, 잭, " + player_name + "(대화상대)가 있다. " +
             "\r\n2. 킨키는 먹방 유튜버로 햄버거를 좋아하는 여자이다. \r\n로버트은 촌장이다. '뱀파이어'는 자신이 뱀파이어라고 주장하는 미스터리의 여자이다." +
             "\r\n윌리엄은 마을의 농부로, 일하는 것을 좋아하는 남자다.\r\n잭은 마을의 유일한 식당의 요리사로, 남자이다. " +
-            "\r\n"+player_name + "(대화상대)는 마을에 온지 오래되지 않았고 농사를 배우고 있는 청년이다. " +
+            "\r\n너의 대화상대인 나("+player_name + ")는 마을에 온지 오래되지 않았고 농사를 배우고 있는 청년이다. " +
             "\r\n3. 대화상대인" +player_name + "는 달리거나 농사를 짓거나, 나무를 흔드는 등 행동을 하면 에너지가 소모된다.\r\n에너지를 충전하기 위해서는 요리를 하거나 식당에서 사서 음식을 먹어야 한다. \r\n";
 
         string prompt_common_last = "\n\n1~2문장으로만 말해줘!짧게 20개 이내의 단어로 말해줘." + "위의 정보는 참고만 하고 설명하지는 마. 자연스럽게 대화만 해 줘. 그리고 호감도가 높을수록 더욱 친밀한 말투로 말해줘. chatGPT같지 않게, 너의 특징을 잘 살려서 진짜 캐릭터처럼 해줘\n\n\n";
@@ -99,6 +102,7 @@ namespace OpenAI
             for (int i = 0; i < size; i++)
             {
                 Destroy(contentObject.GetChild(i).gameObject);
+                messages.Clear();
             }
         }
 
@@ -119,7 +123,11 @@ namespace OpenAI
         private async void SendReply()
         {
             if (messages.Count > 4)
+            {
                 messages.RemoveAt(0);
+                messages.RemoveAt(0);
+            }
+                
 
             var newMessage = new ChatMessage()
             {
@@ -144,6 +152,9 @@ namespace OpenAI
                         break;
                     case CharacterType.Cheif:
                         newMessage.Content += prompt_cheif;
+                        break;
+                    case CharacterType.Vampire:
+                        newMessage.Content += prompt_vampire;
                         break;
                 }
             }
@@ -170,6 +181,7 @@ namespace OpenAI
                 
                 messages.Add(message);
                 AppendMessage(message);
+
             }
             else
             {

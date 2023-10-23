@@ -10,10 +10,6 @@ public class CropPicker : MonoBehaviour
 {
     private GameObject currentCrop = null; //현재 트리거에 잡힌 작물
 
-    void Awake()
-    {
-    }
-
     void Update() //매 프레임마다
     {
         //현재 트리거에 잡힌 작물 있는 상태에서 E키 누를 때
@@ -70,6 +66,8 @@ public class CropPicker : MonoBehaviour
 
             //작물 비활성화
             crop.GetComponent<PickableCrop>().ClearCrop();
+
+            Inventory.instance.AddItem(crop.GetComponent<PickableCrop>().Id,1);
 
             Managers.Energy.DecreaseEnergy(0.2f);
             //현재 작물 null 초기화

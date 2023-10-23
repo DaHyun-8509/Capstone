@@ -84,10 +84,9 @@ public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEn
             inventoryUI.itemInfo_price.text = item.purchase_price + "GOLD";
         else
             inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
-        if (item.id[0] == 'R')
-            inventoryUI.itemInfo_energy.text = "에너지 +" + ((Food)item).energy;
-        else
-            inventoryUI.itemInfo_energy.text = "";
+
+        inventoryUI.itemInfo_energy.text = "에너지 +" + item.energy;
+
     }
 
     public void OnPointerDown(PointerEventData eventData)

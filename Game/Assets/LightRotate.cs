@@ -28,9 +28,9 @@ public class LightRotate : MonoBehaviour
         // 계속 태양을 X 축 중심으로 회전. 현실시간 1초에  0.1f * secondPerRealTimeSecond 각도만큼 회전
         transform.Rotate(Vector3.right, 360 / Managers.Time.DayDuration * Time.deltaTime);
 
-        if (transform.eulerAngles.x >= 230) // x 축 회전값 170 이상이면 밤이라고 하겠음
+        if (Managers.Time.GetHour() == 21) // x 축 회전값 170 이상이면 밤이라고 하겠음
             isNight = true;
-        else if (transform.eulerAngles.x >= 0)  // x 축 회전값 10 이상이면 낮이라고 하겠음
+        else if (Managers.Time.GetHour() == 6)  // x 축 회전값 10 이상이면 낮이라고 하겠음
             isNight = false;
 
         if (isNight)

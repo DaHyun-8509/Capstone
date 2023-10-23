@@ -9,13 +9,13 @@ public class ItemBase : RawData
     public string name;
     public int purchase_price;
     public int sell_price;
+    public int energy;
 }
 
 [Serializable]
 public class Food : ItemBase
 {
     public int food_grade;
-    public int energy;
 }
 
 [Serializable]
@@ -26,8 +26,8 @@ public class Crop : ItemBase
 
 [Serializable]
 public class Grocery : ItemBase 
-{ 
-
+{
+    
 }
 
 
