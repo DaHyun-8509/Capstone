@@ -33,7 +33,7 @@ namespace OpenAI
         CharacterType npcType = CharacterType.None;
         public CharacterType NPCType { get { return npcType; } set { npcType = value; } }
 
-        public static string[] likeGrades = { "first meeting(wary of stranger)", "unfamiliar, feistiness ", "familiar,Kindness", "friend,tenderness", "best friend, love" };
+        public static string[] likeGrades = { "first meeting(unfamiliar,feistiness)", "one met, but unfamiliar, feistiness ", "familiar,Kindness", "friend,tenderness", "best friend, love" };
         int likeGrade;
 
         public string nowState = "talking";

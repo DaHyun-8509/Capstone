@@ -119,6 +119,7 @@ public class AI_Kinki : MonoBehaviour
                 case Location.Home:
                     break;
                 case Location.Restaurant:
+                    gpt.nowState = "eating hamburger in the restaurant";
                     SitAndEatBurger();
                     break;
                 case Location.OnAWalk:
@@ -142,9 +143,12 @@ public class AI_Kinki : MonoBehaviour
         {
             agent.acceleration = agentAccel;
             agent.isStopped = false;
+            
             isTalking = false;
             if (state == State.Move)
                 anim.SetTrigger("walk");
+            if (state != State.Move && location == Location.Restaurant)
+                SitAndEatBurger();
         }
     }
     void Move()

@@ -22,13 +22,11 @@ public class AI_Vampire : MonoBehaviour
     {
         Home,
         Restaurant,
-        Bench,
         River
     }
 
     //Transforms
     public Transform homePos;
-    public Transform benchPos;
     public Transform benchForwardPos;
     public Transform riverPos;
     public Transform riverPos2;
@@ -38,7 +36,6 @@ public class AI_Vampire : MonoBehaviour
 
     //Times
     public int TimeToGoRestaurant;
-    public int TimeToGoBench;
     public int TimeToGoHome;
     public int TimeToGoRiver;
 
@@ -52,7 +49,9 @@ public class AI_Vampire : MonoBehaviour
     NavMeshAgent agent;
     NPCDialog dialog;
 
+    [SerializeField]
     State state = State.None;
+    [SerializeField]
     Location location = Location.Home;
 
     bool isTalking = false;
@@ -81,14 +80,6 @@ public class AI_Vampire : MonoBehaviour
             Move();
             location = Location.Restaurant;
         }
-
-        else if (state == State.None && Managers.Time.GetHour() == TimeToGoBench)
-        {
-            //벤치로 이동 
-            agent.destination = benchPos.position;
-            location = Location.Bench;
-            Move();
-        }
         
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoRiver)
         {
@@ -114,8 +105,9 @@ public class AI_Vampire : MonoBehaviour
         //Move 상태이고 목적지에 도달했으면
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state == State.Move)
         {
+            agent.velocity = Vector3.zero;
             state = State.Act;
-            StartCoroutine(WaitAndSetStateNone());
+
             anim.SetTrigger("stop");
 
             switch (location)
@@ -123,16 +115,16 @@ public class AI_Vampire : MonoBehaviour
                 case Location.Home:
                     break;
                 case Location.Restaurant:
-                    SitAndDrink();
-                    break;
+                    {
+                        SitAndDrink();
+                        break;
+                    }
                 case Location.River:
-                    break;
-                case Location.Bench:
-                    SitOnBench();
                     break;
                 default:
                     break;
             }
+            StartCoroutine(WaitAndSetStateNone());
         }
 
         //플레이어가 대화를 걸었을 때 
@@ -149,6 +141,8 @@ public class AI_Vampire : MonoBehaviour
             isTalking = false;
             if (state == State.Move)
                 anim.SetTrigger("walk");
+            if (state != State.Move && location == Location.Restaurant)
+                SitAndDrink();
         }
     }
     void Move()
@@ -164,12 +158,6 @@ public class AI_Vampire : MonoBehaviour
         state = State.None;
     }
     
-    void SitOnBench()
-    {
-        transform.LookAt(benchForwardPos.position);
-        anim.SetTrigger("sit");
-    }
-
     void SitAndDrink()
     {
         transform.LookAt(restaurantForwardPos.position);
@@ -177,6 +165,8 @@ public class AI_Vampire : MonoBehaviour
         WineGlass.SetActive(true);
         Food.SetActive(true);
         WineBottle.SetActive(true);
+        transform.LookAt(restaurantForwardPos.position);
+
     }
 
     void StandUp()

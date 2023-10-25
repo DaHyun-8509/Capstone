@@ -120,6 +120,8 @@ public class AI_Cheif : MonoBehaviour
         {
             //이동한다. 
             agent.destination = homePos.position;
+            anim.SetTrigger("stop");
+            BeerGlass.SetActive(false);
             Move();
             location = Location.Home;
             gpt.nowState = "going to home to sleep";
@@ -187,6 +189,8 @@ public class AI_Cheif : MonoBehaviour
             isTalking = false;
             if (state == State.Move)
                 anim.SetTrigger("walk");
+            if (state != State.Move && location == Location.Restaurant)
+                OnRestaurant();
         }
     }
     void Move()

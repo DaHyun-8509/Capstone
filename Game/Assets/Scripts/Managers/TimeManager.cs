@@ -7,7 +7,7 @@ public class TimeManager
 
     float totalTimeElapsed = 0.0f;
     float dayTimeElapsed = 0f;
-    float dayDuration = 600.0f;
+    float dayDuration = 1200.0f;
     public float DayDuration { get { return dayDuration; } }
     bool isTimeRunning = true;
 
@@ -18,6 +18,7 @@ public class TimeManager
 
     string[] days = { "월", "화", "수", "목", "금", "토", "일" };
 
+    bool isSkippinng = false;
 
     public void Update()
     {
@@ -37,6 +38,32 @@ public class TimeManager
             day++;
             if (day >= days.Length)
                 day = 0;
+        }
+
+        if(Input.GetKeyDown(KeyCode.F2))
+        {
+            isSkippinng = !isSkippinng;
+            if (isSkippinng)
+            {
+                Time.timeScale = 10f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            isSkippinng = !isSkippinng;
+            if (isSkippinng)
+            {
+                Time.timeScale = 30f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
         }
     }
 
