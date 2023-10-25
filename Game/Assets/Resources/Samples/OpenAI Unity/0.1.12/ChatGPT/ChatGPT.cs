@@ -114,7 +114,7 @@ namespace OpenAI
 
         private async void SendReply()
         {
-            gameObject.GetComponent<Likeability>().Increase(1f);
+            gameObject.GetComponent<Likeability>().Increase(0.2f);
             if (messages.Count > 4)
             {
                 messages.RemoveAt(0);
