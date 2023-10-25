@@ -40,6 +40,12 @@ namespace OpenAI
 
         public static string player_name = "Jiwon";
 
+        //Gift
+        public static string gift_name;
+
+        public static string[] giftGrades = { "You really hate this.", "You think it's not bad.", "You really love this." };
+
+        public int giftGrade;
 
         //Prompt
         string prompt_prev = " \n you are the below character, and talking with (이름 :" + player_name + ") . don't use  \"\" or : ";
@@ -58,14 +64,16 @@ namespace OpenAI
         private string prompt_vampire =
             "\n\n<<너가 연기할 인물의 정보>> {이름과 나이가 비밀인 젊은 여성. 자신을 뱀파이어라고 생각한다. 저녁부터 새벽 사이에만 마을을 돌아다닌다. 고상한 말투.'호호'를 붙여 말한다.";
 
-        string prompt_common_info = "\n\n<<마을에 대한 정보>> \r\n" +
+        string prompt_common_info = "\n\n<<Information about this town>> \r\n" +
             "1. 마을 주민 : 킨키, 로버트, 뱀파이어(이름 불명), 윌리엄, 잭, " + player_name + "(대화상대)가 있다. " +
             "\r\n2. 킨키는 먹방 유튜버로 햄버거를 좋아하는 여자이다. \r\n로버트은 촌장이다. '뱀파이어'는 자신이 뱀파이어라고 주장하는 미스터리의 여자이다." +
             "\r\n윌리엄은 마을의 농부로, 일하는 것을 좋아하는 남자다.\r\n잭은 마을의 유일한 식당의 요리사로, 남자이다. " +
             "\r\n너의 대화상대인 ("+player_name + ")는 마을에 온지 오래되지 않았고 농사를 하는 청년이다. " +
             "\r\n3. 너의 대화상대인" +player_name + "는 달리거나 농사를 짓거나, 나무를 흔드는 등 행동을 하면 에너지가 소모된다.\r\n에너지를 충전하기 위해서는 요리를 하거나 식당에서 사서 음식을 먹어야 한다. \r\n";
 
-        string prompt_common_last = "\n\nSay only 1~2 sentence. (use within 20 words) " + "Don't explain upper info, and talk like real character, not chatGPT. Don't say you will help me.\n\n\n";
+        string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) " + "Don't explain upper info. Talk like real character, not chatGPT. Don't say you will help me.\n";
+
+        string prompt_common_gift;
 
         private void Start()
         {
@@ -74,12 +82,21 @@ namespace OpenAI
 
         void Update()
         {
+            
             // Enter키 동작
             if (Input.GetKeyDown(KeyCode.Return) && inputField.GetComponent<InputField>().text.Length > 0)
             {
                 SendReply();
             }
 
+        }
+
+        public void UpdateGiftPrompt(string giftId, int grade)
+        {
+            gift_name = Managers.Data.GetItemData(giftId).name;
+            giftGrade = grade;
+
+            prompt_common_gift = "\nAnd now you're getting present from me. It is " + gift_name + ", and " + giftGrades[giftGrade] + "Respond to it.\n\n\n";
         }
 
         public void UpdateLikeability()
@@ -152,7 +169,8 @@ namespace OpenAI
                 }
             }
 
-            newMessage.Content += "\nan attitude toward your interlocutor" + likeGrades[likeGrade] + "\t what you are doing : " +nowState + "\n"+ prompt_common_info + "\n" + prompt_common_last + inputField.text;
+            newMessage.Content += "\nan attitude toward your interlocutor :" + likeGrades[likeGrade] 
+                + "\t what you have been doing : " + nowState + prompt_common_gift + "\n"+ prompt_common_info + "\n" + prompt_common_last + "Respond to me : "+inputField.text;
 
             messages.Add(newMessage);
             
@@ -183,6 +201,7 @@ namespace OpenAI
 
             button.enabled = true;
             inputField.enabled = true;
+            prompt_common_gift = "";
         }
     }
 }

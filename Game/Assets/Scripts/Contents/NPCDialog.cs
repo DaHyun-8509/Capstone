@@ -13,6 +13,8 @@ public class NPCDialog : MonoBehaviour
     [SerializeField] private GameObject dialogCamera;
     [SerializeField] private GameObject toActivate;
     [SerializeField] private CharacterType npcType;
+    [SerializeField] private GameObject giftInvenUI;
+    [SerializeField] private GameObject npcGift;
 
     private Transform npc;
     private Transform player;
@@ -21,6 +23,8 @@ public class NPCDialog : MonoBehaviour
     private bool isTalking = false;
     public bool Talking { get { return isTalking; } set { isTalking = value; } }
     private bool isFacing = false;
+
+    private bool giftselecting = false;
 
     private void Start()
     {
@@ -35,6 +39,7 @@ public class NPCDialog : MonoBehaviour
             Recover();
             npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().ResetDialogs();
             Managers.Time.RunTime();
+            giftInvenUI.SetActive(false);
         }
 
         if(isTalking && !isFacing)
@@ -44,6 +49,19 @@ public class NPCDialog : MonoBehaviour
 
             Vector3 directionToNPC = npc.position - player.position;
             player.rotation = Quaternion.Lerp(player.transform.rotation, Quaternion.LookRotation(directionToNPC), Time.deltaTime);
+        }
+
+        if (isTalking && Input.GetKeyDown(KeyCode.Tab))
+        {
+            //선물하기 
+            giftselecting = !giftselecting;
+            if(giftselecting)
+            {
+                giftInvenUI.SetActive(true);
+                giftInvenUI.GetComponent<GiftInvenUI>().NpcGift = npcGift.GetComponent<Gift>();
+            }
+            else
+                giftInvenUI.SetActive(false);   
         }
     }
 
@@ -89,6 +107,8 @@ public class NPCDialog : MonoBehaviour
 
 
         }
+
+      
     }
 
     private void OnTriggerExit(Collider other)
