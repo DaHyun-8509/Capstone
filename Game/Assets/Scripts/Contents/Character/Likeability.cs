@@ -47,6 +47,15 @@ public class Likeability : MonoBehaviour
         SetGrade();
     }
 
+    public void ChangeWithItem(string itemId, int giftGrade)
+    {
+        float price = Managers.Data.GetItemData(itemId).sell_price;
+        float likeAmount = Mathf.Sqrt(price/10);
+        if (giftGrade == 0) likeAmount -= 5;
+        else if (giftGrade == 2) likeAmount *= 3;
+        like += likeAmount;
+    }
+
     private void SetGrade()
     {
         if (like >= 2)

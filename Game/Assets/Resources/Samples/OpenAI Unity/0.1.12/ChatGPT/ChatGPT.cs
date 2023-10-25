@@ -71,7 +71,7 @@ namespace OpenAI
             "\r\n너의 대화상대인 ("+player_name + ")는 마을에 온지 오래되지 않았고 농사를 하는 청년이다. " +
             "\r\n3. 너의 대화상대인" +player_name + "는 달리거나 농사를 짓거나, 나무를 흔드는 등 행동을 하면 에너지가 소모된다.\r\n에너지를 충전하기 위해서는 요리를 하거나 식당에서 사서 음식을 먹어야 한다. \r\n";
 
-        string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) " + "Don't explain upper info. Talk like real character, not chatGPT. Don't say you will help me.\n";
+        string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) (don't use English) " + "Don't explain upper info. Talk like real character, not chatGPT. Don't say you will help me.\n";
 
         string prompt_common_gift;
 
@@ -97,6 +97,9 @@ namespace OpenAI
             giftGrade = grade;
 
             prompt_common_gift = "\nAnd now you're getting present from me. It is " + gift_name + ", and " + giftGrades[giftGrade] + "Respond to it.\n\n\n";
+
+            //호감도 증가
+            gameObject.GetComponent<Likeability>().ChangeWithItem(giftId, grade);
         }
 
         public void UpdateLikeability()
