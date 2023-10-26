@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7075472, g: 0.6841848, b: 0.6841848, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1793,8 +1793,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8787406770985660710}
   m_HandleRect: {fileID: 8787406770985660708}
   m_Direction: 2
-  m_Value: 0.49999985
-  m_Size: 0.4682544
+  m_Value: 0.49999994
+  m_Size: 0.46825433
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2227,6 +2227,7 @@ MonoBehaviour:
   scroll: {fileID: 8787406771343324318}
   sent: {fileID: 8660877164928630359, guid: 53cd26a6eefa5a74086203cd118a04d3, type: 3}
   received: {fileID: 961534450149497043, guid: adc0146c2853ed1418133faaf4379eb1, type: 3}
+  withGift: {fileID: 0}
   nowState: talking
   giftGrade: 0
 --- !u!1 &8787406772777395547

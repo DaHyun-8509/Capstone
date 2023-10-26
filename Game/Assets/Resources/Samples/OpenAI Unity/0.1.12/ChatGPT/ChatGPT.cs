@@ -24,6 +24,9 @@ namespace OpenAI
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
 
+        [SerializeField] GameObject withGift;
+
+
         private float height;
 
         private OpenAIApi openai = new OpenAIApi();
@@ -33,7 +36,7 @@ namespace OpenAI
         CharacterType npcType = CharacterType.None;
         public CharacterType NPCType { get { return npcType; } set { npcType = value; } }
 
-        public static string[] likeGrades = { "first meeting(unfamiliar,feistiness)", "one met, but unfamiliar, feistiness ", "familiar,Kindness", "friend,tenderness", "best friend, love" };
+        public static string[] likeGrades = { "first meeting(unfamiliar,feistiness)", "one met, but unfamiliar, feistiness ", "familiar,Kindness", "friend,tenderness", "best friend, love", "fucking hate" };
         int likeGrade;
 
         public string nowState = "talking";
@@ -42,6 +45,8 @@ namespace OpenAI
 
         //Gift
         public static string gift_name;
+        public static string gift_id;
+
 
         public static string[] giftGrades = { "You really hate this.", "You think it's not bad.", "You really love this." };
 
@@ -86,6 +91,7 @@ namespace OpenAI
             // Enter키 동작
             if (Input.GetKeyDown(KeyCode.Return) && inputField.GetComponent<InputField>().text.Length > 0)
             {
+                withGift.SetActive(false);
                 SendReply();
             }
 
@@ -95,16 +101,16 @@ namespace OpenAI
         {
             gift_name = Managers.Data.GetItemData(giftId).name;
             giftGrade = grade;
-
+            gift_id = giftId;
             prompt_common_gift = "\nAnd now you're getting present from me. It is " + gift_name + ", and " + giftGrades[giftGrade] + "Respond to it.\n\n\n";
 
             //호감도 증가
-            gameObject.GetComponent<Likeability>().ChangeWithItem(giftId, grade);
         }
 
         public void UpdateLikeability()
         {
             likeGrade = gameObject.GetComponent<Likeability>().Grade;
+
         }
 
         public void ResetDialogs()
@@ -134,6 +140,9 @@ namespace OpenAI
 
         private async void SendReply()
         {
+            if (prompt_common_gift != "" && gift_id != null)
+                gameObject.GetComponent<Likeability>().ChangeWithItem(gift_id, giftGrade);
+
             gameObject.GetComponent<Likeability>().Increase(0.2f);
             if (messages.Count > 4)
             {

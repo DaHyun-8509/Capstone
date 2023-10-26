@@ -11,6 +11,9 @@ public class GiftInvenUI : MonoBehaviour
     Gift npcGift;
     public Gift NpcGift { get {  return npcGift; } set { npcGift = value; } }
 
+    [SerializeField] GameObject withGift;
+    [SerializeField] TextMeshProUGUI giftNameText;
+
     //slot
     GiftSlot[] slots;
     public Transform slotHolder;
@@ -61,5 +64,12 @@ public class GiftInvenUI : MonoBehaviour
         int giftGrade = (int)NpcGift.GetGiftGrade(selectedGift);
         //선물 선호도 전달
         npcGift.gameObject.GetComponent<ChatGPT>().UpdateGiftPrompt(selectedGift, giftGrade);
+
+        //선물 텍스트 
+        giftNameText.SetText(Managers.Data.GetItemData(SelectedGift).name);
+        withGift.SetActive(true);
+
+        //창 닫기
+        gameObject.SetActive(false);
     }
 }

@@ -74,5 +74,9 @@ public class Likeability : MonoBehaviour
         {
             grade = 4;
         }
+        if(like < -10)
+        {
+            grade = 5;
+        }
     }
 }
