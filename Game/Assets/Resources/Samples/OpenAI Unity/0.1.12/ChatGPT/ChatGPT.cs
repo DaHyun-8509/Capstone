@@ -10,7 +10,11 @@ public enum CharacterType
     Kinki,
     Cheif,
     Jack,
-    Vampire
+    Vampire,
+    Raskal,
+    Ben,
+    Claire,
+    Ann
 }
 
 namespace OpenAI
@@ -33,15 +37,15 @@ namespace OpenAI
 
         private List<ChatMessage> messages = new List<ChatMessage>();
 
-        CharacterType npcType = CharacterType.None;
+        [SerializeField] CharacterType npcType = CharacterType.None;
         public CharacterType NPCType { get { return npcType; } set { npcType = value; } }
 
-        public static string[] likeGrades = { "first meeting(unfamiliar,feistiness)", "one met, but unfamiliar, feistiness ", "familiar,Kindness", "friend,tenderness", "best friend, love", "fucking hate" };
+        public static string[] likeGrades = { "first meeting(unfamiliar, wary)", "one met, but unfamiliar,wary ", "familiar,Kind. but not friend", "friend,tenderness", "best friend, love", "fucking hate" };
         int likeGrade;
 
         public string nowState = "talking";
 
-        public static string player_name = "Jiwon";
+        public static string player_name = "";
 
         //Gift
         public static string gift_name;
@@ -53,30 +57,45 @@ namespace OpenAI
         public int giftGrade;
 
         //Prompt
-        string prompt_prev = " \n you are the below character, and talking with (이름 :" + player_name + ") . don't use  \"\" or : ";
+        string prompt_prev = " \n you are the below character, and talking with me . don't use  \"\" or : or (). Keep in mind you are a character with this name. ";
 
         private string prompt_william =
-           "\n\n<<너가 연기할 인물의 정보>>{농사일 외에는 관심이 없는 무뚝뚝한 23세 농부 윌리엄. 요즘에는 옥수수농사를 하고 있다. 최대한 무뚝뚝한 말투로 짧게 말한다. 자기 얘기는 잘 안한다.} ";
+           "\n\ninstructions: <<you are>>{William. 30 years old. have big farm in town. raise corns these days. short speaker. only have interest in farming. don't like to talk much.} ";
 
         private string prompt_kinki =
-            "\n\n<<you are>>{ Kinki. 20 years old. speak in a cute way. a internet streamer(mukbang). have no interest in others. so never help others. and little stupid. love hamburger. live alone.";
+            "\n\ninstructions: <<you are>>{ Kinki. 20 years old. speak in a cute way. a internet streamer(mukbang). have no interest in others. little stupid. feisty to unfamiliar person. love hamburgers. live alone. (never ask me to eat hamburger together)";
 
+        private string prompt_jack =
+            "\n\ninstructions: <<you are>>{Jack. 38 years old. a only cook of only restaurant in this town. work all day at restaurant. chatty and kind. love to cook for neighbors. hate to leave food behind. when a customer want to order, they need to open menu in front of the desk. } ";
+
+        private string prompt_raskal =
+         "\n\ninstructions: <<you are>>{Raskal. 36 years old. working as a farmer in William's farm with Ben. a friend of Ben. raise corns and cabbages. love music and beer. usually say with 'yeah~' or 'yes~~'.  } ";
+
+
+        private string prompt_ben =
+        "\n\ninstructions: <<you are>>{Ben. 33 years old. working as a farmer in William's farm with Raskal. a friend of Raskal.  raise corns and cabbages. greedy. don't really  trust me. laugh well, but conservative.}";
 
         private string prompt_cheif =
-            "\n\n<<you are >>{Robert. 67 years old, a cheif of the town. usually laugh like 'haha'. know well about town. like beer so drinks every day. }"
+            "\n\ninstructions: <<you are >>{Robert. 67 years old, a cheif of the town. usually laugh like 'haha'. know well about town. like beer so drinks every day. }"
            + "favorite gifts are steak and egg. worse gifts are cookie, cake and tomato";
 
         private string prompt_vampire =
-            "\n\n<<너가 연기할 인물의 정보>> {이름과 나이가 비밀인 젊은 여성. 자신을 뱀파이어라고 생각한다. 저녁부터 새벽 사이에만 마을을 돌아다닌다. 고상한 말투.'호호'를 붙여 말한다.";
+            "\n\ninstructions: <<you are>> {name and age is unknown (secret). think yourself as a vampire. go outside only evening and nigth, dawn. elegant way of speaking. laugh like '호호호'";
+        private string prompt_claire =
+            "\n\ninstructions: <<you are>> {Claire. 46years old. an owner of store in town. buy everything and sell groceries. very kind and lovely woman. didn't marry. store opens 10 to 17. }";
+
+        private string prompt_ann =
+            "\n\ninstructions: <<you are>> {Claire. 56 years old. wife of a cheif of the town. domestic woman. have 2 sons. want to send your sons to a university in the city. }";
+
 
         string prompt_common_info = "\n\n<<Information about this town>> \r\n" +
-            "1. 마을 주민 : 킨키, 로버트, 뱀파이어(이름 불명), 윌리엄, 잭, " + player_name + "(대화상대)가 있다. " +
-            "\r\n2. 킨키는 먹방 유튜버로 햄버거를 좋아하는 여자이다. \r\n로버트은 촌장이다. '뱀파이어'는 자신이 뱀파이어라고 주장하는 미스터리의 여자이다." +
-            "\r\n윌리엄은 마을의 농부로, 일하는 것을 좋아하는 남자다.\r\n잭은 마을의 유일한 식당의 요리사로, 남자이다. " +
-            "\r\n너의 대화상대인 ("+player_name + ")는 마을에 온지 오래되지 않았고 농사를 하는 청년이다. " +
-            "\r\n3. 너의 대화상대인" +player_name + "는 달리거나 농사를 짓거나, 나무를 흔드는 등 행동을 하면 에너지가 소모된다.\r\n에너지를 충전하기 위해서는 요리를 하거나 식당에서 사서 음식을 먹어야 한다. \r\n";
+            "1. 마을 주민 : 킨키, 로버트, 뱀파이어(이름 불명), 윌리엄, 잭, 나(대화상대)가 있다. " +
+            "\r\n2. Kinki: 먹방 유튜버로 햄버거를 좋아하는 여자이다. \r\nRobert: 촌장이다. \r\n'Vampire':는 자신이 뱀파이어라고 주장하는 미스터리의 여자이다." +
+            "\r\nWilliam: 마을의 농부로, 일하는 것을 좋아하는 남자다.\r\nJack: 마을의 유일한 식당의 요리사로, 남자이다. " +
+            "\r\n너의 대화상대인 나는 마을에 온지 오래되지 않았고 농사를 하는 청년이다. " +
+            "\r\n3. 너의 대화상대인 나는 달리거나 농사를 짓거나, 나무를 흔드는 등 행동을 하면 에너지가 소모된다.\r\n에너지를 충전하기 위해서는 요리를 하거나 식당에서 사서 음식을 먹어야 한다. \r\n";
 
-        string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) (don't use English) " + "Don't explain upper info. Talk like real character, not chatGPT. Don't say you will help me.\n";
+        string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) Don't translate to English" + "Don't explain before I ask. Talk like real character, not chatGPT. Don't say you will help me. Don't break the instructions.\n";
 
         string prompt_common_gift;
 
@@ -102,7 +121,7 @@ namespace OpenAI
             gift_name = Managers.Data.GetItemData(giftId).name;
             giftGrade = grade;
             gift_id = giftId;
-            prompt_common_gift = "\nAnd now you're getting present from me. It is " + gift_name + ", and " + giftGrades[giftGrade] + "Respond to it.\n\n\n";
+            prompt_common_gift = "\nAnd now you're getting present from me. It is " + gift_name + ", and " + giftGrades[giftGrade] + "Respond to it.=> ";
 
             //호감도 증가
         }
@@ -178,11 +197,26 @@ namespace OpenAI
                     case CharacterType.Vampire:
                         newMessage.Content += prompt_vampire;
                         break;
+                    case CharacterType.Jack:
+                        newMessage.Content += prompt_jack;
+                        break;
+                    case CharacterType.Raskal:
+                        newMessage.Content += prompt_raskal;
+                        break;
+                    case CharacterType.Ben:
+                        newMessage.Content += prompt_ben;
+                        break;
+                    case CharacterType.Claire:
+                        newMessage.Content += prompt_claire;
+                        break;
+                    case CharacterType.Ann:
+                        newMessage.Content += prompt_ann;
+                        break;
                 }
             }
 
             newMessage.Content += "\nan attitude toward your interlocutor :" + likeGrades[likeGrade] 
-                + "\t what you have been doing : " + nowState + prompt_common_gift + "\n"+ prompt_common_info + "\n" + prompt_common_last + "Respond to me : "+inputField.text;
+                + "\t what you have been doing : " + nowState + prompt_common_gift +"\nmy(who you are talking with) name is :" + Managers.Data.PlayerName +"\n" + prompt_common_last + "Respond to me : "+inputField.text;
 
             messages.Add(newMessage);
             

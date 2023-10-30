@@ -15,20 +15,26 @@ public class ItemBase : RawData
 [Serializable]
 public class Food : ItemBase
 {
-    public int food_grade;
 }
 
 [Serializable]
 public class Crop : ItemBase
 {
-    public int generate_time;
+    public float generate_time;
 }
 
 [Serializable]
-public class Grocery : ItemBase 
+public class Grocery : ItemBase
 {
-    
+
 }
+
+[Serializable]
+public class Drink : ItemBase
+{
+    public int speed;
+}
+
 
 
 [Serializable]
@@ -54,4 +60,10 @@ public class GroceryData
 public class CropData
 {
     public Crop[] info;
+}
+
+[Serializable]
+public class DrinkData
+{
+    public Drink[] info;
 }

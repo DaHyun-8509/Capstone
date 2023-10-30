@@ -75,8 +75,9 @@ public class AI_Cheif : MonoBehaviour
     private void Update()
     {
         if (agent == null) return;
+        anim.SetFloat("speed", agent.velocity.magnitude);
 
-        if(randValueSelected == false && Managers.Time.GetHour() == 0)
+        if (randValueSelected == false && Managers.Time.GetHour() == 0)
         {
             type = Random.Range(1, 3);
             randValueSelected = true;
@@ -101,11 +102,10 @@ public class AI_Cheif : MonoBehaviour
             }
             else if (type == 2)
             {
-                agent.destination = marketPos.position;
+                agent.destination = parkPos.position;
                 Move();
                 location = Location.Park;
                 gpt.nowState = "going to the park.";
-
             }
         }
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoToRestaruant)
@@ -145,12 +145,18 @@ public class AI_Cheif : MonoBehaviour
             MoveToWork();
         }
 
+        if (location == Location.Restaurant && state != State.Move)
+        {
+            transform.LookAt(restaurantForwardPos.position);
+
+        }
 
         //Move 상태이고 목적지에 도달했으면
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state == State.Move)
         {
             state = State.Act;
-            StartCoroutine(WaitAndSetStateNone());
+            if (location != Location.Work)
+                StartCoroutine(WaitAndSetStateNone());
             anim.SetTrigger("stop");
 
             switch (location)
@@ -164,13 +170,13 @@ public class AI_Cheif : MonoBehaviour
                     DoWork();
                     break;
                 case Location.Market:
-                    OnMarket();
                     break;
                 case Location.Park:
                     break;
                 default:
                     break;
             }
+
         }
 
 
@@ -238,12 +244,6 @@ public class AI_Cheif : MonoBehaviour
         gpt.nowState = "drink beear in the restaurant";
     }
 
-    void OnMarket()
-    {
-        transform.LookAt(marketForwardPos.position);
-        anim.SetTrigger("talk");
-        gpt.nowState = "chattering with market owner";
-    }
 
     public void GrabBeerGlass()
     {

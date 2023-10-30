@@ -17,15 +17,15 @@ public class PlayerController : MonoBehaviour
     public float _runSpeed = 6.0f;
 
     //회전
-    public float _turnSpeed = 10.0f;
-    public float _cameraMoveSpeed = 2f;
+    public float _turnSpeed = 5.0f;
+    public float _cameraMoveSpeed = 1f;
     public float _maxUpAngle = 80f;
-    public float _maxDownAngle = 30f;
+    public float _maxDownAngle = 50f;
     private float _xRotation = 0f;
     private float _yRotation = 0f;
 
     public float _offset = 0.1f;
-    public float _minDistance = 2f;
+    public float _minDistance = 4f;
     public float _defaultCameraDistance = 6f;
 
 
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         //플레이어와 카메라 사이에 벽이 있는지 판단하여 거리 조절
         float cameraDistance;
 
-        Vector3 lookAtPosition = transform.position + new Vector3(0f, _controller.height * 2 / 3, 0f);
+        Vector3 lookAtPosition = transform.position + new Vector3(0f, _controller.height * 2.5f / 3, 0f);
         Vector3 cameraPos = Camera.main.transform.position;
         Vector3 rayOrigin = lookAtPosition + (cameraPos - lookAtPosition).normalized * _defaultCameraDistance;
         float rayDistance = Vector3.Distance(rayOrigin, lookAtPosition) - 0.5f;
@@ -113,7 +113,10 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(rayOrigin, (lookAtPosition - rayOrigin).normalized, out hit, rayDistance))
         {
             if (!hit.transform.gameObject.CompareTag("NPC") && hit.collider.isTrigger == false)
-                cameraDistance = Mathf.Max(Vector3.Distance(hit.point, lookAtPosition) - _offset, 0f);
+            {
+                //cameraDistance = Mathf.Max(Vector3.Distance(hit.point, lookAtPosition) - _offset, 0f);
+                cameraDistance = _defaultCameraDistance - 2;
+            }
             else
                 cameraDistance = _defaultCameraDistance;
         }

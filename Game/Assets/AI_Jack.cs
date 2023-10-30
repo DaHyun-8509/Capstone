@@ -55,7 +55,7 @@ public class AI_Jack : MonoBehaviour
     bool isTalking = false;
 
     bool finishedAct = true;
-
+ 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -71,6 +71,7 @@ public class AI_Jack : MonoBehaviour
     private void Update()
     {
         if (agent == null) return;
+        anim.SetFloat("speed", agent.velocity.magnitude);
 
         if (state == State.None && Managers.Time.GetHour() == TimeToGoToWork)
         {

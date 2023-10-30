@@ -69,6 +69,7 @@ public class AI_Kinki : MonoBehaviour
     private void Update()
     {
         if (agent == null) return;
+        anim.SetFloat("speed", agent.velocity.magnitude);
 
         //아무것도 안하고있고 TimeToGoRestaurant시이면  
         if (state == State.None && Managers.Time.GetHour() == TimeToGoRestaurant)
@@ -86,7 +87,7 @@ public class AI_Kinki : MonoBehaviour
             //집으로 이동한다. 
             agent.destination = homePos.position;
             Move();
-            location = Location.Restaurant;
+            location = Location.Home;
         }
         //아무것도 안하고있고 TimeToGoForaWalk시이면  
         if (state == State.None && Managers.Time.GetHour() == TimeToGoForaWalk)
@@ -145,8 +146,6 @@ public class AI_Kinki : MonoBehaviour
             agent.isStopped = false;
             
             isTalking = false;
-            if (state == State.Move)
-                anim.SetTrigger("walk");
             if (state != State.Move && location == Location.Restaurant)
                 SitAndEatBurger();
         }
@@ -154,7 +153,6 @@ public class AI_Kinki : MonoBehaviour
     void Move()
     {
         state = State.Move;
-        anim.SetTrigger("walk");
     }
 
     void SitAndEatBurger()

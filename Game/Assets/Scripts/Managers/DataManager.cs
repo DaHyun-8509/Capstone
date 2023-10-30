@@ -19,7 +19,11 @@ public class DataManager
     private List<Grocery> groceryList = new List<Grocery>();
     public List<Grocery> GroceryList { get { return groceryList; } }
 
+    private List<Drink> drinkList = new List<Drink>();
+    public List<Drink> DrinkList { get { return drinkList; } }
 
+    string playerName;
+    public string PlayerName {  get { return playerName; } set {  playerName = value; } }
 
     public void Start()
     {
@@ -48,6 +52,13 @@ public class DataManager
             var json = ReadFile("JsonData/item_crop").text;
             CropData cropData = JsonUtility.FromJson<CropData>(json);
             foreach (var crop in cropData.info) { cropList.Add(crop); }
+        }
+
+        //DrinkData Load
+        {
+            var json = ReadFile("JsonData/item_drink").text;
+            DrinkData drinkData = JsonUtility.FromJson<DrinkData>(json);
+            foreach (var drink in drinkData.info) { drinkList.Add(drink); }
         }
     }
 
@@ -96,7 +107,15 @@ public class DataManager
         }
         return null;
     }
-
+    public Drink GetDrinkData(string id)
+    {
+        foreach (var drink in drinkList)
+        {
+            if (drink.id == id)
+                return drink;
+        }
+        return null;
+    }
 
     public ItemBase GetItemData(string id)
     {
@@ -117,6 +136,11 @@ public class DataManager
 
         {
             ItemBase item = GetGroceryData(id);
+            if (item != null) return item;
+        }
+
+        {
+            ItemBase item = GetDrinkData(id);
             if (item != null) return item;
         }
         return null;

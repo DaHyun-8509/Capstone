@@ -33,6 +33,9 @@ public class Managers : MonoBehaviour
     public static GoldManager Gold { get { return Instance._gold;} }
 
     public GameObject LoadingUI;
+    public GameObject nameUI;
+
+
     void Awake()
     {
         Init();
@@ -45,7 +48,8 @@ public class Managers : MonoBehaviour
         Energy.Start();
         Sound.Start();
 
-        LoadingUI = GameObject.Find("UI_Loading");
+        //LoadingUI = GameObject.Find("UI_Loading");
+        //nameUI = GameObject.Find("UI_Name");
     }
 
     private void Start()
@@ -53,6 +57,7 @@ public class Managers : MonoBehaviour
         LoadingUI.SetActive(true);
         StartCoroutine(RecoverTimeRun());
         UnityEngine.Time.timeScale = 50f;
+        UI.ReleaseCursor();
     }
 
     void Update()
@@ -63,6 +68,12 @@ public class Managers : MonoBehaviour
         UI.Update();
         Gold.Update();
         Resources.UnloadUnusedAssets();
+
+        if(UnityEngine.Input.GetKeyDown(KeyCode.Delete))
+        {
+            Application.Quit();
+        }
+          
     }
 
     static void Init()
@@ -86,6 +97,9 @@ public class Managers : MonoBehaviour
         yield return new WaitUntil(() => Time.GetHour() == 8);
         UnityEngine.Time.timeScale = 1;
         LoadingUI.SetActive(false);
-    }
 
+        //Name
+        nameUI.SetActive(true);
+        UI.ReleaseCursor();
+    }
 }

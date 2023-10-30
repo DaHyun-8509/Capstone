@@ -38,16 +38,18 @@ public class NPCDialog : MonoBehaviour
         {
             Recover();
             npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().ResetDialogs();
-            Managers.Time.RunTime();
             giftInvenUI.SetActive(false);
+            StopAllCoroutines();
         }
 
         if(isTalking && !isFacing)
         {
             Vector3 directionToPlayer = player.position - npc.position;
+            directionToPlayer.y = 0f;
             npc.rotation = Quaternion.Lerp(npc.transform.rotation, Quaternion.LookRotation(directionToPlayer), Time.deltaTime);
 
             Vector3 directionToNPC = npc.position - player.position;
+            directionToNPC.y = 0f;
             player.rotation = Quaternion.Lerp(player.transform.rotation, Quaternion.LookRotation(directionToNPC), Time.deltaTime);
         }
 
@@ -92,6 +94,10 @@ public class NPCDialog : MonoBehaviour
             player.GetComponent<Animator>().updateMode = AnimatorUpdateMode.UnscaledTime;
             npc.GetComponent<Animator>().updateMode = AnimatorUpdateMode.UnscaledTime;
 
+            player.GetComponent<Animator>().SetFloat("move_speed", 0);
+            player.GetComponent<Animator>().SetFloat("horizontal", 0);
+            player.GetComponent<Animator>().SetFloat("vertical", 0);
+
             toActivate.SetActive(true);
             Managers.UI.DisableCanvas();
 
@@ -108,7 +114,6 @@ public class NPCDialog : MonoBehaviour
 
         }
 
-      
     }
 
     private void OnTriggerExit(Collider other)
@@ -133,7 +138,7 @@ public class NPCDialog : MonoBehaviour
         Managers.UI.EnableCanvas();
         Managers.Time.RunTime();
 
-        Talking = false;
+        isTalking = false;
         isFacing = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

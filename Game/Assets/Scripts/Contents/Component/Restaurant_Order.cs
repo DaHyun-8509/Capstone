@@ -75,5 +75,14 @@ public class Restaurant_Order : MonoBehaviour
             dishButtons[i].GetComponent<Restaurant_Item>().Init(food);
             i++;
         }
+
+        var drinkData = Managers.Data.DrinkList;
+
+        foreach(var drink in drinkData)
+        {
+            if (dishButtons.Count <= i) continue;
+            dishButtons[i].GetComponent<Restaurant_Item>().InitDrink(drink);
+            i++;
+        }
     }
 }

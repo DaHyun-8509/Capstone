@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Restaurant_Item : MonoBehaviour
 {
-    Food food;
-    
+    ItemBase item;
     public TextMeshProUGUI description_name;
     public TextMeshProUGUI description_price;
     public TextMeshProUGUI description_energy;
@@ -20,15 +20,24 @@ public class Restaurant_Item : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI guideTextUI;
 
-    public void Init(Food item)
+    public void Init(Food food)
     {
-        food = item;
+        item = food;
         description_name.SetText(food.name);
         description_price.SetText("{0}GOLD", food.purchase_price);
         description_energy.SetText("에너지 +{0}", food.energy);
-        description_image.sprite = Managers.Resource.GetSprite(item.id);
-
+        description_image.sprite = Managers.Resource.GetSprite(food.id);
     }
+
+    public void InitDrink(Drink drink)
+    {
+        item = drink;
+        description_name.SetText(drink.name);
+        description_price.SetText("{0}GOLD", drink.purchase_price);
+        description_energy.SetText("에너지 +{0}", drink.energy);
+        description_image.sprite = Managers.Resource.GetSprite(drink.id);
+    }
+
     public void Update()
     {
         clickTime += Time.unscaledDeltaTime;
@@ -58,10 +67,10 @@ public class Restaurant_Item : MonoBehaviour
 
     private void Purchase()
     {
-        if(Managers.Gold.SubGold(food.purchase_price))
+        if(Managers.Gold.SubGold(item.purchase_price))
         {
             //구매 시도
-            if(Inventory.instance.AddItem(food.id, 1))
+            if(Inventory.instance.AddItem(item.id, 1))
             { //구매 가능
 
                 guideTextUI.SetText("구매 완료!");
@@ -75,7 +84,7 @@ public class Restaurant_Item : MonoBehaviour
                 guideTextUI.color = Color.red;
                 StartCoroutine(WaitAndRemoveGuideText());
                 //차감된 골드 다시 복구
-                Managers.Gold.AddGold(food.purchase_price);
+                Managers.Gold.AddGold(item.purchase_price);
             }
         }
         else

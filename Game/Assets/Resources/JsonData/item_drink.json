@@ -1,0 +1,6 @@
+{"info":
+[
+{"id":"D0","name":"맥주","purchase_price":110,"sell_price":22,"energy":-10,"speed":1.5},
+{"id":"D1","name":"와인","purchase_price":230,"sell_price":46,"energy":-20,"speed":2},
+{"id":"D2","name":"위스키","purchase_price":480,"sell_price":60,"energy":-30,"speed":3}
+]}

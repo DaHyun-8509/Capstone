@@ -108,4 +108,20 @@ public class UIManager
 
         harvestText.SetText("");
     }
+
+    public void ReleaseCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Interact;
+        player.GetComponent<CharacterController>().enabled = false;
+    }
+
+    public void LockCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        player.GetComponent<PlayerController>().State = PlayerController.PlayerState.Idle;
+        player.GetComponent<CharacterController>().enabled = true;
+    }
 }

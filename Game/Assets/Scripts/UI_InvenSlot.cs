@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -75,7 +76,10 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // info 텍스트 변경
         inventoryUI.itemInfo_name.text = item.name;
         inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
-        inventoryUI.itemInfo_energy.text = "에너지 +" + item.energy;
+        if (item.id[0]=='D')
+            inventoryUI.itemInfo_energy.text = "에너지 " + item.energy;
+        else
+            inventoryUI.itemInfo_energy.text = "에너지 +" + item.energy;
 
     }
 
@@ -122,6 +126,13 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void EatItem()
     {
         //먹기 효과 
+
+        if (item.id[0] == 'D')
+        {
+            Managers.Time.NowSpeed = ((Drink)item).speed;
+            StartCoroutine(SpeedTimer());
+        }
+
         Managers.Sound.PlayEating();
         Managers.Energy.IncreaseEnergy(item.energy);
         RemoveItem(1);
@@ -130,6 +141,12 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void RemoveItem(int count)
     {
         Inventory.instance.RemoveItem(item.id, count);
+    }
+
+    IEnumerator SpeedTimer()
+    {
+        yield return new WaitForSeconds(Managers.Time.GetOneHourTime() * 5);
+        Managers.Time.NowSpeed = 1f;
     }
     
 }

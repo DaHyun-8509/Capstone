@@ -29,6 +29,15 @@ public class Sleep : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            Managers.UI.DisableInteractText();
+            playerInTrigger = false;
+        }
+    }
+
     private void Update()
     {
         if(playerInTrigger && Input.GetKey(KeyCode.E))

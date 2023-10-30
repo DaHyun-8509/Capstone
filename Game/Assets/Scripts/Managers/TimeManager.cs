@@ -20,6 +20,9 @@ public class TimeManager
 
     bool isSkippinng = false;
 
+    float nowSpeed = 1f;
+    public float NowSpeed {  get { return nowSpeed; } set {  nowSpeed = value; Time.timeScale = nowSpeed; } }
+
     public void Update()
     {
         
@@ -73,7 +76,9 @@ public class TimeManager
     }
     public void RunTime()
     {
-        Time.timeScale = 1;
+        if (nowSpeed > 1)
+            Time.timeScale = nowSpeed;
+        else Time.timeScale = 1;
     }
 
     public int GetHour() { return hour; }

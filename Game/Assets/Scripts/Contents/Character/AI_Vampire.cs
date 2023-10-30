@@ -71,6 +71,7 @@ public class AI_Vampire : MonoBehaviour
     private void Update()
     {
         if (agent == null) return;
+        anim.SetFloat("speed", agent.velocity.magnitude);
 
         //아무것도 안하고있고 TimeToGoRestaurant시이면  
         if (state == State.None && Managers.Time.GetHour() == TimeToGoRestaurant)
@@ -102,13 +103,17 @@ public class AI_Vampire : MonoBehaviour
             location = Location.Home;
         }
 
+        if(location == Location.Restaurant && state != State.Move)
+        {
+            transform.LookAt(restaurantForwardPos.position);
+
+        }
+
         //Move 상태이고 목적지에 도달했으면
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state == State.Move)
         {
             agent.velocity = Vector3.zero;
             state = State.Act;
-
-            anim.SetTrigger("stop");
 
             switch (location)
             {
@@ -131,7 +136,6 @@ public class AI_Vampire : MonoBehaviour
         if (dialog.Talking == true && isTalking == false)
         {
             agent.isStopped = true;
-            anim.SetTrigger("stop");
             isTalking = true;
         }
         //대화가 끝났을 때
@@ -139,16 +143,15 @@ public class AI_Vampire : MonoBehaviour
         {
             agent.isStopped = false;
             isTalking = false;
-            if (state == State.Move)
-                anim.SetTrigger("walk");
             if (state != State.Move && location == Location.Restaurant)
                 SitAndDrink();
+            if (state == State.Move)
+                anim.SetTrigger("walk");
         }
     }
     void Move()
     {
         state = State.Move;
-        anim.SetTrigger("walk");
     }
 
     private IEnumerator WaitAndSetStateNone()

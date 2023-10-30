@@ -1,17 +1,17 @@
 {"info":
 [
-{"id":"R0","name":"빵","purchase_price":50,"sell_price":10,"food_grade":2,"energy":5},
-{"id":"R1","name":"계란과 베이컨","purchase_price":200,"sell_price":40,"food_grade":2,"energy":18},
-{"id":"R2","name":"소세지와 감자구이","purchase_price":300,"sell_price":60,"food_grade":2,"energy":30},
-{"id":"R3","name":"미트볼 정식","purchase_price":560,"sell_price":112,"food_grade":2,"energy":50},
-{"id":"R4","name":"삶은 닭가슴살","purchase_price":400,"sell_price":80,"food_grade":2,"energy":37},
-{"id":"R5","name":"모듬초밥","purchase_price":430,"sell_price":86,"food_grade":2,"energy":40},
-{"id":"R6","name":"피자","purchase_price":700,"sell_price":140,"food_grade":2,"energy":64},
-{"id":"R7","name":"핫도그","purchase_price":160,"sell_price":32,"food_grade":2,"energy":13},
-{"id":"R8","name":"햄버거","purchase_price":260,"sell_price":52,"food_grade":2,"energy":24},
-{"id":"R9","name":"감자튀김","purchase_price":120,"sell_price":24,"food_grade":2,"energy":10},
-{"id":"R10","name":"새우구이","purchase_price":660,"sell_price":132,"food_grade":2,"energy":60},
-{"id":"R11","name":"스테이크","purchase_price":950,"sell_price":190,"food_grade":2,"energy":80},
-{"id":"R12","name":"칠면조구이","purchase_price":1200,"sell_price":240,"food_grade":2,"energy":100},
-{"id":"R13","name":"꼬치구이","purchase_price":760,"sell_price":152,"food_grade":2,"energy":67}
+{"id":"R0","name":"빵","purchase_price":20,"sell_price":3,"energy":5},
+{"id":"R1","name":"계란과 베이컨","purchase_price":80,"sell_price":16,"energy":18},
+{"id":"R2","name":"소세지와 감자구이","purchase_price":120,"sell_price":24,"energy":30},
+{"id":"R3","name":"미트볼 정식","purchase_price":220,"sell_price":45,"energy":50},
+{"id":"R4","name":"삶은 닭가슴살","purchase_price":170,"sell_price":35,"energy":37},
+{"id":"R5","name":"모듬초밥","purchase_price":180,"sell_price":37,"energy":40},
+{"id":"R6","name":"피자","purchase_price":300,"sell_price":60,"energy":64},
+{"id":"R7","name":"핫도그","purchase_price":60,"sell_price":12,"energy":13},
+{"id":"R8","name":"햄버거","purchase_price":120,"sell_price":24,"energy":24},
+{"id":"R9","name":"감자튀김","purchase_price":55,"sell_price":11,"energy":10},
+{"id":"R10","name":"새우구이","purchase_price":300,"sell_price":60,"energy":60},
+{"id":"R11","name":"스테이크","purchase_price":380,"sell_price":75,"energy":80},
+{"id":"R12","name":"칠면조구이","purchase_price":450,"sell_price":90,"energy":100},
+{"id":"R13","name":"꼬치구이","purchase_price":330,"sell_price":66,"energy":67}
 ]}
