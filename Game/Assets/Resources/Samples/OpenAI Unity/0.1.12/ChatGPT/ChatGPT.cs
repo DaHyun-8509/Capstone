@@ -14,7 +14,8 @@ public enum CharacterType
     Raskal,
     Ben,
     Claire,
-    Ann
+    Ann,
+    Rena
 }
 
 namespace OpenAI
@@ -113,6 +114,7 @@ namespace OpenAI
             "think yourself as a vampire. " +
             "go outside only evening and nigth, dawn. elegant way of speaking. " +
             "laugh like '호호호'";
+
         private string prompt_claire =
             "\n\ninstructions: <<you are>> {name: Claire or 클레어." +
             "age: 46years old. " +
@@ -123,12 +125,20 @@ namespace OpenAI
             "store opens 10 to 17. }";
 
         private string prompt_ann =
-            "\n\ninstructions: <<you are>> {Ann." +
+            "\n\ninstructions: <<you are>> {name: Ann or 앤." +
             "age: 56 years old." +
             " wife of a cheif of the town. " +
             "domestic woman." +
             " have 2 sons. " +
             "want to send your sons to a university in the city. }";
+
+        private string prompt_rena =
+           "\n\ninstructions: <<you are>> {name: Rena or 레나." +
+           "age: 12 years old." +
+           "rich girl who came to recuperate. " +
+           "super shy girl." +
+           "usually say with '.....'. " +
+           "she likes flower. }";
 
 
         string prompt_common_info = "\n\n<<Information about this town>> \r\n" +
@@ -254,6 +264,9 @@ namespace OpenAI
                         break;
                     case CharacterType.Ann:
                         newMessage.Content += prompt_ann;
+                        break;
+                    case CharacterType.Rena:
+                        newMessage.Content += prompt_rena;
                         break;
                 }
             }
