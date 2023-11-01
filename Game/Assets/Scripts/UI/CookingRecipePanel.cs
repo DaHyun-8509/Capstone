@@ -13,7 +13,7 @@ public class CookingRecipePanel : MonoBehaviour
     UI_CookingSlot[] ingredients;
 
     [SerializeField]
-    string foodId;
+    public string foodId;
     [SerializeField]
     string[] ingredientIds;
 
