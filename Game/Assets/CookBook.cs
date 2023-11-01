@@ -42,6 +42,11 @@ public class CookBook : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        Managers.UI.DisableInteractText();
+    }
+
     IEnumerator HideGuideMessage()
     {
         yield return new WaitForSeconds(0.5f);
