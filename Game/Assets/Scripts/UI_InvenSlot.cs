@@ -76,7 +76,7 @@ public class UI_InvenSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // info 텍스트 변경
         inventoryUI.itemInfo_name.text = item.name;
         inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
-        if (item.id[0]=='D')
+        if (item.energy < 0)
             inventoryUI.itemInfo_energy.text = "에너지 " + item.energy;
         else
             inventoryUI.itemInfo_energy.text = "에너지 +" + item.energy;

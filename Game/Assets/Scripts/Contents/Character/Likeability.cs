@@ -50,9 +50,9 @@ public class Likeability : MonoBehaviour
     public void ChangeWithItem(string itemId, int giftGrade)
     {
         float price = Managers.Data.GetItemData(itemId).sell_price;
-        float likeAmount = Mathf.Sqrt(price/10);
-        if (giftGrade == 0) likeAmount -= 5;
-        else if (giftGrade == 2) likeAmount *= 3;
+        float likeAmount = price/10;
+        if (giftGrade == 0) likeAmount -= 7;
+        else if (giftGrade == 2) likeAmount *= 2;
         like += likeAmount;
     }
 
@@ -70,7 +70,7 @@ public class Likeability : MonoBehaviour
         {
             grade = 3;
         }
-        if (like >= 50)
+        if (like >= 40)
         {
             grade = 4;
         }

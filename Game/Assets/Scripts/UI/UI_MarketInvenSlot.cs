@@ -85,7 +85,11 @@ public class UI_MarketInvenSlot : MonoBehaviour, IPointerDownHandler, IPointerEn
         else
             inventoryUI.itemInfo_price.text = item.sell_price + "GOLD";
 
-        inventoryUI.itemInfo_energy.text = "에너지 +" + item.energy;
+        if(item.energy >0)
+            inventoryUI.itemInfo_energy.text = "에너지 +" + item.energy;
+        else
+            inventoryUI.itemInfo_energy.text = "에너지 " + item.energy;
+
 
     }
 

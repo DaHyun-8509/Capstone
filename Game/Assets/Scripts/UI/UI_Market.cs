@@ -47,7 +47,7 @@ public class UI_Market : MonoBehaviour
             checkCount = value;
             checkCountUI.SetText("{0}", checkCount);
             if (checkSlot != null)
-                checkGoldUI.SetText("{0}", checkCount * checkSlot.Item.sell_price);
+                checkGoldUI.SetText("{0}", checkCount * checkSlot.Item.purchase_price);
             else
                 checkGoldUI.SetText("0");
         }
@@ -139,7 +139,7 @@ public class UI_Market : MonoBehaviour
     {
 
         //플레이어 골드 차감
-        if (Managers.Gold.SubGold(checkSlot.Item.sell_price * CheckCount))
+        if (Managers.Gold.SubGold(checkSlot.Item.purchase_price * CheckCount))
         {
 
             //인벤토리에 아이템 추가
@@ -163,7 +163,7 @@ public class UI_Market : MonoBehaviour
                 guideTextUI.color = Color.red;
                 StartCoroutine(WaitAndRemoveGuideText());
                 //차감된 골드 다시 복구
-                Managers.Gold.AddGold(checkSlot.Item.sell_price * CheckCount);
+                Managers.Gold.AddGold(checkSlot.Item.purchase_price * CheckCount);
             }
         }
         else //구매 실패
