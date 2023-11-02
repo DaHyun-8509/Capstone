@@ -185,7 +185,6 @@ public class AI_Cheif : MonoBehaviour
         if (dialog.Talking == true && isTalking == false)
         {
             agent.isStopped = true;
-            anim.SetTrigger("stop");
             isTalking = true;
         }
         //대화가 끝났을 때

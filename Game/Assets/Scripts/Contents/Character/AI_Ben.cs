@@ -95,6 +95,8 @@ public class AI_Ben : MonoBehaviour
             
             Move();
             gpt.nowState = "going to the restaurant for dinner";
+            StopAllCoroutines();
+
         }
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoHome)
         {
@@ -131,7 +133,6 @@ public class AI_Ben : MonoBehaviour
             state = State.Act;
             if (location != Location.Work)
                 StartCoroutine(WaitAndSetStateNone());
-            anim.SetTrigger("stop");
 
             switch (location)
             {

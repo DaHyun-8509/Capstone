@@ -84,6 +84,7 @@ public class AI_Raskal : MonoBehaviour
             Move();
             location = Location.Restaurant;
             gpt.nowState = "going to the restaurant for dinner";
+            StopAllCoroutines();
         }
         else if (state == State.None && Managers.Time.GetHour() == TimeToGoToFrontHome)
         {
@@ -132,8 +133,6 @@ public class AI_Raskal : MonoBehaviour
             state = State.Act;
             if(location != Location.Work)
                 StartCoroutine(WaitAndSetStateNone());
-            anim.SetTrigger("stop");
-
             switch (location)
             {
                 case Location.Home:
