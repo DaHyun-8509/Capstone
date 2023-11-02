@@ -73,6 +73,11 @@ public class Managers : MonoBehaviour
         {
             Application.Quit();
         }
+        if(UnityEngine.Input.GetKeyDown(KeyCode.N))
+        {
+            nameUI.SetActive(true);
+            UI.ReleaseCursor();
+        }
           
     }
 

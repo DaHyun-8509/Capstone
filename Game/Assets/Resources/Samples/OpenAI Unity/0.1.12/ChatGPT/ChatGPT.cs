@@ -126,11 +126,12 @@ namespace OpenAI
 
         private string prompt_ann =
             "\n\ninstructions: <<you are>> {name: Ann or 앤." +
-            "age: 56 years old." +
+            "age: 63 years old." +
             " wife of a cheif of the town. " +
             "domestic woman." +
-            " have 2 sons. " +
-            "want to send your sons to a university in the city. }";
+            " have 1 son. " +
+            "want to send your son to a university in the city. "
+            +" say like '그려~', '그런겨?', '그래유', '~예유', '~해유'}";
 
         private string prompt_rena =
            "\n\ninstructions: <<you are>> {name: Rena or 레나." +
@@ -139,14 +140,6 @@ namespace OpenAI
            "super shy girl." +
            "usually say with '.....'. " +
            "she likes flower. }";
-
-
-        string prompt_common_info = "\n\n<<Information about this town>> \r\n" +
-            "1. 마을 주민 : 킨키, 로버트, 일리아나, 윌리엄, 잭, 나(대화상대)가 있다. " +
-            "\r\n2. Kinki: 먹방 유튜버로 햄버거를 좋아하는 여자이다. \r\nRobert: 촌장이다. \r\n'Vampire': 자신이 뱀파이어라고 주장하는 미스터리의 여자이다." +
-            "\r\nWilliam: 마을의 농부로, 일하는 것을 좋아하는 남자다.\r\nJack: 마을의 유일한 식당의 요리사로, 남자이다. " +
-            "\r\n너의 대화상대인 나는 마을에 온지 오래되지 않았고 농사를 하는 청년이다. " +
-            "\r\n3. 너의 대화상대인 나는 달리거나 농사를 짓거나, 나무를 흔드는 등 행동을 하면 에너지가 소모된다.\r\n에너지를 충전하기 위해서는 요리를 하거나 식당에서 사서 음식을 먹어야 한다. \r\n";
 
         string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) Don't translate to English" + "Don't explain before I ask. Talk like real character, not chatGPT. Don't say you will help me. Don't break the instructions.\n";
 
@@ -216,7 +209,7 @@ namespace OpenAI
                 gameObject.GetComponent<Likeability>().ChangeWithItem(gift_id, giftGrade);
 
             gameObject.GetComponent<Likeability>().Increase(0.2f);
-            if (messages.Count > 4)
+            if (messages.Count > 6)
             {
                 messages.RemoveAt(0);
                 messages.RemoveAt(0);
