@@ -54,6 +54,7 @@ public class Sleep : MonoBehaviour
                 sleepTimeBefore = Managers.Time.GetHour();
                 todaySleepTimeText.SetText(todayTimeSleep + "½Ã°£)");
                 sleepTimeText.SetText("1");
+                wakeupTime = Managers.Time.GetHour() + 1;
             }
             else
             {
@@ -114,7 +115,7 @@ public class Sleep : MonoBehaviour
     {
         beforeSleepUI.SetActive(false);
         sleepUI.SetActive(true);
-        Time.timeScale = 50f;
+        Time.timeScale = 30f;
         isSleeping = true;
         todayTimeSleep += timeForSleep;
     }
