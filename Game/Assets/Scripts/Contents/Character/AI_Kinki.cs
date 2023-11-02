@@ -113,7 +113,7 @@ public class AI_Kinki : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && state == State.Move)
         {
             state = State.None;
-            anim.SetTrigger("stop");
+            //anim.SetTrigger("stop");
 
             switch (location)
             {
