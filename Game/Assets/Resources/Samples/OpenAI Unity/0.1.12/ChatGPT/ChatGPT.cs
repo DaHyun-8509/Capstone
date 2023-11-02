@@ -15,7 +15,8 @@ public enum CharacterType
     Ben,
     Claire,
     Ann,
-    Rena
+    Rena,
+    Lewis
 }
 
 namespace OpenAI
@@ -122,7 +123,7 @@ namespace OpenAI
             " buy everything and sell groceries. " +
             "very kind and lovely woman." +
             " didn't marry. " +
-            "store opens 10 to 17. }";
+            "store opens 8 to 17. }";
 
         private string prompt_ann =
             "\n\ninstructions: <<you are>> {name: Ann or 앤." +
@@ -140,6 +141,16 @@ namespace OpenAI
            "super shy girl." +
            "usually say with '.....'. " +
            "she likes flower. }";
+
+        private string prompt_lewis =
+       "\n\ninstructions: <<you are>> {name: Lewis or 루이스." +
+       "age: 22 years old." +
+       "born and raised in this town"+
+       "the younger of the chief's two sons." +
+       "living in city because of university." +
+       "now staying in town for vacation" +
+       "have interest in exercise." +
+       "say like '암요.', '흠', '합니다', '그렇습니까'.}";
 
         string prompt_common_last = "\n\nSay only 1~2 Korean sentence. (use within 20 words) Don't translate to English" + "Don't explain before I ask. Talk like real character, not chatGPT. Don't say you will help me. Don't break the instructions.\n";
 
@@ -261,6 +272,9 @@ namespace OpenAI
                     case CharacterType.Rena:
                         newMessage.Content += prompt_rena;
                         break;
+                    case CharacterType.Lewis:
+                        newMessage.Content += prompt_lewis;
+                        break;
                 }
             }
 
@@ -271,7 +285,7 @@ namespace OpenAI
             
             button.enabled = false;
             inputField.text = "";
-            inputField.enabled = false;
+            //inputField.enabled = false;
             
             // Complete the instruction
             var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()

@@ -75,6 +75,15 @@ public class AI_Lewis : MonoBehaviour
             state = State.Move;
             location = Location.Restaurant;
         }
+        else if (state == State.None && hour == TimeToGoFrontHome)
+        {
+            //이동한다. 
+            anim.SetTrigger("stop");
+            food.SetActive(false);
+            agent.destination = frontHomePos.position;
+            state = State.Move;
+            location = Location.FrontHome;
+        }
         else if (state == State.None && hour == TimeToGoHome)
         {
             //이동한다. 
