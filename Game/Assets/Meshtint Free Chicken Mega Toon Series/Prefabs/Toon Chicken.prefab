@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f199d8bab0bb2d1488f6c6aee6be00d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToMakeEgg: 1
+  timeToMakeEgg: 11
   egg: {fileID: 1650097750763094610, guid: 17a00774542692a49bf53f88f7da52d3, type: 3}
 --- !u!195 &-1301807160078882612
 NavMeshAgent:
