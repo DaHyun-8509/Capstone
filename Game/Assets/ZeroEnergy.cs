@@ -18,6 +18,7 @@ public class ZeroEnergy : MonoBehaviour
             transform.position = spawnPos.position;
             sleepStartTime = Managers.Time.GetHour();
             Managers.Time.NowSpeed = 30f;
+            Inventory.instance.ClearInven();
             StartCoroutine(TimeRecover());
         }
     }

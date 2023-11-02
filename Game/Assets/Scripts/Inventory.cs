@@ -82,4 +82,11 @@ public class Inventory: MonoBehaviour
 
         onChangeItem.Invoke();
     }
+
+    public void ClearInven()
+    {
+        itemCounts.Clear();
+        items.Clear();
+        onChangeItem.Invoke();
+    }
 }
