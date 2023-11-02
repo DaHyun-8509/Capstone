@@ -1,6 +1,6 @@
 {"info":
 [
-{"id":"R0","name":"빵","purchase_price":20,"sell_price":3,"energy":5},
+{"id":"R0","name":"잘 구운 빵","purchase_price":20,"sell_price":3,"energy":5},
 {"id":"R1","name":"계란과 베이컨","purchase_price":80,"sell_price":16,"energy":18},
 {"id":"R2","name":"소세지와 감자구이","purchase_price":120,"sell_price":24,"energy":30},
 {"id":"R3","name":"미트볼 정식","purchase_price":220,"sell_price":45,"energy":50},

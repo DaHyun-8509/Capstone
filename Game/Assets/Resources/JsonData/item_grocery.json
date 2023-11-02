@@ -1,7 +1,7 @@
 {"info":
 [
 {"id":"G0","name":"우유","purchase_price":30,"sell_price":6,"energy":5},
-{"id":"G1","name":"빵","purchase_price":50,"sell_price":10,"energy":5},
+{"id":"G1","name":"빵","purchase_price":10,"sell_price":2,"energy":2},
 {"id":"G2","name":"생크림","purchase_price":40,"sell_price":8,"energy":1},
 {"id":"G3","name":"치즈","purchase_price":40,"sell_price":8,"energy":3},
 {"id":"G4","name":"베이컨","purchase_price":40,"sell_price":8,"energy":3},
