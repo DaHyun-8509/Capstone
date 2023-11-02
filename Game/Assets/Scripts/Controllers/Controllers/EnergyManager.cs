@@ -48,4 +48,9 @@ public class EnergyManager
             curEnergy = 0;
         }
     }
+
+    public float GetEnergy()
+    {
+        return curEnergy;
+    }
 }
