@@ -24,9 +24,7 @@ public class Player : MonoBehaviour
     }
 
 
-//피로도 관련
-
-
+    public bool isTalking = false;
 
 
 

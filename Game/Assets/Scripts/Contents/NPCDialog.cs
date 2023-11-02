@@ -80,12 +80,16 @@ public class NPCDialog : MonoBehaviour
     {
         if (other.CompareTag("Player") && Input.GetKey(KeyCode.E) && isTalking == false)
         {
+
+            player = other.transform;
+            if (player.gameObject.GetComponent<Player>().isTalking)
+                return;
+            player.gameObject.GetComponent<Player>().isTalking = true;
             Managers.UI.DisableInteractText();
             Talking = true;
 
             npc.Find("ToActivate").GetComponentInChildren<ChatGPT>().UpdateLikeability();
 
-            player = other.transform;
 
             StartCoroutine(FaceEachOtherAfterDelay());
             // disable player input
@@ -133,6 +137,7 @@ public class NPCDialog : MonoBehaviour
         player.GetComponent<Animator>().updateMode = AnimatorUpdateMode.Normal;
         npc.GetComponent<Animator>().updateMode = AnimatorUpdateMode.Normal;
 
+        player.gameObject.GetComponent<Player>().isTalking = false;
 
         toActivate.SetActive(false);
         Managers.UI.EnableCanvas();

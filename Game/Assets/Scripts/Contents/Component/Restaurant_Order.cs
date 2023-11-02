@@ -31,6 +31,8 @@ public class Restaurant_Order : MonoBehaviour
     {
         if (playerIn && Input.GetKey(KeyCode.E))
         {
+            if (player.gameObject.GetComponent<Player>().isTalking == true)
+                return;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             canvases[0].SetActive(true);
