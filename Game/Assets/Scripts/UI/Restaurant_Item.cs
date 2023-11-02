@@ -34,7 +34,7 @@ public class Restaurant_Item : MonoBehaviour
         item = drink;
         description_name.SetText(drink.name);
         description_price.SetText("{0}GOLD", drink.purchase_price);
-        description_energy.SetText("에너지 +{0}", drink.energy);
+        description_energy.SetText("에너지 {0}", drink.energy);
         description_image.sprite = Managers.Resource.GetSprite(drink.id);
     }
 
